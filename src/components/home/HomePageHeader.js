@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom'
+var courseImg = require('../../../src/assets/images/study.jpg');
 
-const HomePageHeader = () => {
+const HomePageHeader = (props) => {
   return (
     <main role="main">
       <div className="container">
@@ -26,7 +27,7 @@ const HomePageHeader = () => {
         </form>
 
         <div className="h-100 mt-5 mb-5">
-          <span className="small">539 Lessons Available</span>
+          <span className="small">{props.lessons.totalItems} Lessons Available</span>
           <div className="dropdown float-right">
             <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">

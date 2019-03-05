@@ -3,8 +3,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import WebFont from 'webfontloader';
 import configureStore from './store/configureStore';
-import { loadMessages, loadNotifications, loadTasks, loadUserProfile } from './actions/Message-Notification-Tasks_Actions';
-
+import { Provider } from 'react-redux';
+import {loadLessons} from './actions/LessonsActions';
 import { BrowserRouter, Link } from 'react-router-dom';
 import App from './components/App';
 
@@ -17,10 +17,8 @@ import '../node_modules/jquery-slimscroll/jquery.slimscroll.min.js';
 const store = configureStore();
 
 // Dispatch actions to load initial state.
-store.dispatch(loadMessages());
-store.dispatch(loadNotifications());
-store.dispatch(loadTasks());
-store.dispatch(loadUserProfile());
+store.dispatch(loadLessons());
+
 
 WebFont.load({
   google: {
@@ -29,8 +27,10 @@ WebFont.load({
 });
 
 render((
+  <Provider store={store}>
   <BrowserRouter>
     <App />
   </BrowserRouter>
+  </Provider>
 ), document.getElementById('app'));
 
