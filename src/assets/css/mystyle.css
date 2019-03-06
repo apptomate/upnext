@@ -380,3 +380,5 @@ div.addslide > div > div:hover { border: 1px solid #007bff !important; color: #0
 .mt-5rem {margin-top: 5rem!important;}
 .text-color-black {color:black !important;}
 .text-color-white {color:white !important;}
+.lessonHeaderClass {cursor: pointer;}
+.blur-effect{-webkit-filter:blur(3px);filter:blur(3px);}
