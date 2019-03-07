@@ -5,21 +5,21 @@ import { withRouter } from 'react-router-dom';
 
 class CreateLessonHeader extends React.Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            btnText: 'ADD QUIZ'
-        }
-        this.changeText = this.changeText.bind(this)
+        super(props)      
+        if (this.props.props.location.pathname == "/CreateLesson") {
+            this.state = {btnText: 'ADD QUIZ', lessonClass:'fas', quizClass:'far'}
+        } else if (this.props.props.location.pathname == "/CreateQuiz") {
+            this.state = {btnText: 'PUBLISH LESSON', quizClass:'fas', lessonClass:'far'} 
+        }    
+        this.navigateNext = this.navigateNext.bind(this)
     }
 
-    changeText() {
-        this.setState({
-            btnText: 'ADD LESSON'
-        });
+    navigateNext() {
+        event.preventDefault()        
+        this.props.props.history.push(`/CreateQuiz`)      
     }
 
     render() {
-
         return (
             <div>
                 <main role="main" className="fixed-top">
@@ -43,8 +43,8 @@ class CreateLessonHeader extends React.Component {
                                                 <span>STEP 1 of 2</span>
                                             </h6>
                                             <div className="float-left">
-                                                <i className="fas fa-circle fa-xs text-primary"></i>
-                                                <i className="far fa-circle fa-xs text-primary"></i>
+                                                <i className={'fa-circle fa-xs text-primary ' + this.state.lessonClass}></i>
+                                                <i className={'fa-circle fa-xs text-primary ' + this.state.quizClass}></i>
                                             </div>
                                         </div>
                                     </div>
@@ -67,8 +67,8 @@ class CreateLessonHeader extends React.Component {
                                     </div>
                                 </Link>
                             </li>
-                            <li className="w-10 bg-primary text-white slide_steps ml-auto" onClick={() => history.push('/CreateQuiz')}>
-                                <div className="lessonHeaderClass" onClick={ this.changeText }>
+                            <li className="w-10 bg-primary text-white slide_steps ml-auto">
+                                <div className="lessonHeaderClass" onClick={ this.navigateNext }>
                                     <h6 className="p-t-14 p-l-20 text-color-white">
                                         <span>NEXT STEP</span>
                                         <br></br>

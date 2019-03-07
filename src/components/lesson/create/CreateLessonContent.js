@@ -4,7 +4,7 @@ var courseImg = require('../../../../src/assets/images/study.jpg');
 class CreateLessonContent extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props) 
     this.state = {
       blureffect: true
     }
