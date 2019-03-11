@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 var courseImg = require('../../../../src/assets/images/study.jpg');
 
-class CreateLessonContent extends React.Component {
 
+var currentProps;
+class CreateLessonContent extends React.Component {
   constructor(props) {
     super(props) 
     this.state = {
@@ -21,9 +22,19 @@ class CreateLessonContent extends React.Component {
       this.setState({
         blureffect: false
       });
+      //API Call
+      var lessoninfo = {
+        lesson:
+          {
+            bgColor: '#000',
+            slideBgColor: '#000',
+            title: 'Lesson Title 04'
+          }
+      };
+      this.props.props.actions.addLesson(lessoninfo);
     }
   }
-  render() {
+ render() {
     return (
       <div>
         <div className="container">
@@ -33,7 +44,7 @@ class CreateLessonContent extends React.Component {
               <form className="form-inline searchbar">
                 <div className="input-group mb-3 w-100">
                   <input type="text" className="form-control" placeholder="What is this lesson called?"
-                    aria-label="What is this lesson called?" aria-describedby="basic-addon2" onChange={changeEvent => this.titleEnteredEvent(changeEvent.target.value)}></input>
+                    aria-label="What is this lesson called?" aria-describedby="basic-addon2" onBlur={changeEvent => this.titleEnteredEvent(changeEvent.target.value)}></input>
                   <div className="input-group-append">
                     <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0"><i className="fas fa-arrow-circle-right"></i></span>
                   </div>
