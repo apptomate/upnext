@@ -1,37 +1,38 @@
 import React, { PropTypes } from 'react';
 var courseImg = require('../../../../src/assets/images/study.jpg');
 
-
 var currentProps;
 class CreateLessonContent extends React.Component {
   constructor(props) {
     super(props) 
-    this.state = {
-      blureffect: true
-    }
+    this.state = {blureffect: true, lessonHash:''}
     this.titleEnteredEvent = this.titleEnteredEvent.bind(this)
   }
-
   titleEnteredEvent(value) {
     if (value.length == 0) {
-      this.setState({
-        blureffect: true
-      });
+      this.setState({blureffect: true});
     }
     else {
-      this.setState({
-        blureffect: false
-      });
+      this.setState({blureffect: false});
       //API Call
       var lessoninfo = {
         lesson:
           {
             bgColor: '#000',
             slideBgColor: '#000',
-            title: 'Lesson Title 04'
+            title: value
           }
       };
-      this.props.props.actions.addLesson(lessoninfo);
+      if(this.state.lessonHash.length==0)
+      {
+        alert(this.props.props.actions.addLesson(lessoninfo));
+        this.setState({lessonHash: this.props.props.actions.addLesson(lessoninfo)});
+      }
+      else 
+      {
+        alert(this.state.lessonHash);
+        this.props.props.actions.editLesson(lessoninfo);
+      }
     }
   }
  render() {

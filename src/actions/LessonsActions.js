@@ -1,6 +1,5 @@
 import * as types from '../actions/actionTypes';
 import request from 'superagent';
-import axios from 'axios';
 var URLSearchParams = require('url-search-params');
 
 export function loadLessonsListSuccess(lessons) {
@@ -21,7 +20,7 @@ export function deleteLessonSuccess(lesson) {
 
 export function loadLessons() {
   return dispatch => {
-    request.get('https://admin.vetti.co/rest/admin/v1/lessons').end((err, res) => {
+    request.get('/rest/admin/v1/lessons').end((err, res) => {
       if (err) {
         throw (err);
       }
@@ -33,44 +32,17 @@ export function loadLessons() {
 }
 
 export function addLesson(lessoninfo) {
-  alert('adding a new lesson');
   return dispatch => {
-    const params = new URLSearchParams();
-    params.append('bgColor', lessoninfo.lesson.bgcolor);
-    params.append('slideBgColor', lessoninfo.lesson.slidebgcolor);
-    params.append('title', lessoninfo.lesson.title);
-
-    var apiURL = 'https://admin.vetti.co/rest/admin/v1/lessons';
+    var apiURL = '/rest/admin/v1/lessons';
     request.post(apiURL)
       .set('Content-Type', 'application/json')
-      .send(params.toString()).then(response => {
-        alert(response.data.hash);
-        return;
+      .send(lessoninfo.lesson).then(res => { 
+        dispatch(addLessonSuccess(res.body.data));
+        return res.body.data.hash;
       })
       .catch(error => {
         console.log(error);
       });
-
-     // (OR)
-
-    // var headers = {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    // };
-    // const params = new URLSearchParams();
-    // params.append('bgColor', lessoninfo.lesson.bgcolor);
-    // params.append('slideBgColor', lessoninfo.lesson.slidebgcolor);
-    // params.append('title', lessoninfo.lesson.title);
-
-    // var apiURL = 'https://admin.vetti.co/rest/admin/v1/lessons';
-    // axios.post(apiURL, params.toString(), { headers: headers })
-    //     .then(response => {
-    //         alert(response.data.hash);
-    //         return;
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
   };
 }
 
