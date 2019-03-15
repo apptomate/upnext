@@ -7,13 +7,15 @@ export function loadLessonsListSuccess(lessons) {
 }
 
 export function addLessonSuccess(lesson) {
-  return { type: types.ADD_LESSON_SUCCESS, lesson }
+  return { type: types.ADD_LESSON_SUCCESS, payload: lesson }
 }
 
 export function editLessonSuccess(lesson) {
-  return { type: types.EDIT_LESSON_SUCCESS, lesson }
+  return { type: types.EDIT_LESSON_SUCCESS, payload: lesson }
 }
-
+export function clearAddLessonValues(lesson) {
+  return { type: types.CLEAR_ADD_LESSON_VALUES }
+}
 export function deleteLessonSuccess(lesson) {
   return { type: types.DELETE_LESSON_SUCCESS, lesson }
 }
@@ -32,11 +34,12 @@ export function loadLessons() {
 }
 
 export function addLesson(lessoninfo) {
+  console.warn('----------->  addlesson', lessoninfo)
   return dispatch => {
     var apiURL = '/rest/admin/v1/lessons';
     request.post(apiURL)
       .set('Content-Type', 'application/json')
-      .send(lessoninfo.lesson).then(res => { 
+      .send(lessoninfo.lesson).then(res => {
         dispatch(addLessonSuccess(res.body.data));
         return res.body.data.hash;
       })
@@ -47,16 +50,13 @@ export function addLesson(lessoninfo) {
 }
 
 export function editLesson(lessoninfo) {
+  console.warn('----------->  editlesson', lessoninfo)  
   return dispatch => {
-    const params = new URLSearchParams();
-    params.append('bgColor', lessoninfo.lesson.bgcolor);
-    params.append('slideBgColor', lessoninfo.lesson.slidebgcolor);
-    params.append('title', lessoninfo.lesson.title);
-
-    var apiURL = 'https://admin.vetti.co/rest/admin/v1/lessons/' + lessoninfo.lesson.hash;
-    request.post(apiURL)
+    var apiURL = '/rest/admin/v1/lessons/' + lessoninfo.lesson.hash;
+    request.patch(apiURL)
       .set('Content-Type', 'application/json')
-      .send(params.toString()).then(response => {
+      .send(lessoninfo.lesson).then(res => {
+        dispatch(editLessonSuccess(res.body.data));        
         return;
       })
       .catch(error => {

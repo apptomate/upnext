@@ -23,25 +23,12 @@ class CreateLessonPage extends React.Component {
     return (
      <div className="createLesson">
        <CreateLessonHeader props={this.props}></CreateLessonHeader>
-       <CreateLessonContent props={this.props}></CreateLessonContent>
+       <CreateLessonContent {...this.props}></CreateLessonContent>
        <MainFooter></MainFooter>
     </div>
     )
   }
 };
-
-function mapStateToProps(state, ownProps) {
-  return {
-      lessons: state.lessons
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-      actions: bindActionCreators(managelessonsActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateLessonPage);
+export default CreateLessonPage;
 
 

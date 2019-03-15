@@ -1,39 +1,47 @@
 import React, { PropTypes } from 'react';
 var courseImg = require('../../../../src/assets/images/study.jpg');
+import { connect } from 'react-redux';
+import { addLesson, editLesson, clearAddLessonValues } from '../../../actions/LessonsActions';
+import Alert from 'react-s-alert';
 
 var currentProps;
-class CreateLessonContent extends React.Component {
+class CreateLessonContent extends React.Component {  
   constructor(props) {
-    super(props) 
-    this.state = {blureffect: true, lessonHash:''}
-    this.titleEnteredEvent = this.titleEnteredEvent.bind(this)
+    super(props)
+    this.state = { blureffect: true }
+    this.handleTitleOnblur = this.handleTitleOnblur.bind(this)
+    this.props.clearAddLessonValues()
   }
-  titleEnteredEvent(value) {
-    if (value.length == 0) {
-      this.setState({blureffect: true});
+  handleTitleOnblur(e) {
+    const title = e.target.value
+    console.warn(title)
+    if (title.length == 0) {
+      this.setState({ blureffect: true });
+      return
+    }
+    //API Call
+    var lessoninfo = { lesson: { bgColor: '#000', slideBgColor: '#000', title: title, hash: this.props.hash || null } };
+    if (!this.props.hash) {
+      debugger;
+      this.props.addLesson(lessoninfo);
+      Alert.info(`Lesson - ${title} Saved!`, {
+        position: 'top-right',
+        offset: 100,
+        effect: 'jelly',
+        timeout: 2500
+      });
     }
     else {
-      this.setState({blureffect: false});
-      //API Call
-      var lessoninfo = {
-        lesson:
-          {
-            bgColor: '#000',
-            slideBgColor: '#000',
-            title: value
-          }
-      };
-      if(this.state.lessonHash.length==0)
-      {
-        alert(this.props.props.actions.addLesson(lessoninfo));
-        this.setState({lessonHash: this.props.props.actions.addLesson(lessoninfo)});
-      }
-      else 
-      {
-        alert(this.state.lessonHash);
-        this.props.props.actions.editLesson(lessoninfo);
-      }
+      debugger;
+      this.props.editLesson(lessoninfo);
+      Alert.info(`Lesson - ${title} Updated!`, {
+        position: 'top-right',
+        offset: 100,
+        effect: 'jelly',
+        timeout: 2500
+      });
     }
+    this.setState({ blureffect: false });
   }
  render() {
     return (
@@ -45,7 +53,7 @@ class CreateLessonContent extends React.Component {
               <form className="form-inline searchbar">
                 <div className="input-group mb-3 w-100">
                   <input type="text" className="form-control" placeholder="What is this lesson called?"
-                    aria-label="What is this lesson called?" aria-describedby="basic-addon2" onBlur={changeEvent => this.titleEnteredEvent(changeEvent.target.value)}></input>
+                    aria-label="What is this lesson called?" aria-describedby="basic-addon2" onBlur={this.handleTitleOnblur}></input>
                   <div className="input-group-append">
                     <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0"><i className="fas fa-arrow-circle-right"></i></span>
                   </div>
@@ -195,6 +203,13 @@ class CreateLessonContent extends React.Component {
     )
   }
 };
-module.exports = CreateLessonContent;
+
+const mapStateToProps = state => {
+  return {
+    title: state.addLessons.title || '',
+    hash: state.addLessons.hash || null
+  }
+}
+module.exports = connect(mapStateToProps, { addLesson, editLesson, clearAddLessonValues })(CreateLessonContent);
 
 

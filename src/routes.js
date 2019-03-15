@@ -6,6 +6,7 @@ import CreateLessonPage from './components/lesson/create/CreateLessonPage';
 import CreateQuizPage from './components/lesson/quiz/CreateQuizPage';
 import ViewLessonPage from './components/lesson/view/ViewLessonPage';
 import PublishLessonPage from './components/lesson/publish/PublishLessonPage';
+import DashboardPage from './components/dashboard/DashboardPage';
 
 const Routes = () => (
   <Switch>
@@ -15,6 +16,7 @@ const Routes = () => (
     <Route path="/CreateQuiz" component={CreateQuizPage} />    
     <Route path="/ViewLesson" component={ViewLessonPage} />
     <Route path="/PublishLesson" component={PublishLessonPage} />
+    <Route path="/Dashboard" component={DashboardPage} />
   </Switch>
 );
 export default Routes;
