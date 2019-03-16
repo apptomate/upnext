@@ -7,7 +7,7 @@ import Alert from 'react-s-alert';
 
 class CreateLessonHeader extends React.Component {
     constructor(props) {
-        super(props)      
+        super(props)  
         if (this.props.location.pathname == "/CreateLesson") {
             this.state = {btnText: 'ADD QUIZ', lessonClass:'fas', quizClass:'far'}
         } else if (this.props.location.pathname == "/CreateQuiz") {

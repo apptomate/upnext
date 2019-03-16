@@ -44,28 +44,28 @@ const CreateQuizContent = () => {
                     <h3 className="f-s-16 f-w-700">Options</h3>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck1"></input>
-                        <label className="custom-control-label" for="customCheck1">Option 1</label>
+                        <label className="custom-control-label" htmlFor="customCheck1">Option 1</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck2"></input>
-                        <label className="custom-control-label" for="customCheck2">Option 2</label>
+                        <label className="custom-control-label" htmlFor="customCheck2">Option 2</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck3"></input>
-                        <label className="custom-control-label" for="customCheck3">Option 3</label>
+                        <label className="custom-control-label" htmlFor="customCheck3">Option 3</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck4"></input>
-                        <label className="custom-control-label" for="customCheck1">Option 4</label>
+                        <label className="custom-control-label" htmlFor="customCheck1">Option 4</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
@@ -79,28 +79,28 @@ const CreateQuizContent = () => {
                     <h3 className="f-s-16 f-w-700">Options</h3>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck5"></input>
-                        <label className="custom-control-label" for="customCheck5">Option 1</label>
+                        <label className="custom-control-label" htmlFor="customCheck5">Option 1</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck6"></input>
-                        <label className="custom-control-label" for="customCheck6">Option 2</label>
+                        <label className="custom-control-label" htmlFor="customCheck6">Option 2</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck7"></input>
-                        <label className="custom-control-label" for="customCheck7">Option 3</label>
+                        <label className="custom-control-label" htmlFor="customCheck7">Option 3</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck8"></input>
-                        <label className="custom-control-label" for="customCheck8">Option 4</label>
+                        <label className="custom-control-label" htmlFor="customCheck8">Option 4</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
@@ -114,28 +114,28 @@ const CreateQuizContent = () => {
                     <h3 className="f-s-16 f-w-700">Options</h3>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck9"></input>
-                        <label className="custom-control-label" for="customCheck9">Option 1</label>
+                        <label className="custom-control-label" htmlFor="customCheck9">Option 1</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck10"></input>
-                        <label className="custom-control-label" for="customCheck10">Option 2</label>
+                        <label className="custom-control-label" htmlFor="customCheck10">Option 2</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck11"></input>
-                        <label className="custom-control-label" for="customCheck11">Option 3</label>
+                        <label className="custom-control-label" htmlFor="customCheck11">Option 3</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
                     </div>
                     <div className="custom-control custom-checkbox pt-4 pb-4 border-bottom">
                         <input type="checkbox" className="custom-control-input" id="customCheck12"></input>
-                        <label className="custom-control-label" for="customCheck12">Option 4</label>
+                        <label className="custom-control-label" htmlFor="customCheck12">Option 4</label>
                         <span className="float-right">
                             <i className="fas fa-check"></i> Correct Answer
                         </span>
