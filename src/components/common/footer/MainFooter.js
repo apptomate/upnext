@@ -47,6 +47,6 @@ const MainFooter = () => {
     </footer>
   );
 }
-module.exports = MainFooter;
+export default MainFooter;
 
 

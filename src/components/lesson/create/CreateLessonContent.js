@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 var courseImg = require('../../../../src/assets/images/study.jpg');
 import { connect } from 'react-redux';
-import { addLesson, editLesson, clearAddLessonValues } from '../../../actions/LessonsActions';
+import { addLesson, editLesson, clearAddLessonValues } from '../../../actions/';
 import Alert from 'react-s-alert';
 
 var currentProps;
@@ -19,27 +19,13 @@ class CreateLessonContent extends React.Component {
       this.setState({ blureffect: true });
       return
     }
-    //API Call
+
     var lessoninfo = { lesson: { bgColor: '#000', slideBgColor: '#000', title: title, hash: this.props.hash || null } };
-    if (!this.props.hash) {
-      debugger;
+    if (!this.props.hash) {               // adding new lesson if no hash available
       this.props.addLesson(lessoninfo);
-      Alert.info(`Lesson - ${title} Saved!`, {
-        position: 'top-right',
-        offset: 100,
-        effect: 'jelly',
-        timeout: 2500
-      });
     }
-    else {
-      debugger;
+    else if(title != this.props.title) {   // avoiding update if title has no change
       this.props.editLesson(lessoninfo);
-      Alert.info(`Lesson - ${title} Updated!`, {
-        position: 'top-right',
-        offset: 100,
-        effect: 'jelly',
-        timeout: 2500
-      });
     }
     this.setState({ blureffect: false });
   }
@@ -210,6 +196,6 @@ const mapStateToProps = state => {
     hash: state.addLessons.hash || null
   }
 }
-module.exports = connect(mapStateToProps, { addLesson, editLesson, clearAddLessonValues })(CreateLessonContent);
+export default connect(mapStateToProps, { addLesson, editLesson, clearAddLessonValues })(CreateLessonContent);
 
 

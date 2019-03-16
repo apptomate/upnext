@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import DashboardContent from './DashboardContent';
-import MainFooter from '../common/footer/MainFooter';
 import MainHeader from '../common/header/MainHeader';
 
 
@@ -9,10 +8,9 @@ const PublishLessonPage = () => {
      <div>
        <MainHeader></MainHeader>
        <DashboardContent/>
-       <MainFooter></MainFooter>
     </div>
     );
 };
-module.exports = PublishLessonPage;
+export default PublishLessonPage;
 
 

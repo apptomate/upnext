@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import ViewLessonHeader from './ViewLessonHeader';
 import ViewLessonContent from './ViewLessonContent';
-import MainFooter from '../../common/footer/MainFooter';
 
 import '../../../assets/css/mystyle.css';
 import '../../../assets/css/helper.css';
@@ -17,10 +16,9 @@ const ViewLessonPage = () => {
      <div className="viewLesson">
        <ViewLessonHeader></ViewLessonHeader>
        <ViewLessonContent></ViewLessonContent>
-       <MainFooter></MainFooter>
     </div>
     );
 };
-module.exports = ViewLessonPage;
+export default ViewLessonPage;
 
 

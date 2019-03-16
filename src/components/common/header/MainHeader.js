@@ -12,4 +12,4 @@ class MainHeader extends React.Component {
         );
     };
 }
-module.exports = MainHeader;
+export default MainHeader;

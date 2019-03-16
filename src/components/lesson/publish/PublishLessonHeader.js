@@ -34,6 +34,6 @@ const PublishLessonHeader = () => {
         </main>
     );
 };
-module.exports = PublishLessonHeader;
+export default PublishLessonHeader;
 
 

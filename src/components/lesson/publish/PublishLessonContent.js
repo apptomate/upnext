@@ -39,6 +39,6 @@ const PublishLessonContent = () => {
       </div>
     );
 };
-module.exports = PublishLessonContent;
+export default PublishLessonContent;
 
 

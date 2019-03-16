@@ -2,14 +2,15 @@ import React, { PropTypes } from 'react';
 import { Link,Redirect  } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import Alert from 'react-s-alert';
+// import { DEFAULT_ECDH_CURVE } from 'tls';
 
 
 class CreateLessonHeader extends React.Component {
     constructor(props) {
         super(props)      
-        if (this.props.props.location.pathname == "/CreateLesson") {
+        if (this.props.location.pathname == "/CreateLesson") {
             this.state = {btnText: 'ADD QUIZ', lessonClass:'fas', quizClass:'far'}
-        } else if (this.props.props.location.pathname == "/CreateQuiz") {
+        } else if (this.props.location.pathname == "/CreateQuiz") {
             this.state = {btnText: 'PUBLISH LESSON', quizClass:'fas', lessonClass:'far'} 
         }    
         this.navigateNext = this.navigateNext.bind(this)
@@ -17,7 +18,7 @@ class CreateLessonHeader extends React.Component {
 
     navigateNext() {
         event.preventDefault()        
-        this.props.props.history.push(`/CreateQuiz`)      
+        this.props.history.push(`/CreateQuiz`)      
     }
 
     render() {
@@ -85,6 +86,4 @@ class CreateLessonHeader extends React.Component {
         )
     }
 };
-module.exports = CreateLessonHeader;
-
-
+export default CreateLessonHeader;

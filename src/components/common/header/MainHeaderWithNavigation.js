@@ -50,4 +50,4 @@ const MainHeaderWithNavigation = () => {
   );
 }
 
-module.exports = MainHeaderWithNavigation;
+export default MainHeaderWithNavigation;

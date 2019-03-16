@@ -73,6 +73,6 @@ const ViewLessonHeader = () => {
         </main>
     );
 };
-module.exports = ViewLessonHeader;
+export default ViewLessonHeader;
 
 

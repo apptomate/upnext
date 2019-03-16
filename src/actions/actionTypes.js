@@ -1,4 +1,4 @@
-//Lesson - Action Types
+//Lesson   -   Action Types
 export const LOAD_LESSONS_LIST = 'LOAD_LESSONS_LIST';
 export const ADD_LESSON_SUCCESS = 'ADD_LESSON_SUCCESS';
 export const EDIT_LESSON_SUCCESS = 'EDIT_LESSON_SUCCESS';

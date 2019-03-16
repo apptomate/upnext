@@ -94,6 +94,6 @@ const ViewLessonContent = () => {
         </div>
     );
 };
-module.exports = ViewLessonContent;
+export default ViewLessonContent;
 
 

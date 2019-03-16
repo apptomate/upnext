@@ -48,6 +48,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "2.0.1",
     "request": "2.88.0",
+    "shortid": "2.2.14",
     "superagent": "3.8.3",
     "toastr": "2.1.2",
     "url-search-params": "1.1.0"

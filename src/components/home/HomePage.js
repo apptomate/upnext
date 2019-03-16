@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MainHeader from '../common/header/MainHeader';
 import NavScroll from '../common/header/NavScroll';
-import MainFooter from '../common/footer/MainFooter';
 import HomePageHeader from './HomePageHeader';
-import HomePageLessonsGrid  from './HomePageLessonsGrid';
-import * as lessonsActions from '../../actions/LessonsActions';
+import HomePageLessonsGrid from './HomePageLessonsGrid';
+// import * as lessonsActions from '../../actions/LessonsActions';
+import { loadLessons } from '../../actions';
 
 import '../../assets/css/mystyle.css';
 import '../../assets/css/helper.css';
@@ -18,30 +18,33 @@ const css = `.content {padding-left:10px}`;
 
 class HomePage extends React.Component {
   constructor(props, context) {
-      super(props, context);
+    super(props, context);
+  }
+  componentDidMount() {
+    this.props.loadLessons()
   }
   render() {
+    const {lessons} = this.props;
     return (
-      <div className='home'>    
-            <MainHeader></MainHeader>
-            <NavScroll></NavScroll>
-            <HomePageHeader lessons={this.props.lessons}></HomePageHeader>
-            <HomePageLessonsGrid lessons={this.props.lessons}></HomePageLessonsGrid>
-            <MainFooter></MainFooter>
-      </div>       
-       );
-      }
+      <div className='home'>
+        <MainHeader></MainHeader>
+        <NavScroll></NavScroll>
+        <HomePageHeader lessons={lessons}></HomePageHeader>
+        <HomePageLessonsGrid lessons={lessons}></HomePageLessonsGrid>
+      </div>
+    );
   }
-function mapStateToProps(state, ownProps) {
-  return {    
+}
+const mapStateToProps = (state) => {
+  return {
     lessons: state.lessons
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-      actions: bindActionCreators(lessonsActions, dispatch)
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//       actions: bindActionCreators(lessonsActions, dispatch)
+//   };
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, { loadLessons })(HomePage);

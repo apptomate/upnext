@@ -24,6 +24,6 @@ const LeftContent = () => {
     </div>
     );
 };
-module.exports = LeftContent;
+export default LeftContent;
 
 

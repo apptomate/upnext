@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import PublishLessonHeader from './PublishLessonHeader';
 import PublishLessonContent from './PublishLessonContent';
-import MainFooter from '../../common/footer/MainFooter';
 
 import '../../../assets/css/mystyle.css';
 import '../../../assets/css/helper.css';
@@ -17,10 +16,9 @@ const PublishLessonPage = () => {
      <div className="publishLesson">
        <PublishLessonHeader></PublishLessonHeader>
        <PublishLessonContent></PublishLessonContent>
-       <MainFooter></MainFooter>
     </div>
     );
 };
-module.exports = PublishLessonPage;
+export default PublishLessonPage;
 
 

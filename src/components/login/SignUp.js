@@ -49,6 +49,6 @@ const SignUp = () => {
                             </div>
     );
 };
-module.exports = SignUp;
+export default SignUp;
 
 

@@ -37,6 +37,6 @@ const LoginPage = () => {
     </div>
     );
 };
-module.exports = LoginPage;
+export default LoginPage;
 
 

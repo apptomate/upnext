@@ -12,4 +12,4 @@ const NavScroll = () => {
   );
 }
 
-module.exports = NavScroll;
+export default NavScroll;

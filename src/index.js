@@ -4,7 +4,7 @@ import {render} from 'react-dom';
 import WebFont from 'webfontloader';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
-import {loadLessons} from './actions/LessonsActions';
+// import {loadLessons} from './actions/';
 import { BrowserRouter, Link } from 'react-router-dom';
 import App from './components/App';
 
@@ -17,7 +17,7 @@ import '../node_modules/jquery-slimscroll/jquery.slimscroll.min.js';
 const store = configureStore();
 
 // Dispatch actions to load initial state.
-store.dispatch(loadLessons());
+// store.dispatch(loadLessons());
 
 
 WebFont.load({

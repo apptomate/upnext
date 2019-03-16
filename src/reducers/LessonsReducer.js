@@ -1,11 +1,10 @@
 import * as types from '../actions/actionTypes';
-import initialState from './initialState';
-import { debug } from 'util';
+import {lessonsInitials} from './initialState';
 
-export default function lessons(state = initialState.lessons, action) {
+export default function lessons(state = lessonsInitials, action) {
   switch (action.type) {
     case types.LOAD_LESSONS_LIST:
-      return action.lessons;
+      return action.payload;
     default:
       return state;
   }

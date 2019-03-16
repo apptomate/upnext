@@ -44,6 +44,6 @@ const HomePageHeader = (props) => {
     </main>
   );
 }
-module.exports = HomePageHeader;
+export default HomePageHeader;
 
 

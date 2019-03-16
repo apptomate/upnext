@@ -151,6 +151,6 @@ const CreateQuizContent = () => {
         </div>
     );
 };
-module.exports = CreateQuizContent;
+export default CreateQuizContent;
 
 

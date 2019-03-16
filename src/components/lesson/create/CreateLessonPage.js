@@ -1,10 +1,6 @@
 import React, { PropTypes } from 'react';
 import CreateLessonHeader from './CreateLessonHeader';
 import CreateLessonContent from './CreateLessonContent';
-import MainFooter from '../../common/footer/MainFooter';
-import * as managelessonsActions from '../../../actions/LessonsActions';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import '../../../assets/css/mystyle.css';
 import '../../../assets/css/helper.css';
@@ -22,9 +18,8 @@ class CreateLessonPage extends React.Component {
   render() {
     return (
      <div className="createLesson">
-       <CreateLessonHeader props={this.props}></CreateLessonHeader>
+       <CreateLessonHeader {...this.props}></CreateLessonHeader>
        <CreateLessonContent {...this.props}></CreateLessonContent>
-       <MainFooter></MainFooter>
     </div>
     )
   }
