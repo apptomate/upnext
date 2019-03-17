@@ -41,10 +41,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//       actions: bindActionCreators(lessonsActions, dispatch)
-//   };
-// }
-
 export default connect(mapStateToProps, { loadLessons })(HomePage);

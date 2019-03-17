@@ -4,24 +4,26 @@ import request from 'superagent';
 import { alertInitials } from '../reducers/initialState';
 // var URLSearchParams = require('url-search-params');
 
-export function loadLessonsListSuccess(lessons) {
-  return { type: types.LOAD_LESSONS_LIST, payload: lessons }
+export function loadLessonsListSuccess(payload) {
+  return { type: types.LOAD_LESSONS_LIST, payload }
 }
 
-export function addLessonSuccess(lesson) {
-  return { type: types.ADD_LESSON_SUCCESS, payload: lesson }
+export function addLessonSuccess(payload) {
+  return { type: types.ADD_LESSON_SUCCESS, payload }
 }
 
-export function editLessonSuccess(lesson) {
-  return { type: types.EDIT_LESSON_SUCCESS, payload: lesson }
+export function editLessonSuccess(payload) {
+  return { type: types.EDIT_LESSON_SUCCESS, payload }
 }
-export function clearAddLessonValues(lesson) {
+export function clearAddLessonValues() {
   return { type: types.CLEAR_ADD_LESSON_VALUES }
 }
-export function deleteLessonSuccess(lesson) {
-  return { type: types.DELETE_LESSON_SUCCESS, lesson }
+export function deleteLessonSuccess(payload) {
+  return { type: types.DELETE_LESSON_SUCCESS, payload }
 }
-
+export function createSlideRequestSuccess(payload) {
+  return { type: types.CREATE_SLIDE_REQUEST_SUCCESS, payload }
+}
 
 export function AlertError(message) {
   if (message) {
@@ -50,6 +52,34 @@ export function loadLessons() {
   };
 }
 
+export function createSlideRequest(params) {
+
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides';
+    request.post(apiURL)
+      .set('Content-Type', 'application/json')
+      .send(params).then(res => {
+        // dispatch( (res.body.data));
+        console.error(res.body.data)
+      })
+  }
+}
+
+export function deleteSlideRequest(slideHash) {
+
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides/' + slideHash;
+    request.delete(apiURL)
+      .set('Content-Type', 'application/json')
+      .then(res => {
+        // dispatch( (res.body.data));
+        AlertError(`Slide Deleted`)
+        console.error('slide deleted', res.body.data)
+      })
+  }
+}
+
+// /rest/admin/v1/slides/{slideHash}/slide-sections
 export function addLesson(lessoninfo) {
   console.warn('----------->  addlesson', lessoninfo)
   return dispatch => {
@@ -59,10 +89,15 @@ export function addLesson(lessoninfo) {
       .send(lessoninfo.lesson).then(res => {
         AlertInfo(`Lesson - ${res.body.data.title || ''}  Created!`)
         dispatch(addLessonSuccess(res.body.data));
+        dispatch(createSlideRequestSuccess({
+          "lessonHash": res.body.data.hash,
+          "layout": "TEXT",
+          "displayOrder": 1
+        }))
         return res.body.data.hash;
       })
       .catch(error => {
-        AlertError("Unexpected Error - Try again")
+        // AlertError("Unexpected Error - Try again")
         console.log(error);
       });
   };

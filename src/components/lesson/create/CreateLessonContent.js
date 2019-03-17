@@ -1,22 +1,52 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 var courseImg = require('../../../../src/assets/images/study.jpg');
 import { connect } from 'react-redux';
-import { addLesson, editLesson, clearAddLessonValues } from '../../../actions/';
-import Alert from 'react-s-alert';
+import { addLesson, editLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest } from '../../../actions/';
 
-var currentProps;
-class CreateLessonContent extends React.Component {  
+class CreateLessonContent extends Component {
   constructor(props) {
     super(props)
-    this.state = { blureffect: true }
+    this.state = { blurEffect: true, slides: [], currentSlide: { layout: 'TEXT', displayOrder: 1 } }
     this.handleTitleOnblur = this.handleTitleOnblur.bind(this)
+    this.handleSlideInputs = this.handleSlideInputs.bind(this)
+    this.handleAddSlideButton = this.handleAddSlideButton.bind(this)
     this.props.clearAddLessonValues()
   }
+
+  loadSlide(id = undefined) {
+    const { currentSlide, slides } = this.state
+    let inits = { layout: 'TEXT', displayOrder: currentSlide.displayOrder + 1 };
+    if (id !== undefined) {
+      inits = slides.find(slide => slide.displayOrder === id)
+      if (!inits) {
+        inits = currentSlide
+      }
+    }
+    this.setState({ currentSlide: inits })
+  }
+
+  handleSlideInputs(e) {
+    let name = e.target.name;
+    let value = e.target.value;
+    this.setState(({ currentSlide }) => ({ currentSlide: { ...currentSlide, [name]: value } }))
+  }
+  handleDeleteSlideButton(slideHash){
+    let flag = window.confirm("Are you sure to delete this slide")
+    if(flag){
+      this.props.deleteSlideRequest(slideHash);
+    }
+  }
+  handleAddSlideButton() {
+    let { currentSlide, slides } = this.state;
+    slides.push(currentSlide);
+    this.loadSlide();
+    this.setState({ slides: [...slides] })
+  }
+
   handleTitleOnblur(e) {
     const title = e.target.value
-    console.warn(title)
     if (title.length == 0) {
-      this.setState({ blureffect: true });
+      this.setState({ blurEffect: true });
       return
     }
 
@@ -24,12 +54,15 @@ class CreateLessonContent extends React.Component {
     if (!this.props.hash) {               // adding new lesson if no hash available
       this.props.addLesson(lessoninfo);
     }
-    else if(title != this.props.title) {   // avoiding update if title has no change
+    else if (title != this.props.title) {   // avoiding update if title has no change
       this.props.editLesson(lessoninfo);
     }
-    this.setState({ blureffect: false });
+    this.setState({ blurEffect: false });
   }
- render() {
+  render() {
+    console.log(this.name || this.constructor.name, this.state, this.props)
+    let { currentSlide, slides } = this.state;
+    let totalSlides = slides.length;
     return (
       <div>
         <div className="container">
@@ -60,27 +93,24 @@ class CreateLessonContent extends React.Component {
             </div>
           </div>
         </div>
-        <div className={`lesson-slides-content container-fluid bg-light p-t-50 p-b-50 ${this.state.blureffect ? "blur-effect" : ""}`}>
+        <div className={`lesson-slides-content container-fluid bg-light p-t-50 p-b-50 ${this.state.blurEffect ? "blur-effect" : ""}`}>
           <div className="row">
             <div className="col-lg-2">
               <ul className="sliderss mt-4">
-                <li>
-                  <img src={courseImg} className="w-100" alt=""></img>
-                </li>
-                <li>
-                  <img src={courseImg} className="w-100" alt=""></img>
-                </li>
+                {slides.map(slide => <li onClick={() => this.loadSlide(slide.displayOrder)} >
+                  <img src={courseImg} className="w-100" alt={slide.header}></img>
+                </li>)}
               </ul>
             </div>
             <div className="col-lg-8">
-              <h6>Slide 1 of 1</h6>
+              <h6>Slide {currentSlide.displayOrder} of {totalSlides}</h6>
               <div className="p-5 bg-white box-shadow mb-5 relative">
-                <form action="" className="lesson-form">
+                <form className="lesson-form">
                   <div className="form-group">
-                    <input type="text" className="form-control pl-4 pr-4 pt-5 pb-5" placeholder="Add a header"></input>
+                    <input name="header" type="text" value={currentSlide.header || ''} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-5 pb-5" placeholder="Add a header"></input>
                   </div>
                   <div className="form-group mb-0">
-                    <textarea className="form-control pl-4 pr-4 pt-4 pb-5" rows="10" placeholder="Enter body text"></textarea>
+                    <textarea name="body" value={currentSlide.body || ''} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-4 pb-5" rows="10" placeholder="Enter body text"></textarea>
                   </div>
                 </form>
                 <div className="addslide p-3 bg-white box-shadow f-s-12 text-center">
@@ -115,11 +145,11 @@ class CreateLessonContent extends React.Component {
               </div>
               <div className="row">
                 <div className="col">
-                  <button type="button" className="btn btn-dark f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2">
+                  <button type="button" onClick={() => this.handleDeleteSlideButton(currentSlide.hash)} className="btn btn-dark f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2">
                     <i className="far fa-trash-alt m-r-5"></i> DELETE THIS SLIDE</button>
                 </div>
                 <div className="col text-right">
-                  <button type="button" className="btn btn-primary f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2">
+                  <button type="button" onClick={this.handleAddSlideButton} className="btn btn-primary f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2">
                     <i className="fas fa-plus m-r-5"></i> ADD NEXT SLIDE</button>
                 </div>
               </div>
@@ -192,10 +222,17 @@ class CreateLessonContent extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    title: state.addLessons.title || '',
-    hash: state.addLessons.hash || null
+    title: state.addLessons.title,
+    hash: state.addLessons.hash,
+    currentSlide: state.addLessons.currentSlide
   }
 }
-export default connect(mapStateToProps, { addLesson, editLesson, clearAddLessonValues })(CreateLessonContent);
+export default connect(mapStateToProps, {
+  addLesson,
+  editLesson,
+  clearAddLessonValues,
+  createSlideRequest,
+  deleteSlideRequest
+})(CreateLessonContent);
 
 

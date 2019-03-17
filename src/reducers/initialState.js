@@ -8,7 +8,9 @@ export const lessonsInitials = {
 
 export const addLessonInitials = {
   title: '',
-  hash: null
+  hash: null,
+  slides:[],
+  currentSlide : {}
 }
 
 export const alertInitials = {
