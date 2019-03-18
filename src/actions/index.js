@@ -122,14 +122,11 @@ export function editLesson(lessoninfo) {
 }
 
 export function deleteLesson(lessonHashID) {
-  var apiURL = 'https://admin.vetti.co/rest/admin/v1/lessons/' + lessonHashID + '/deactivate';
+  var apiURL = '/rest/admin/v1/lessons/' + lessonHashID + '/deactivate';
   return dispatch => {
-    request.post(apiURL).end((err, res) => {
-      if (err) {
-        throw (err);
-      }
-      const response = JSON.parse(res.text);
-      dispatch(deleteLessonSuccess(response));
+    request.post(apiURL).then((res) => {
+      AlertError(`Lesson deleted`)
+      dispatch(loadLessons())
       return;
     });
   };

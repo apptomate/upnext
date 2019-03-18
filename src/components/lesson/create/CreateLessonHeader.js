@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link,Redirect  } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import Alert from 'react-s-alert';
 // import { DEFAULT_ECDH_CURVE } from 'tls';
 
 
@@ -24,7 +23,6 @@ class CreateLessonHeader extends React.Component {
     render() {
         return (
             <div>
-                <Alert stack={{ limit: 2 }} />
                 <main role="main" className="fixed-top">
                     <div className="container-fluid create_less bg-light nav-scroller">
                         <ul className="row fheader nav lh-60 text-dark text-left">
