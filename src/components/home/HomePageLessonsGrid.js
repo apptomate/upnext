@@ -1,11 +1,13 @@
 import React, { PropTypes, Fragment } from 'react';
 import { Link } from 'react-router-dom'
 import shortid from 'shortid';
-
+import { deleteLesson } from '../../actions'
 var courseImg = require('../../../src/assets/images/study.jpg');
+import {connect} from 'react-redux';
 
 const HomePageLessonsGrid = (props) => {
-  const { lessons } = props;
+  console.log('HomePageLessonsGrid', props)
+  const { lessons, deleteLesson } = props;
   const listCollection = [];
   var listrow = [];
   lessons.data.map((value, index) => {    
@@ -19,7 +21,7 @@ const HomePageLessonsGrid = (props) => {
   return (
     <ul className="container less_grid">      
         {listCollection.map((value) => {
-          return renderLessonsList(value || []) 
+          return renderLessonsList(value || [], deleteLesson) 
         })}      
       <li className="row" >
         <button type="button" className="btn btn-light shadow mx-auto">Load More...</button>
@@ -28,7 +30,7 @@ const HomePageLessonsGrid = (props) => {
   );
 }
 
-const renderLessonsList = (lessons) => {
+const renderLessonsList = (lessons, deleteLesson) => {
 
   return (
     <li className="row" key={shortid.generate()}>
@@ -55,8 +57,8 @@ const renderLessonsList = (lessons) => {
                             <i className="far fa-edit"></i> Edit</a>
                         </li>
                         <li className="f-s-12">
-                          <a href="#">
-                            <i className="far fa-trash-alt"></i> Delete</a>
+                          <button onClick={()=> deleteLesson(lesson.hash)  }>
+                            <i className="far fa-trash-alt"></i> Delete</button>
                         </li>
                       </ul>
                     </div>
@@ -70,6 +72,5 @@ const renderLessonsList = (lessons) => {
   )
 };
 
-export default HomePageLessonsGrid;
-
+export default connect(null, {deleteLesson} )(HomePageLessonsGrid);
 
