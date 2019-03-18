@@ -20,7 +20,7 @@ webpack(webpackConfig).run((err, stats) => {
   if (jsonStats.hasErrors) {
     return jsonStats.errors.map(error => console.log(error.red));
   }
-
+ 
   if (jsonStats.hasWarnings) {
     console.log('Webpack generated the following warnings: '.bold.yellow);
     jsonStats.warnings.map(warning => console.log(warning.yellow));

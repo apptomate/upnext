@@ -4,7 +4,8 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'), //This global makes sure React is built in prod mode. https://facebook.github.io/react/downloads.html
-  __DEV__: false // potentially useful for feature flags. More info: https://github.com/petehunt/webpack-howto#6-feature-flags
+  __DEV__: false, // potentially useful for feature flags. More info: https://github.com/petehunt/webpack-howto#6-feature-flags
+  API_BASE_URL : JSON.stringify('https://admin.vetti.co/rest')
 };
 
 export default {
@@ -27,9 +28,6 @@ export default {
     new ExtractTextPlugin('styles.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
-    new webpack.DefinePlugin({
-      BASENAME: JSON.stringify("/UpNext/")
-    }),
   ],
   module: {
     loaders: [

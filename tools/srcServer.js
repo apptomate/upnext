@@ -11,6 +11,7 @@ const port = 3000;
 const app = express();
 const compiler = webpack(config);
 
+process.env.NODE_ENV = 'development'; 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath

@@ -1,6 +1,12 @@
 import webpack from 'webpack';
 import path from 'path';
 
+const GLOBALS = {
+  'process.env.NODE_ENV': JSON.stringify('development'), //This global makes sure React is built in prod mode. https://facebook.github.io/react/downloads.html
+  __DEV__: false, // potentially useful for feature flags. More info: https://github.com/petehunt/webpack-howto#6-feature-flags
+  API_BASE_URL : JSON.stringify('/rest')
+};
+
 export default {
   debug: true,
   devtool: 'cheap-module-eval-source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
@@ -20,11 +26,9 @@ export default {
     contentBase: './src'
   },
   plugins: [
-    new webpack.DefinePlugin({
-      BASENAME: JSON.stringify("/UpNext/")
-    }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),    
+    new webpack.DefinePlugin(GLOBALS),
   ],
   module: {
     loaders: [

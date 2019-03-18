@@ -41,7 +41,8 @@ export function AlertInfo(message) {
 
 export function loadLessons() {
   return dispatch => {
-    request.get('/rest/admin/v1/lessons').end((err, res) => {
+    var apiURL = API_BASE_URL + '/admin/v1/lessons';
+    request.get(apiURL).end((err, res) => {
       if (err) {
         throw (err);
       }
@@ -55,7 +56,7 @@ export function loadLessons() {
 export function createSlideRequest(params) {
 
   return dispatch => {
-    var apiURL = '/rest/admin/v1/slides';
+    var apiURL = API_BASE_URL + '/admin/v1/slides';
     request.post(apiURL)
       .set('Content-Type', 'application/json')
       .send(params).then(res => {
@@ -68,7 +69,7 @@ export function createSlideRequest(params) {
 export function deleteSlideRequest(slideHash) {
 
   return dispatch => {
-    var apiURL = '/rest/admin/v1/slides/' + slideHash;
+    var apiURL = API_BASE_URL + '/admin/v1/slides/' + slideHash;
     request.delete(apiURL)
       .set('Content-Type', 'application/json')
       .then(res => {
@@ -83,7 +84,7 @@ export function deleteSlideRequest(slideHash) {
 export function addLesson(lessoninfo) {
   console.warn('----------->  addlesson', lessoninfo)
   return dispatch => {
-    var apiURL = '/rest/admin/v1/lessons';
+    var apiURL = API_BASE_URL + '/admin/v1/lessons';
     request.post(apiURL)
       .set('Content-Type', 'application/json')
       .send(lessoninfo.lesson).then(res => {
@@ -106,7 +107,7 @@ export function addLesson(lessoninfo) {
 export function editLesson(lessoninfo) {
   console.warn('----------->  editlesson', lessoninfo)
   return dispatch => {
-    var apiURL = '/rest/admin/v1/lessons/' + lessoninfo.lesson.hash;
+    var apiURL = API_BASE_URL + '/admin/v1/lessons/' + lessoninfo.lesson.hash;
     request.patch(apiURL)
       .set('Content-Type', 'application/json')
       .send(lessoninfo.lesson).then(res => {
@@ -122,7 +123,7 @@ export function editLesson(lessoninfo) {
 }
 
 export function deleteLesson(lessonHashID) {
-  var apiURL = '/rest/admin/v1/lessons/' + lessonHashID + '/deactivate';
+  var apiURL = API_BASE_URL + '/admin/v1/lessons/' + lessonHashID + '/deactivate';
   return dispatch => {
     request.post(apiURL).then((res) => {
       AlertError(`Lesson deleted`)
