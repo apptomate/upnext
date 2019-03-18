@@ -40,7 +40,7 @@ ul.less_grid li { margin-bottom: 30px; }
 .lesson_grid:hover .study-overlay div { top: 45px; }
 ul.lesson_grid_list { margin: 0; padding: 0; list-style-type: none; }
 ul.lesson_grid_list li { display: inline; margin-right: 15px; }
-ul.lesson_grid_list li a { color: #FFF; text-decoration: none; }
+ul.lesson_grid_list li a, ul.lesson_grid_list li button  { color: #FFF; text-decoration: none; background-color: transparent;}
 ul.lesson_grid_list li a i{ margin-right: 5px; }
 /*social links*/
 .social-links a { margin: 0 5px; }
