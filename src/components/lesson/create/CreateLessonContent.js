@@ -1,46 +1,89 @@
 import React, { PropTypes, Component } from 'react';
 var courseImg = require('../../../../src/assets/images/study.jpg');
 import { connect } from 'react-redux';
-import { addLesson, editLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest } from '../../../actions/';
+import { addLesson, editLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, AlertError } from '../../../actions/';
+import shortid from 'shortid';
 
 class CreateLessonContent extends Component {
   constructor(props) {
     super(props)
-    this.state = { blurEffect: true, slides: [], currentSlide: { layout: 'TEXT', displayOrder: 1 } }
+    this.state = { blurEffect: true, slides: [], currentSlide: { layout: 'TEXT', displayOrder: 1, content: {} } }
+    this.loadSlide = this.loadSlide.bind(this)
     this.handleTitleOnblur = this.handleTitleOnblur.bind(this)
     this.handleSlideInputs = this.handleSlideInputs.bind(this)
+    this.handleSlideInputBlur = this.handleSlideInputBlur.bind(this)
     this.handleAddSlideButton = this.handleAddSlideButton.bind(this)
     this.props.clearAddLessonValues()
   }
 
-  loadSlide(id = undefined) {
-    const { currentSlide, slides } = this.state
-    let inits = { layout: 'TEXT', displayOrder: currentSlide.displayOrder + 1 };
-    if (id !== undefined) {
-      inits = slides.find(slide => slide.displayOrder === id)
-      if (!inits) {
-        inits = currentSlide
-      }
-    }
-    this.setState({ currentSlide: inits })
-  }
+  loadSlide(loadHash = null) {
+    let { hash, slides, createSlideRequest } = this.props;
 
+    if (loadHash === null) {
+      let maxDisplayOrder = slides.reduce((acc, { displayOrder }) => (displayOrder > acc ? displayOrder : acc), 0)
+      createSlideRequest({
+        "lessonHash": hash,
+        "layout": "TEXT",
+        "displayOrder": maxDisplayOrder + 1
+      })
+      return;
+    }
+
+    let slide = slides.find(slide => slide.hash === loadHash)
+    slide['content'] = (slide.content.length > 1 && typeof slide.content === 'string')
+      ? JSON.parse(slide.content)
+      : slide.content
+    this.setState({ currentSlideHash: slide.hash, currentSlideUpdateHash: slide.updateHash, currentSlide: { ...slide } })
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.currentSlideHash !== prevProps.currentSlideHash) {
+      this.loadSlide(this.props.currentSlideHash)
+    }
+  }
+  handleSlideInputBlur() {
+    const { currentSlide } = this.state;
+    const { slides, currentSlideHash, currentSlideUpdateHash } = this.props;
+    
+    let params = {
+      type: currentSlide.layout,
+      content: JSON.stringify(currentSlide.content),
+      displayOrder: currentSlide.displayOrder
+    }
+    // let slide = slides.find(slide => slide.hash === currentSlideHash)
+    // console.error(slide)
+    // console.error(JSON.stringify(slide.content,null, '\t'))
+    // console.error(JSON.stringify(currentSlide.content))
+    // if(JSON.stringify(slide.content).toString() === JSON.stringify(currentSlide.content)){
+    //   return;  // avoiding updates for no content change
+    // }
+    // console.error('varudhu')
+    if (!currentSlideUpdateHash) {
+      this.props.slideSectionCreateRequest(currentSlideHash, params)
+      return;
+    } else {
+      this.props.slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHash, params)
+      return;
+    }
+    // this.props.slideSectionUpdateRequest(currentSlideUpdateHash, params)
+  }
   handleSlideInputs(e) {
     let name = e.target.name;
     let value = e.target.value;
-    this.setState(({ currentSlide }) => ({ currentSlide: { ...currentSlide, [name]: value } }))
+    this.setState(({ currentSlide }) => ({ currentSlide: { ...currentSlide, content: { ...currentSlide.content, [name]: value } } }))
   }
-  handleDeleteSlideButton(slideHash){
-    let flag = window.confirm("Are you sure to delete this slide")
-    if(flag){
-      this.props.deleteSlideRequest(slideHash);
+  handleDeleteSlideButton(slideHash) {
+    const { deleteSlideRequest, slides } = this.props;
+    if (slides.length > 1) {
+      let flag = window.confirm("Are you sure to delete this slide")
+      if (flag) {
+        deleteSlideRequest(slideHash)
+      }
+    } else {
+      AlertError('Failed - Lesson should have atleast one slide ');
     }
   }
   handleAddSlideButton() {
-    let { currentSlide, slides } = this.state;
-    slides.push(currentSlide);
     this.loadSlide();
-    this.setState({ slides: [...slides] })
   }
 
   handleTitleOnblur(e) {
@@ -60,9 +103,11 @@ class CreateLessonContent extends Component {
     this.setState({ blurEffect: false });
   }
   render() {
-    console.log(this.name || this.constructor.name, this.state, this.props)
-    let { currentSlide, slides } = this.state;
+    // console.log(this.name || this.constructor.name, this.state, this.props)
+    let { currentSlide, currentSlide: { content } } = this.state;
+    let { currentSlideHash, currentSlideUpdateHash, slides } = this.props;
     let totalSlides = slides.length;
+    // console.warn(content)
     return (
       <div>
         <div className="container">
@@ -97,8 +142,8 @@ class CreateLessonContent extends Component {
           <div className="row">
             <div className="col-lg-2">
               <ul className="sliderss mt-4">
-                {slides.map(slide => <li onClick={() => this.loadSlide(slide.displayOrder)} >
-                  <img src={courseImg} className="w-100" alt={slide.header}></img>
+                {slides.map(slide => <li key={shortid.generate()} onClick={() => this.loadSlide(slide.hash)} >
+                  <img key={shortid.generate()} src={`https://dummyimage.com/600x400/ddd/${slide.hash === currentSlide.hash ? '07b' : '000'}&text=` + (slide.displayOrder || '')} className="w-100" alt={slide.header}></img>
                 </li>)}
               </ul>
             </div>
@@ -107,10 +152,10 @@ class CreateLessonContent extends Component {
               <div className="p-5 bg-white box-shadow mb-5 relative">
                 <form className="lesson-form">
                   <div className="form-group">
-                    <input name="header" type="text" value={currentSlide.header || ''} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-5 pb-5" placeholder="Add a header"></input>
+                    <input name="header" type="text" value={content.header || ''} onBlur={this.handleSlideInputBlur} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-5 pb-5" placeholder="Add a header"></input>
                   </div>
                   <div className="form-group mb-0">
-                    <textarea name="body" value={currentSlide.body || ''} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-4 pb-5" rows="10" placeholder="Enter body text"></textarea>
+                    <textarea name="body" value={content.body || ''} onBlur={this.handleSlideInputBlur} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-4 pb-5" rows="10" placeholder="Enter body text"></textarea>
                   </div>
                 </form>
                 <div className="addslide p-3 bg-white box-shadow f-s-12 text-center">
@@ -145,7 +190,7 @@ class CreateLessonContent extends Component {
               </div>
               <div className="row">
                 <div className="col">
-                  <button type="button" onClick={() => this.handleDeleteSlideButton(currentSlide.hash)} className="btn btn-dark f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2">
+                  <button type="button" onClick={() => this.handleDeleteSlideButton(currentSlideHash)} className="btn btn-dark f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2">
                     <i className="far fa-trash-alt m-r-5"></i> DELETE THIS SLIDE</button>
                 </div>
                 <div className="col text-right">
@@ -224,7 +269,10 @@ const mapStateToProps = state => {
   return {
     title: state.addLessons.title,
     hash: state.addLessons.hash,
-    currentSlide: state.addLessons.currentSlide
+    currentSlide: state.addLessons.currentSlide,
+    currentSlideHash: state.addLessons.currentSlideHash,
+    currentSlideUpdateHash: state.addLessons.currentSlideUpdateHash,
+    slides: state.addLessons.slides
   }
 }
 export default connect(mapStateToProps, {
@@ -232,7 +280,9 @@ export default connect(mapStateToProps, {
   editLesson,
   clearAddLessonValues,
   createSlideRequest,
-  deleteSlideRequest
+  deleteSlideRequest,
+  slideSectionCreateRequest,
+  slideSectionUpdateRequest
 })(CreateLessonContent);
 
 
