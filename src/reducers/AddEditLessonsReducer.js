@@ -4,28 +4,39 @@ import { debug } from 'util';
 
 export default function addLessons(state = addLessonInitials, action) {
   const { type, payload } = action;
+  let updatedSlides, slide;
+  let newState = { ...state };
   switch (type) {
     case types.CLEAR_ADD_LESSON_VALUES:
       return addLessonInitials;
 
     case types.ADD_LESSON_SUCCESS:
-      return { ...state, ...payload };
+      return { ...newState, ...payload };
 
     case types.CREATE_SLIDE_REQUEST_SUCCESS:
-      let newState = { ...state };
       if (newState.slides.length === 0) {
-        newState = { ...newState, slides: [{ ...payload, content: '' }] }
+        return { ...newState,  slides: [{ ...payload, content: '' }], currentSlideHash: payload.hash || '' }
       }
-      return { ...newState, currentSlideHash: payload.hash || '' };
+      updatedSlides = [...newState.slides]
+      slide={ ...payload, content: '' }
+      updatedSlides.push(slide)
+      return { ...newState, slides: [...updatedSlides],currentSlideUpdateHash:'', currentSlideHash: payload.hash || '' };
 
     case types.SLIDE_SECTION_CREATE_REQUEST_SUCCESS:
-      let updatedSlides = state.slides.filter(slide => payload.hash !== slide.hash)
-      let slide = state.slides.find(slide => payload.hash === slide.hash)
-      slide = { ...slide, updateHash: payload.updateHash }
+      updatedSlides = newState.slides.filter(slide => payload.hash !== slide.hash)
+      slide = newState.slides.find(slide => payload.hash === slide.hash)
+      slide = { ...slide, content:payload.content, updateHash: payload.updateHash }
       updatedSlides.push(slide)
-      return { ...state, currentSlideUpdateHash: payload.updateHash, slides: updatedSlides }
-
+      return { ...newState, currentSlideUpdateHash: payload.updateHash, slides: updatedSlides }
+      
+    case types.SLIDE_SECTION_UPDATE_REQUEST_SUCCESS:
+      updatedSlides = newState.slides.filter(slide => payload.hash !== slide.hash)
+      slide = newState.slides.find(slide => payload.hash === slide.hash)
+      slide = { ...slide, content:payload.content, updateHash: payload.updateHash }
+      updatedSlides.push(slide)
+      return { ...newState, currentSlideUpdateHash: payload.updateHash, slides: updatedSlides }
+    // return state
     default:
-      return state;
+      return newState;
   }
 }

@@ -27,6 +27,9 @@ export function createSlideRequestSuccess(payload) {
 export function slideSectionCreateRequestSuccess(payload) {
   return { type: types.SLIDE_SECTION_CREATE_REQUEST_SUCCESS, payload }
 }
+export function slideSectionUpdateRequestSuccess(payload) {
+  return { type: types.SLIDE_SECTION_UPDATE_REQUEST_SUCCESS, payload }
+}
 
 export function AlertError(message) {
   if (message) {
@@ -62,7 +65,7 @@ export function createSlideRequest(params) {
     request.post(apiURL)
       .set('Content-Type', 'application/json')
       .send(params).then(res => {
-        dispatch( createSlideRequestSuccess(res.body.data));
+        dispatch(createSlideRequestSuccess(res.body.data));
       })
   }
 }
@@ -75,12 +78,15 @@ export function deleteSlideRequest(slideHash) {
       .set('Content-Type', 'application/json')
       .then(res => {
         // dispatch( (res.body.data));
-        AlertError(`Slide Deleted`)
+        // AlertError(`Slide Deleted`)
         console.error('slide deleted', res.body.data)
-      })
+      }).catch(e=>{
+        console.log(e);
+        // AlertError('Error - Slide not deleted')
+      });
   }
 }
-export function slideSectionCreateRequest(hash, params){
+export function slideSectionCreateRequest(hash, params) {
   console.log(hash, params)
   // return;
   return dispatch => {
@@ -90,10 +96,15 @@ export function slideSectionCreateRequest(hash, params){
       .send(params).then(res => {
         console.log('jaksjdhflajsdljfashldkj', res)
         let data = {
-          hash : hash,
-          updateHash : res.body.data.hash
+          hash: hash,
+          updateHash: res.body.data.hash,
+          content: res.body.data.content
         }
         dispatch(slideSectionCreateRequestSuccess(data))
+        AlertInfo("Slide Updated")
+      }).catch(e => {
+        console.log(e)
+        AlertError('Error occured')
       })
   }
 }
@@ -146,6 +157,31 @@ export function deleteLesson(lessonHashID) {
       AlertError(`Lesson deleted`)
       dispatch(loadLessons())
       return;
+    }).catch(e=>{
+      console.log(e);
+      AlertError('Error - Slide not deleted')
     });
   };
+}
+///rest/admin/v1/slides/{slideHash}/slide-sections
+export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHash, params) {
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides/' + currentSlideHash + '/slide-sections/' + currentSlideUpdateHash;
+    console.log(currentSlideHash, currentSlideUpdateHash, params, apiURL)
+    request.patch(apiURL)
+      .set('Content-Type', 'application/json')
+      .send(params).then(res => {
+        console.log('jaksjdhflajsdljfashldkj', res)
+        let data = {
+          hash: currentSlideHash,
+          updateHash: res.body.data.hash,
+          content: res.body.data.content
+        }
+        dispatch(slideSectionUpdateRequestSuccess(data))
+        AlertInfo("Slide Updated")
+      }).catch(e => {
+        console.log(e)
+        AlertError('Error occurred')
+      })
+  }
 }
