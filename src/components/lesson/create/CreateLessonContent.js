@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 var courseImg = require('../../../../src/assets/images/study.jpg');
 import { connect } from 'react-redux';
-import { addLesson, editLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, AlertError } from '../../../actions/';
+import { addLesson, editLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, changeCurrentSlideAction, slideSectionCreateRequest, slideSectionUpdateRequest, AlertError, sortByDisplayOrder } from '../../../actions/';
 import shortid from 'shortid';
 
 class CreateLessonContent extends Component {
@@ -106,6 +106,7 @@ class CreateLessonContent extends Component {
     // console.log(this.name || this.constructor.name, this.state, this.props)
     let { currentSlide, currentSlide: { content } } = this.state;
     let { currentSlideHash, currentSlideUpdateHash, slides } = this.props;
+    slides = sortByDisplayOrder(slides);
     let totalSlides = slides.length;
     // console.warn(content)
     return (
@@ -142,7 +143,7 @@ class CreateLessonContent extends Component {
           <div className="row">
             <div className="col-lg-2">
               <ul className="sliderss mt-4">
-                {slides.map(slide => <li key={shortid.generate()} onClick={() => this.loadSlide(slide.hash)} >
+                {slides.map(slide => <li key={shortid.generate()} onClick={() => this.props.changeCurrentSlideAction(slide.hash)} >
                   <img key={shortid.generate()} src={`https://dummyimage.com/600x400/ddd/${slide.hash === currentSlide.hash ? '07b' : '000'}&text=` + (slide.displayOrder || '')} className="w-100" alt={slide.header}></img>
                 </li>)}
               </ul>
@@ -282,7 +283,8 @@ export default connect(mapStateToProps, {
   createSlideRequest,
   deleteSlideRequest,
   slideSectionCreateRequest,
-  slideSectionUpdateRequest
+  slideSectionUpdateRequest,
+  changeCurrentSlideAction
 })(CreateLessonContent);
 
 

@@ -30,7 +30,12 @@ export function slideSectionCreateRequestSuccess(payload) {
 export function slideSectionUpdateRequestSuccess(payload) {
   return { type: types.SLIDE_SECTION_UPDATE_REQUEST_SUCCESS, payload }
 }
-
+export function changeCurrentSlideAction(hash) {
+  return {
+    type: types.CHANGE_CURRENT_SLIDE_ACTION,
+    payload: { hash }
+  }
+}
 export function AlertError(message) {
   if (message) {
     Alert.error(message, alertInitials);
@@ -81,12 +86,14 @@ export function deleteSlideRequest(slideHash) {
         // dispatch( (res.body.data));
         // AlertError(`Slide Deleted`)
         console.error('slide deleted', res.body.data)
-      }).catch(e=>{
+      }).catch(e => {
         console.log(e);
         // AlertError('Error - Slide not deleted')
       });
   }
 }
+
+
 export function slideSectionCreateRequest(hash, params) {
   console.log(hash, params)
   // return;
@@ -158,7 +165,7 @@ export function deleteLesson(lessonHashID) {
       AlertError(`Lesson deleted`)
       dispatch(loadLessons())
       return;
-    }).catch(e=>{
+    }).catch(e => {
       console.log(e);
       AlertError('Error - Slide not deleted')
     });
@@ -185,4 +192,8 @@ export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHa
         AlertError('Error occurred')
       })
   }
+}
+
+export function sortByDisplayOrder(slides){
+  return slides.sort((a, b) => a.displayOrder - b.displayOrder)
 }

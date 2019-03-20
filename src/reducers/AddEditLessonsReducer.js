@@ -15,24 +15,28 @@ export default function addLessons(state = addLessonInitials, action) {
 
     case types.CREATE_SLIDE_REQUEST_SUCCESS:
       if (newState.slides.length === 0) {
-        return { ...newState,  slides: [{ ...payload, content: '' }], currentSlideHash: payload.hash || '' }
+        return { ...newState, slides: [{ ...payload, content: '' }], currentSlideHash: payload.hash || '' }
       }
       updatedSlides = [...newState.slides]
-      slide={ ...payload, content: '' }
+      slide = { ...payload, content: '' }
       updatedSlides.push(slide)
-      return { ...newState, slides: [...updatedSlides],currentSlideUpdateHash:'', currentSlideHash: payload.hash || '' };
+      return { ...newState, slides: [...updatedSlides], currentSlideUpdateHash: '', currentSlideHash: payload.hash || '' };
+
+    case types.CHANGE_CURRENT_SLIDE_ACTION:
+      slide = newState.slides.find(slide => payload.hash === slide.hash)
+      return { ...newState, currentSlideHash: slide.hash, currentSlideUpdateHash: slide.updateHash }
 
     case types.SLIDE_SECTION_CREATE_REQUEST_SUCCESS:
       updatedSlides = newState.slides.filter(slide => payload.hash !== slide.hash)
       slide = newState.slides.find(slide => payload.hash === slide.hash)
-      slide = { ...slide, content:payload.content, updateHash: payload.updateHash }
+      slide = { ...slide, content: payload.content, updateHash: payload.updateHash }
       updatedSlides.push(slide)
       return { ...newState, currentSlideUpdateHash: payload.updateHash, slides: updatedSlides }
-      
+
     case types.SLIDE_SECTION_UPDATE_REQUEST_SUCCESS:
       updatedSlides = newState.slides.filter(slide => payload.hash !== slide.hash)
       slide = newState.slides.find(slide => payload.hash === slide.hash)
-      slide = { ...slide, content:payload.content, updateHash: payload.updateHash }
+      slide = { ...slide, content: payload.content, updateHash: payload.updateHash }
       updatedSlides.push(slide)
       return { ...newState, currentSlideUpdateHash: payload.updateHash, slides: updatedSlides }
     // return state
