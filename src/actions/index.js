@@ -31,6 +31,10 @@ export function slideSectionUpdateRequestSuccess(payload) {
   return { type: types.SLIDE_SECTION_UPDATE_REQUEST_SUCCESS, payload }
 }
 
+export function loadSlideSectionSuccess(payload){
+  return { type: types.LOAD_SLIDE_SECTION, payload }
+}
+
 export function AlertError(message) {
   if (message) {
     Alert.error(message, alertInitials);
@@ -57,63 +61,12 @@ export function loadLessons() {
     });
   };
 }
-
-export function createSlideRequest(params) {
-
+export function loadSlideSection(payload) {
   return dispatch => {
-    var apiURL = '/rest/admin/v1/slides';
-    request.post(apiURL)
-      .set('Content-Type', 'application/json')
-      .send(params).then(res => {
-        dispatch(createSlideRequestSuccess(res.body.data));
-      })
-  }
+      dispatch(loadSlideSectionSuccess(payload));
+  };
 }
 
-export function deleteSlideRequest(slideHash) {
-
-  return dispatch => {
-    var apiURL = '/rest/admin/v1/slides/' + slideHash;
-    request.delete(apiURL)
-      .set('Content-Type', 'application/json')
-      .then(res => {
-        // dispatch( (res.body.data));
-        // AlertError(`Slide Deleted`)
-        console.error('slide deleted', res.body.data)
-      }).catch(e => {
-        console.log(e);
-        // AlertError('Error - Slide not deleted')
-      });
-  }
-}
-export function slideSectionCreateRequest(hash, params) {
-  console.log(hash, params)
-  // return;
-  return dispatch => {
-    var apiURL = '/rest/admin/v1/slides/' + hash + '/slide-sections';
-    request.post(apiURL)
-      .set('Content-Type', 'application/json')
-      .send(params).then(res => {
-        console.log('slideSectionCreateRequestSuccess', res)
-        let payload = {          // preserving response for future use
-          slideHash: hash, // slide hash
-          sectionHash : res.body.data.hash,
-          data: {
-            hash: res.body.data.hash, //section hash
-            content: res.body.data.content,
-            type: res.body.data.type,
-          },
-          response: res
-        }
-        dispatch(slideSectionCreateRequestSuccess(payload))
-        AlertInfo("Slide Updated")
-      }).catch(eee => {
-        AlertError('Error occured')
-        console.log(eee)
-        throw eee
-      })
-  }
-}
 // /rest/admin/v1/slides/{slideHash}/slide-sections
 export function addLesson(lessoninfo) {
   console.warn('----------->  addlesson', lessoninfo)
@@ -169,6 +122,67 @@ export function deleteLesson(lessonHashID) {
     });
   };
 }
+
+
+export function createSlideRequest(params) {
+
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides';
+    request.post(apiURL)
+      .set('Content-Type', 'application/json')
+      .send(params).then(res => {
+        dispatch(createSlideRequestSuccess(res.body.data));
+      })
+  }
+}
+// export function findPreviousSlide(slides, displayOrder){
+//   let resultSlide = 0;
+// }
+export function deleteSlideRequest(slides, currentSlide) {
+
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides/' + currentSlide.hash;
+    request.delete(apiURL)
+      .set('Content-Type', 'application/json')
+      .then(res => {
+        // dispatch( (res.body.data));
+        // AlertError(`Slide Deleted`)
+        console.error('slide deleted', res.body.data)
+      }).catch(e => {
+        console.log(e);
+        // AlertError('Error - Slide not deleted')
+      });
+  }
+}
+export function slideSectionCreateRequest(hash, params) {
+  console.log(hash, params)
+  // return;
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides/' + hash + '/slide-sections';
+    request.post(apiURL)
+      .set('Content-Type', 'application/json')
+      .send(params).then(res => {
+        console.log('slideSectionCreateRequestSuccess', res)
+        let payload = {          // preserving response for future use
+          slideHash: hash, // slide hash
+          sectionHash : res.body.data.hash,
+          data: {
+            hash: res.body.data.hash, //section hash
+            content: res.body.data.content,
+            type: res.body.data.type,
+          },
+          response: res
+        }
+        dispatch(slideSectionCreateRequestSuccess(payload))
+        AlertInfo("Slide Updated")
+      }).catch(eee => {
+        AlertError('Error occured')
+        console.log(eee)
+        throw eee
+      })
+  }
+}
+
 ///rest/admin/v1/slides/{slideHash}/slide-sections
 export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHash, params) {
   console.log('slideSectionUpdateRequest',currentSlideHash, currentSlideUpdateHash, params )

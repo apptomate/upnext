@@ -4,7 +4,7 @@ import { debug } from 'util';
 
 export default function addLessons(state = addLessonInitials, action) {
   const { type, payload } = action;
-  let slide, updatedSlides, slideIndex, section, updatedSections, sectionIndex;
+  let slide = {}, updatedSlides = [], slideIndex = null, section = {}, updatedSections = [], sectionIndex = null;
   let newState = { ...state };
   switch (type) {
     case types.CLEAR_ADD_LESSON_VALUES:
@@ -34,12 +34,25 @@ export default function addLessons(state = addLessonInitials, action) {
       updatedSlides = newState.slides.filter(slide => payload.slideHash !== slide.hash)
       slide = newState.slides.find(slide => payload.slideHash === slide.hash)
       sectionIndex = slide.sections.findIndex(section => section.hash === payload.sectionHash)
-      if(sectionIndex !== -1){
+      if (sectionIndex !== -1) {
         slide.sections[sectionIndex] = payload.data
       }
       // slide.data
       updatedSlides.push(slide)
       return { ...newState, currentSlideSectionHash: payload.sectionHash, currentSlideHash: payload.slideHash, slides: updatedSlides }
+
+    case types.LOAD_SLIDE_SECTION:
+      let { currentSlideHash, currentSlideSectionHash } = newState
+      if (payload.slideHash) {
+        slide = newState.slides.find(slide => payload.slideHash === slide.hash)
+        section = slide.sections[0] || {}
+        // if (slide && slide.sections.length > 0) {
+          // section = newState.sections.find(section => payload.sectionHash === section.hash)
+        // }
+        currentSlideHash = slide.hash
+        currentSlideSectionHash = section.hash || ''
+      }
+      return { ...newState, currentSlideHash: currentSlideHash, currentSlideSectionHash: currentSlideSectionHash }
     // return state
     default:
       return newState;
