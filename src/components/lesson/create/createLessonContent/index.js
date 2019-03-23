@@ -1,9 +1,12 @@
 import React, { PropTypes, Component } from 'react';
-var courseImg = require('../../../../src/assets/images/study.jpg');
+var courseImg = require('../../../../../src/assets/images/study.jpg');
 import { connect } from 'react-redux';
-import { addLesson, editLesson, loadLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, loadSlideSection, AlertError } from '../../../actions/';
+import { addLesson, editLesson, loadLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, loadSlideSection, AlertError } from '../../../../actions/';
 import shortid from 'shortid';
-import { EDIT_LESSON_URI } from '../../../helpers/constants';
+import EditorOptions from './editorOptions';
+import SectionTypes from './SectionTypes';
+import SlideThumbnails from './slideThumbnails';
+// import { EDIT_LESSON_URI } from '../../../helpers/constants';
 
 class CreateLessonContent extends Component {
   constructor(props) {
@@ -184,11 +187,7 @@ class CreateLessonContent extends Component {
         <div className={`lesson-slides-content container-fluid bg-light p-t-50 p-b-50 ${this.state.blurEffect ? "blur-effect" : ""}`}>
           <div className="row">
             <div className="col-lg-2">
-              <ul className="sliderss mt-4">
-                {slides.map(slide => <li key={shortid.generate()} onClick={() => this.loadSlide(slide.hash)} >
-                  <img key={shortid.generate()} src={`https://dummyimage.com/600x400/ddd/${slide.hash === currentSlide.hash ? '07b' : '000'}&text=` + (slide.displayOrder || '')} className="w-100" alt={slide.header}></img>
-                </li>)}
-              </ul>
+              <SlideThumbnails slides = {slides} currentSlide ={currentSlide} onClickHandler={this.loadSlide}  />
             </div>
             <div className="col-lg-8">
               <h6>Slide {currentSlide.displayOrder} of {totalSlides}</h6>
@@ -201,35 +200,7 @@ class CreateLessonContent extends Component {
                     <textarea name="body" value={currentContent.body || ''} onBlur={this.handleSlideInputBlur} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-4 pb-5" rows="10" placeholder="Enter body text"></textarea>
                   </div>
                 </form>
-                <div className="addslide p-3 bg-white box-shadow f-s-12 text-center">
-                  <div className="row m-0">
-                    <div className="col-4 bg-light border">
-                      <p><i className="fas fa-font"></i></p>
-                      <p>Text</p>
-                    </div>
-                    <div className="col-4 bg-light border">
-                      <p><i className="fas fa-font"></i> +
-                  <i className="fas fa-image"></i></p>
-                      <p>Text + Image</p>
-                    </div>
-                    <div className="col-4 bg-light border">
-                      <p><i className="fas fa-image"></i></p>
-                      <p>Image</p>
-                    </div>
-                    <div className="col-4 bg-light border">
-                      <p>
-                        <i className="fas fa-video"></i>
-                      </p>
-                      <p>Video</p>
-                    </div>
-                    <div className="col-4 bg-light border">
-                      <p>
-                        <i className="fas fa-question-circle"></i>
-                      </p>
-                      <p>Question</p>
-                    </div>
-                  </div>
-                </div>
+                <SectionTypes />
               </div>
               <div className="row">
                 <div className="col">
@@ -242,65 +213,7 @@ class CreateLessonContent extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-lg-2">
-              <h6>Options</h6>
-              <div className="p-5 bg-white box-shadow">
-                <div className="row">
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-bold"></i>
-                  </div>
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-underline"></i>
-                  </div>
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-italic"></i>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-align-left"></i>
-                  </div>
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-align-center"></i>
-                  </div>
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-align-right"></i>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-list-ol"></i>
-                  </div>
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-list-ul"></i>
-                  </div>
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-link"></i>
-                  </div>
-                </div>
-                <div className="row m-b-10">
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-font fa-xs"></i>
-                  </div>
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-font fa-sm"></i>
-                  </div>
-                  <div className="col text-center p-1 border">
-                    <i className="fas fa-font fa-md"></i>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col text-center p-3 border bg-primary"></div>
-                  <div className="col text-center p-3 border bg-secondary"></div>
-                  <div className="col text-center p-3 border bg-success"></div>
-                </div>
-                <div className="row">
-                  <div className="col text-center p-3 border bg-danger"></div>
-                  <div className="col text-center p-3 border bg-warning"></div>
-                  <div className="col text-center p-3 border bg-info"></div>
-                </div>
-              </div>
-            </div>
+            <EditorOptions />
           </div>
         </div>
       </div>

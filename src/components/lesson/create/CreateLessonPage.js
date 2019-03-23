@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import CreateLessonHeader from './CreateLessonHeader';
-import CreateLessonContent from './CreateLessonContent';
+import CreateLessonContent from './createLessonContent';
 
 import '../../../assets/css/mystyle.css';
 import '../../../assets/css/helper.css';
