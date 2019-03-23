@@ -70,7 +70,7 @@ export function loadLesson(lessonHash, loadSlides) {
           dispatch(loadSlidesByLessonHash(lessonHash))
         }
       }).catch(e => {
-        console.log(e);
+        console.error(e);
         // AlertError('Error - Slide not deleted')
       });
   }
@@ -88,7 +88,7 @@ export function loadSlidesByLessonHash(lessonHash) {
         console.error('slides loaded', res.body.data)
         dispatch(loadSlidesSuccess(res.body.data));
       }).catch(e => {
-        console.log(e);
+        console.error(e);
         // AlertError('Error - Slide not deleted')
       });
   }
@@ -162,7 +162,7 @@ export function deleteLesson(lessonHashID) {
       dispatch(loadLessons())
       return;
     }).catch(e => {
-      console.log(e);
+      console.error(e);
       AlertError('Error - Slide not deleted')
     });
   };
@@ -183,24 +183,23 @@ export function createSlideRequest(params) {
 // export function findPreviousSlide(slides, displayOrder){
 //   let resultSlide = 0;
 // }
-export function deleteSlideRequest(slides, currentSlide) {
+export function deleteSlideRequest(currentSlide, data) {
 
   return dispatch => {
     var apiURL = '/rest/admin/v1/slides/' + currentSlide.hash;
     request.delete(apiURL)
       .set('Content-Type', 'application/json')
       .then(res => {
-        // dispatch( (res.body.data));
-        // AlertError(`Slide Deleted`)
-        console.error('slide deleted', res.body.data)
+        AlertError(`Slide Deleted`)
+        dispatch(loadSlidesByLessonHash(data.lessonHash))
       }).catch(e => {
-        console.log(e);
-        // AlertError('Error - Slide not deleted')
+        console.error(e);
+        AlertError('Error - Slide not deleted')
       });
   }
 }
 export function slideSectionCreateRequest(hash, params) {
-  console.log(hash, params)
+  // console.log(hash, params)
   // return;
   return dispatch => {
     var apiURL = '/rest/admin/v1/slides/' + hash + '/slide-sections';
@@ -218,12 +217,11 @@ export function slideSectionCreateRequest(hash, params) {
           },
           response: res
         }
-        dispatch(slideSectionCreateRequestSuccess(payload))
         AlertInfo("Slide Updated")
-      }).catch(eee => {
+        dispatch(slideSectionCreateRequestSuccess(payload))
+      }).catch(e => {
         AlertError('Error occured')
-        console.log(eee)
-        throw eee
+        console.error(e)
       })
   }
 }
@@ -251,14 +249,14 @@ export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHa
         dispatch(slideSectionUpdateRequestSuccess(payload))
         AlertInfo("Slide Updated")
       }).catch(e => {
-        console.log(e)
+        console.error(e)
         AlertError('Error occurred')
       })
   }
 }
 
 export function sortByDisplayOrder(slides){
-  console.log(111111111111111,slides)
+  // console.log(111111111111111,slides)
   return  slides.length > 1 
   ? slides.sort((a, b) => a.displayOrder - b.displayOrder)
   : slides

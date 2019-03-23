@@ -27,7 +27,7 @@ import Html2canvas from 'html2canvas'
 
 const slideThumbnails = (props) => {
     const { slides, currentSlide, onClickHandler } = props;
-    console.warn(props)
+    // console.warn(props)
     return <Fragment>
         <ul className="sliderss mt-4">
             {slides.map(slide => <li key={shortid.generate()} onClick={() => onClickHandler(slide.hash)} >

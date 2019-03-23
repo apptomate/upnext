@@ -21,7 +21,7 @@ class CreateLessonContent extends Component {
     this.handleAddSlideButton = this.handleAddSlideButton.bind(this)
     // this.lessonChange = this.lessonChange.bind(this)
     this.props.clearAddLessonValues()
-    console.error(this.props)
+    // console.error(this.props)
     this.state = initialState
   }
 
@@ -105,7 +105,7 @@ class CreateLessonContent extends Component {
   handleSlideInputBlur() {
     const { currentSlide, currentContent } = this.state;
     const { slides, currentSlideHash, currentSlideSectionHash } = this.props;
-    console.warn(this.state, this.props)
+    // console.warn(this.state, this.props)
     // return
     let _params = {
       content: JSON.stringify(currentContent),
@@ -132,12 +132,11 @@ class CreateLessonContent extends Component {
     this.loadSlide();
   }
   handleDeleteSlideButton(currentSlide) {
-    const { deleteSlideRequest, slides } = this.props;
+    const { deleteSlideRequest, slides,hash} = this.props;
     if (slides.length > 1) {
       let flag = window.confirm("Are you sure to delete this slide")
       if (flag) {
-
-        deleteSlideRequest(slides, currentSlide)
+        deleteSlideRequest(currentSlide, {lessonHash:hash, slides})
       }
     } else {
       AlertError('Failed - Lesson should have atleast one slide ');
@@ -147,7 +146,7 @@ class CreateLessonContent extends Component {
 
 
   render() {
-    console.log(this.name || this.constructor.name, this.state, this.props)
+    // console.log(this.name || this.constructor.name, this.state, this.props)
     let { currentSlide, currentContent } = this.state;
     let { currentSlideHash, currentSlideSectionHash, slides = [], title } = this.props;
     let totalSlides = slides.length;
