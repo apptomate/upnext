@@ -10,7 +10,7 @@ export const addLessonInitials = {
   title: '',
   hash: null,
   slides:[],
-  currentSlide : {}
+  // currentSlide : {}
 }
 
 export const alertInitials = {

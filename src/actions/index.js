@@ -7,7 +7,9 @@ import { alertInitials } from '../reducers/initialState';
 export function loadLessonsListSuccess(payload) {
   return { type: types.LOAD_LESSONS_LIST, payload }
 }
-
+export function loadLessonSuccess(payload) {
+  return { type: types.LOAD_LESSON_SUCCESS, payload }
+}
 export function addLessonSuccess(payload) {
   return { type: types.ADD_LESSON_SUCCESS, payload }
 }
@@ -21,6 +23,9 @@ export function clearAddLessonValues() {
 export function deleteLessonSuccess(payload) {
   return { type: types.DELETE_LESSON_SUCCESS, payload }
 }
+export function loadSlidesSuccess(payload){
+  return { type: types.LOAD_SLIDES_SUCCESS, payload }
+}
 export function createSlideRequestSuccess(payload) {
   return { type: types.CREATE_SLIDE_REQUEST_SUCCESS, payload }
 }
@@ -30,12 +35,11 @@ export function slideSectionCreateRequestSuccess(payload) {
 export function slideSectionUpdateRequestSuccess(payload) {
   return { type: types.SLIDE_SECTION_UPDATE_REQUEST_SUCCESS, payload }
 }
-export function changeCurrentSlideAction(hash) {
-  return {
-    type: types.CHANGE_CURRENT_SLIDE_ACTION,
-    payload: { hash }
-  }
+
+export function loadSlideSectionSuccess(payload) {
+  return { type: types.LOAD_SLIDE_SECTION, payload }
 }
+
 export function AlertError(message) {
   if (message) {
     Alert.error(message, alertInitials);
@@ -50,10 +54,49 @@ export function AlertInfo(message) {
   return true;
 }
 
+export function loadLesson(lessonHash, loadSlides) {
+  // lessonHash = 'bdf801b5b023ba7bd920676f2281b83b459a62dd'
+  console.warn(lessonHash)
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/lessons/' + lessonHash;
+    request.get(apiURL)
+      .set('Content-Type', 'application/json')
+      .then(res => {
+        // dispatch( (res.body.data));
+        // AlertError(`Slide Deleted`)
+        console.error('lesson loaded', res.body.data)
+        dispatch(loadLessonSuccess(res.body.data));
+        if(loadSlides){
+          dispatch(loadSlidesByLessonHash(lessonHash))
+        }
+      }).catch(e => {
+        console.log(e);
+        // AlertError('Error - Slide not deleted')
+      });
+  }
+}
+
+export function loadSlidesByLessonHash(lessonHash) {
+  console.warn(lessonHash)
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides?lessonHash=' + lessonHash;
+    request.get(apiURL)
+      .set('Content-Type', 'application/json')
+      .then(res => {
+        // dispatch( (res.body.data));
+        // AlertError(`Slide Deleted`)
+        console.error('slides loaded', res.body.data)
+        dispatch(loadSlidesSuccess(res.body.data));
+      }).catch(e => {
+        console.log(e);
+        // AlertError('Error - Slide not deleted')
+      });
+  }
+}
+
 export function loadLessons() {
   return dispatch => {
-    var apiURL = API_BASE_URL + '/admin/v1/lessons';
-    request.get(apiURL).end((err, res) => {
+    request.get('/rest/admin/v1/lessons').end((err, res) => {
       if (err) {
         throw (err);
       }
@@ -63,59 +106,12 @@ export function loadLessons() {
     });
   };
 }
-
-export function createSlideRequest(params) {
-
+export function loadSlideSection(payload) {
   return dispatch => {
-    var apiURL = API_BASE_URL + '/admin/v1/slides';
-    request.post(apiURL)
-      .set('Content-Type', 'application/json')
-      .send(params).then(res => {
-        dispatch(createSlideRequestSuccess(res.body.data));
-      })
-  }
+    dispatch(loadSlideSectionSuccess(payload));
+  };
 }
 
-export function deleteSlideRequest(slideHash) {
-
-  return dispatch => {
-    var apiURL = API_BASE_URL + '/admin/v1/slides/' + slideHash;
-    request.delete(apiURL)
-      .set('Content-Type', 'application/json')
-      .then(res => {
-        // dispatch( (res.body.data));
-        // AlertError(`Slide Deleted`)
-        console.error('slide deleted', res.body.data)
-      }).catch(e => {
-        console.log(e);
-        // AlertError('Error - Slide not deleted')
-      });
-  }
-}
-
-
-export function slideSectionCreateRequest(hash, params) {
-  console.log(hash, params)
-  // return;
-  return dispatch => {
-    var apiURL = '/rest/admin/v1/slides/' + hash + '/slide-sections';
-    request.post(apiURL)
-      .set('Content-Type', 'application/json')
-      .send(params).then(res => {
-        console.log('jaksjdhflajsdljfashldkj', res)
-        let data = {
-          hash: hash,
-          updateHash: res.body.data.hash,
-          content: res.body.data.content
-        }
-        dispatch(slideSectionCreateRequestSuccess(data))
-        AlertInfo("Slide Updated")
-      }).catch(e => {
-        console.log(e)
-        AlertError('Error occured')
-      })
-  }
-}
 // /rest/admin/v1/slides/{slideHash}/slide-sections
 export function addLesson(lessoninfo) {
   console.warn('----------->  addlesson', lessoninfo)
@@ -134,7 +130,7 @@ export function addLesson(lessoninfo) {
         return res.body.data.hash;
       })
       .catch(error => {
-        // AlertError("Unexpected Error - Try again")
+        AlertError("Unexpected Error - Try again")
         console.log(error);
       });
   };
@@ -171,21 +167,88 @@ export function deleteLesson(lessonHashID) {
     });
   };
 }
+
+
+export function createSlideRequest(params) {
+
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides';
+    request.post(apiURL)
+      .set('Content-Type', 'application/json')
+      .send(params).then(res => {
+        dispatch(createSlideRequestSuccess(res.body.data));
+      })
+  }
+}
+// export function findPreviousSlide(slides, displayOrder){
+//   let resultSlide = 0;
+// }
+export function deleteSlideRequest(slides, currentSlide) {
+
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides/' + currentSlide.hash;
+    request.delete(apiURL)
+      .set('Content-Type', 'application/json')
+      .then(res => {
+        // dispatch( (res.body.data));
+        // AlertError(`Slide Deleted`)
+        console.error('slide deleted', res.body.data)
+      }).catch(e => {
+        console.log(e);
+        // AlertError('Error - Slide not deleted')
+      });
+  }
+}
+export function slideSectionCreateRequest(hash, params) {
+  console.log(hash, params)
+  // return;
+  return dispatch => {
+    var apiURL = '/rest/admin/v1/slides/' + hash + '/slide-sections';
+    request.post(apiURL)
+      .set('Content-Type', 'application/json')
+      .send(params).then(res => {
+        console.log('slideSectionCreateRequestSuccess', res)
+        let payload = {          // preserving response for future use
+          slideHash: hash, // slide hash
+          sectionHash: res.body.data.hash,
+          data: {
+            hash: res.body.data.hash, //section hash
+            content: res.body.data.content,
+            type: res.body.data.type,
+          },
+          response: res
+        }
+        dispatch(slideSectionCreateRequestSuccess(payload))
+        AlertInfo("Slide Updated")
+      }).catch(eee => {
+        AlertError('Error occured')
+        console.log(eee)
+        throw eee
+      })
+  }
+}
+
 ///rest/admin/v1/slides/{slideHash}/slide-sections
 export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHash, params) {
+  console.log('slideSectionUpdateRequest', currentSlideHash, currentSlideUpdateHash, params)
   return dispatch => {
     var apiURL = '/rest/admin/v1/slides/' + currentSlideHash + '/slide-sections/' + currentSlideUpdateHash;
     console.log(currentSlideHash, currentSlideUpdateHash, params, apiURL)
     request.patch(apiURL)
       .set('Content-Type', 'application/json')
       .send(params).then(res => {
-        console.log('jaksjdhflajsdljfashldkj', res)
-        let data = {
-          hash: currentSlideHash,
-          updateHash: res.body.data.hash,
-          content: res.body.data.content
+        console.log('slideSectionUpdateRequest', res)
+        let payload = {          // preserving response for future use
+          slideHash: currentSlideHash, // slide hash
+          sectionHash: res.body.data.hash,
+          data: {
+            hash: res.body.data.hash, //section hash
+            content: res.body.data.content,
+            type: res.body.data.type,
+          },
+          response: res
         }
-        dispatch(slideSectionUpdateRequestSuccess(data))
+        dispatch(slideSectionUpdateRequestSuccess(payload))
         AlertInfo("Slide Updated")
       }).catch(e => {
         console.log(e)
@@ -195,5 +258,8 @@ export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHa
 }
 
 export function sortByDisplayOrder(slides){
-  return slides.sort((a, b) => a.displayOrder - b.displayOrder)
-}
+  console.log(111111111111111,slides)
+  return  slides.length > 1 
+  ? slides.sort((a, b) => a.displayOrder - b.displayOrder)
+  : slides
+} 
