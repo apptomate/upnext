@@ -185,7 +185,7 @@ class CreateLessonContent extends Component {
           <div className="row">
             <div className="col-lg-2">
               <ul className="sliderss mt-4">
-                {slides.map(slide => <li key={shortid.generate()} onClick={() => this.props.changeCurrentSlideAction(slide.hash)} >
+                {slides.map(slide => <li key={shortid.generate()} onClick={() => this.loadSlide(slide.hash)} >
                   <img key={shortid.generate()} src={`https://dummyimage.com/600x400/ddd/${slide.hash === currentSlide.hash ? '07b' : '000'}&text=` + (slide.displayOrder || '')} className="w-100" alt={slide.header}></img>
                 </li>)}
               </ul>

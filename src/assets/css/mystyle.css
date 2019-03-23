@@ -729,3 +729,5 @@ ul.tutorlist li { padding: 0; margin: 5px 0; }
 .slick-list{
   height: 225px !important;
 }
+/* elango style */
+.blur-effect{pointer-events:none;}
