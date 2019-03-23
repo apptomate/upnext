@@ -4,6 +4,7 @@ import shortid from 'shortid';
 import { deleteLesson } from '../../actions'
 var courseImg = require('../../../src/assets/images/study.jpg');
 import {connect} from 'react-redux';
+import { EDIT_LESSON_URI } from '../../helpers/constants';
 
 const HomePageLessonsGrid = (props) => {
   console.log('HomePageLessonsGrid', props)
@@ -53,8 +54,7 @@ const renderLessonsList = (lessons, deleteLesson) => {
                       <p className="f-s-10 m-b-5 w-100 text-warning">378 Views, 83 Favourites, 43 Saved for later</p>
                       <ul className="lesson_grid_list w-100">
                         <li className="f-s-12">
-                          <a href="#">
-                            <i className="far fa-edit"></i> Edit</a>
+                          <Link to={EDIT_LESSON_URI+'/'+lesson.hash}><i className="far fa-edit"></i> Edit</Link>
                         </li>
                         <li className="f-s-12">
                           <button onClick={()=> deleteLesson(lesson.hash)  }>

@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import { Link,Redirect  } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import { EDIT_LESSON_URI } from '../../../helpers/constants';
 // import { DEFAULT_ECDH_CURVE } from 'tls';
 
 
 class CreateLessonHeader extends React.Component {
     constructor(props) {
         super(props)  
-        if (this.props.location.pathname == "/CreateLesson") {
+        if (this.props.location.pathname === "/CreateLesson" || EDIT_LESSON_URI) {
             this.state = {btnText: 'ADD QUIZ', lessonClass:'fas', quizClass:'far'}
         } else if (this.props.location.pathname == "/CreateQuiz") {
             this.state = {btnText: 'PUBLISH LESSON', quizClass:'fas', lessonClass:'far'} 

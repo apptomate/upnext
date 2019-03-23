@@ -1,19 +1,21 @@
 import React, { PropTypes, Component } from 'react';
 var courseImg = require('../../../../src/assets/images/study.jpg');
 import { connect } from 'react-redux';
-import { addLesson, editLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, loadSlideSection, AlertError } from '../../../actions/';
+import { addLesson, editLesson, loadLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, loadSlideSection, AlertError } from '../../../actions/';
 import shortid from 'shortid';
+import { EDIT_LESSON_URI } from '../../../helpers/constants';
 
 class CreateLessonContent extends Component {
   constructor(props) {
     super(props)
-    let initialState = { blurEffect: true, currentContent: {}, currentSlide: { layout: 'TEXT', displayOrder: 1, sections: [] }, currentSection: {} }
+    let initialState = { blurEffect: true, title: '', currentContent: {}, currentSlide: { layout: 'TEXT', displayOrder: 1, sections: [] }, currentSection: {} }
+    const { hash, title } = this.props;
     this.loadSlide = this.loadSlide.bind(this)
     this.handleTitleOnblur = this.handleTitleOnblur.bind(this)
     this.handleSlideInputs = this.handleSlideInputs.bind(this)
     this.handleSlideInputBlur = this.handleSlideInputBlur.bind(this)
     this.handleAddSlideButton = this.handleAddSlideButton.bind(this)
-    this.lessonChange = this.lessonChange.bind(this)
+    // this.lessonChange = this.lessonChange.bind(this)
     this.props.clearAddLessonValues()
     console.error(this.props)
     this.state = initialState
@@ -21,14 +23,35 @@ class CreateLessonContent extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     // `debugg`er
-    if (this.props.currentSlideHash !== prevProps.currentSlideHash) {
+    const {hash, currentSlideHash, slides } = this.props;
+    if (this.state.blurEffect && hash) {
+      this.setState({ blurEffect: false })
+    }
+    if (currentSlideHash !== prevProps.currentSlideHash) {
       this.loadSlide(this.props.currentSlideHash)
     }
+    // if (title !== prevState.title) {
+    //   let initSlide = slides[0];
+    //   let currentSection = initSlide.sections[0] || {}
+    //   let currentContent = (currentSection.content  || {})
+      // currentContent = typeof currentContent === 'string' ? JSON.parse(currentContent) : currentContent
+      // this.setState({ title : title})
+    // }
   }
-  lessonChange(e) {
-    let name = e.target.name;
-    let value = e.target.value;
-    this.setState((state) => ({ ...state, [name]: value }))
+  componentDidMount() {
+    const { match : {params} } = this.props;
+    if (params.hash) {
+      // const { hash } = match.params
+      this.props.loadLesson(params.hash, true)
+    }
+  }
+  // lessonChange(e) {
+  //   let name = e.target.name;
+  //   let value = e.target.value;
+  //   this.setState({[name]: value })
+  // }
+  componentWillUnmount(){
+    this.props.clearAddLessonValues()
   }
   handleTitleOnblur(e) {
     const title = e.target.value
@@ -61,7 +84,7 @@ class CreateLessonContent extends Component {
     }
 
     _currentSlide = slides.find(slide => slide.hash === loadHash)
-    if (_currentSlide.sections.length > 0) {
+    if (_currentSlide.sections && _currentSlide.sections.length > 0) {
       _currentSection = _currentSlide.sections[0]  //taking initial section as default
       _currentContent = typeof _currentSection.content === 'string' ? JSON.parse(_currentSection.content) : _currentSection.content
     }
@@ -122,7 +145,7 @@ class CreateLessonContent extends Component {
   render() {
     console.log(this.name || this.constructor.name, this.state, this.props)
     let { currentSlide, currentContent } = this.state;
-    let { currentSlideHash, currentSlideSectionHash, slides, title } = this.props;
+    let { currentSlideHash, currentSlideSectionHash, slides = [], title } = this.props;
     let totalSlides = slides.length;
     // let content = currentSection.length > 1
     //   ? typeof currentSection.content === 'string' ? JSON.parse(currentSection.content) : currentSection.content
@@ -137,7 +160,7 @@ class CreateLessonContent extends Component {
               <form className="form-inline searchbar">
                 <div className="input-group mb-3 w-100">
                   <input name="title" required type="text" className="form-control" placeholder="What is this lesson called?"
-                    aria-label="What is this lesson called?" aria-describedby="basic-addon2" onBlur={this.handleTitleOnblur}></input>
+                    aria-label="What is this lesson called?" aria-describedby="basic-addon2" defaultValue={title}  onBlur={this.handleTitleOnblur}></input>
                   <div className="input-group-append">
                     <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0"><i className="fas fa-arrow-circle-right"></i></span>
                   </div>
@@ -303,6 +326,7 @@ export default connect(mapStateToProps, {
   slideSectionCreateRequest,
   slideSectionUpdateRequest,
   loadSlideSection,
+  loadLesson,
 })(CreateLessonContent);
 
 

@@ -1,0 +1,1 @@
+export const EDIT_LESSON_URI = '/editLesson';
