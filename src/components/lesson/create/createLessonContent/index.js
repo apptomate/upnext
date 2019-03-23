@@ -6,6 +6,7 @@ import shortid from 'shortid';
 import EditorOptions from './editorOptions';
 import SectionTypes from './SectionTypes';
 import SlideThumbnails from './slideThumbnails';
+import TextSection from './sectionForms.js/TextSection';
 // import { EDIT_LESSON_URI } from '../../../helpers/constants';
 
 class CreateLessonContent extends Component {
@@ -193,12 +194,7 @@ class CreateLessonContent extends Component {
               <h6>Slide {currentSlide.displayOrder} of {totalSlides}</h6>
               <div className="p-5 bg-white box-shadow mb-5 relative">
                 <form className="lesson-form">
-                  <div className="form-group">
-                    <input name="header" type="text" value={currentContent.header || ''} onBlur={this.handleSlideInputBlur} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-5 pb-5" placeholder="Add a header"></input>
-                  </div>
-                  <div className="form-group mb-0">
-                    <textarea name="body" value={currentContent.body || ''} onBlur={this.handleSlideInputBlur} onChange={this.handleSlideInputs} className="form-control pl-4 pr-4 pt-4 pb-5" rows="10" placeholder="Enter body text"></textarea>
-                  </div>
+                  <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur = {this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs}/>
                 </form>
                 <SectionTypes />
               </div>
