@@ -2,10 +2,14 @@ import * as types from './actionTypes';
 import Alert from 'react-s-alert';
 import request from 'superagent';
 import { alertInitials } from '../reducers/initialState';
+import { serialize } from '../helpers/methods';
 // var URLSearchParams = require('url-search-params');
 
 export function loadLessonsListSuccess(payload) {
   return { type: types.LOAD_LESSONS_LIST, payload }
+}
+export function loadLessonsLoadMoreSuccess(payload) {
+  return { type: types.LOAD_LESSONS_LOAD_MORE, payload }
 }
 export function loadLessonSuccess(payload) {
   return { type: types.LOAD_LESSON_SUCCESS, payload }
@@ -23,7 +27,7 @@ export function clearAddLessonValues() {
 export function deleteLessonSuccess(payload) {
   return { type: types.DELETE_LESSON_SUCCESS, payload }
 }
-export function loadSlidesSuccess(payload){
+export function loadSlidesSuccess(payload) {
   return { type: types.LOAD_SLIDES_SUCCESS, payload }
 }
 export function createSlideRequestSuccess(payload) {
@@ -66,7 +70,7 @@ export function loadLesson(lessonHash, loadSlides) {
         // AlertError(`Slide Deleted`)
         console.error('lesson loaded', res.body.data)
         dispatch(loadLessonSuccess(res.body.data));
-        if(loadSlides){
+        if (loadSlides) {
           dispatch(loadSlidesByLessonHash(lessonHash))
         }
       }).catch(e => {
@@ -94,14 +98,19 @@ export function loadSlidesByLessonHash(lessonHash) {
   }
 }
 
-export function loadLessons() {
+export function loadLessons(params, loadMore=false) {
+  let encodedParams = serialize(params) || '';
   return dispatch => {
-    request.get('/rest/admin/v1/lessons').end((err, res) => {
+    request.get('/rest/admin/v1/lessons'+ encodedParams).end((err, res) => {
       if (err) {
         throw (err);
       }
       const response = JSON.parse(res.text);
-      dispatch(loadLessonsListSuccess(response));
+      if(!loadMore){
+        dispatch(loadLessonsListSuccess(response));
+      }else{
+        dispatch(loadLessonsLoadMoreSuccess(response))
+      }
       return;
     });
   };
@@ -255,9 +264,9 @@ export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHa
   }
 }
 
-export function sortByDisplayOrder(slides){
+export function sortByDisplayOrder(slides) {
   // console.log(111111111111111,slides)
-  return  slides.length > 1 
-  ? slides.sort((a, b) => a.displayOrder - b.displayOrder)
-  : slides
+  return slides.length > 1
+    ? slides.sort((a, b) => a.displayOrder - b.displayOrder)
+    : slides
 } 

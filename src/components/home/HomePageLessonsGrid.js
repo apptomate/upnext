@@ -8,7 +8,7 @@ import { EDIT_LESSON_URI } from '../../helpers/constants';
 
 const HomePageLessonsGrid = (props) => {
   console.log('HomePageLessonsGrid', props)
-  const { lessons, deleteLesson } = props;
+  const { lessons, deleteLesson, loadMoreHandler } = props;
   const listCollection = [];
   var listrow = [];
   lessons.data.map((value, index) => {    
@@ -25,7 +25,7 @@ const HomePageLessonsGrid = (props) => {
           return renderLessonsList(value || [], deleteLesson) 
         })}      
       <li className="row" >
-        <button type="button" className="btn btn-light shadow mx-auto">Load More...</button>
+        <button type="button" onClick={loadMoreHandler} className="btn btn-light shadow mx-auto">Load More...</button>
       </li>
     </ul>
   );

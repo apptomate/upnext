@@ -27,7 +27,7 @@ class CreateLessonContent extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     // `debugg`er
-    const {hash, currentSlideHash, slides } = this.props;
+    const { hash, currentSlideHash, slides } = this.props;
     if (this.state.blurEffect && hash) {
       this.setState({ blurEffect: false })
     }
@@ -38,12 +38,12 @@ class CreateLessonContent extends Component {
     //   let initSlide = slides[0];
     //   let currentSection = initSlide.sections[0] || {}
     //   let currentContent = (currentSection.content  || {})
-      // currentContent = typeof currentContent === 'string' ? JSON.parse(currentContent) : currentContent
-      // this.setState({ title : title})
+    // currentContent = typeof currentContent === 'string' ? JSON.parse(currentContent) : currentContent
+    // this.setState({ title : title})
     // }
   }
   componentDidMount() {
-    const { match : {params} } = this.props;
+    const { match: { params } } = this.props;
     if (params.hash) {
       // const { hash } = match.params
       this.props.loadLesson(params.hash, true)
@@ -54,7 +54,7 @@ class CreateLessonContent extends Component {
   //   let value = e.target.value;
   //   this.setState({[name]: value })
   // }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.props.clearAddLessonValues()
   }
   handleTitleOnblur(e) {
@@ -132,11 +132,11 @@ class CreateLessonContent extends Component {
     this.loadSlide();
   }
   handleDeleteSlideButton(currentSlide) {
-    const { deleteSlideRequest, slides,hash} = this.props;
+    const { deleteSlideRequest, slides, hash } = this.props;
     if (slides.length > 1) {
       let flag = window.confirm("Are you sure to delete this slide")
       if (flag) {
-        deleteSlideRequest(currentSlide, {lessonHash:hash, slides})
+        deleteSlideRequest(currentSlide, { lessonHash: hash, slides })
       }
     } else {
       AlertError('Failed - Lesson should have atleast one slide ');
@@ -150,6 +150,7 @@ class CreateLessonContent extends Component {
     let { currentSlide, currentContent } = this.state;
     let { currentSlideHash, currentSlideSectionHash, slides = [], title } = this.props;
     let totalSlides = slides.length;
+    let currentSlideOrder = slides.findIndex(slide => slide.hash === currentSlide.hash) + 1
     // let content = currentSection.length > 1
     //   ? typeof currentSection.content === 'string' ? JSON.parse(currentSection.content) : currentSection.content
     //   : {}
@@ -163,7 +164,7 @@ class CreateLessonContent extends Component {
               <form className="form-inline searchbar">
                 <div className="input-group mb-3 w-100">
                   <input name="title" required type="text" className="form-control" placeholder="What is this lesson called?"
-                    aria-label="What is this lesson called?" aria-describedby="basic-addon2" defaultValue={title}  onBlur={this.handleTitleOnblur}></input>
+                    aria-label="What is this lesson called?" aria-describedby="basic-addon2" defaultValue={title} onBlur={this.handleTitleOnblur}></input>
                   <div className="input-group-append">
                     <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0"><i className="fas fa-arrow-circle-right"></i></span>
                   </div>
@@ -187,13 +188,13 @@ class CreateLessonContent extends Component {
         <div className={`lesson-slides-content container-fluid bg-light p-t-50 p-b-50 ${this.state.blurEffect ? "blur-effect" : ""}`}>
           <div className="row">
             <div className="col-lg-2">
-              <SlideThumbnails slides = {slides} currentSlide ={currentSlide} onClickHandler={this.loadSlide}  />
+              <SlideThumbnails slides={slides} currentSlide={currentSlide} onClickHandler={this.loadSlide} />
             </div>
             <div className="col-lg-8">
-              <h6>Slide {currentSlide.displayOrder} of {totalSlides}</h6>
+              <h6>Slide {currentSlideOrder} of {totalSlides}</h6>
               <div className="p-5 bg-white box-shadow mb-5 relative">
                 <form className="lesson-form">
-                  <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur = {this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs}/>
+                  <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur={this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs} />
                 </form>
                 <SectionTypes />
               </div>
