@@ -68,25 +68,34 @@ import { pure } from 'recompose'
 
 
 const editorOptions = () => (
-    <div id="toolbar">
-      <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
-        <option value="1" />
-        <option value="2" />
-        <option selected />
-      </select>
-<br/>
-      <select className="ql-color">
-        <option value="red" />
-        <option value="green" />
-        <option value="blue" />
-        <option value="orange" />
-        <option value="violet" />
-        <option value="#d0d1d2" />
-        <option selected />
-      </select>
-      <button className="ql-bold" />
-      <button className="ql-italic" />
-      </div>
-  );
+  <div id="toolbar">
+    <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
+      <option value="1" />
+      <option value="2" />
+      <option value="" />
+    </select>
+    <br />
+    <button className="ql-bold" />
+    <button className="ql-underline" />
+    <button className="ql-italic" />
+    <br />
+    <button type="button" className="ql-align" value="" />
+    <button type="button" className="ql-align" value="center" />
+    <button type="button" className="ql-align" value="right" />
+    <br />
+    <button className="ql-list" value="ordered" />
+    <button className="ql-list" value="bullet" />
+    <button className="ql-link" />
+    <br />
+    <button className="ql-color" value="violet" style={{ backgroundColor: 'violet' }} />
+    <button className="ql-color" value="grey" style={{ backgroundColor: 'grey' }} />
+    <button className="ql-color" value="green" style={{ backgroundColor: 'green' }} />
+    <br />
+    <button className="ql-color" value="red" style={{ backgroundColor: 'red' }} />
+    <button className="ql-color" value="yellow" style={{ backgroundColor: 'yellow' }} />
+    <button className="ql-color" value="blue" style={{ backgroundColor: 'blue' }} />
+    <br />
+  </div>
+);
 
 export default pure(editorOptions)

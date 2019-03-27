@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
 import { pure } from 'recompose'
 
-const sectionTypes = () => {
+const sectionTypes = (props) => {
     return <Fragment>
-            <div className="row m-0">
-                <div className="col-4 bg-light border">
+            <div {...props} className="row m-0">
+                <div className="col-4 bg-light border addslideActive">
                     <p><i className="fas fa-font"></i></p>
                     <p>Text</p>
                 </div>

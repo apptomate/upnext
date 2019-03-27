@@ -71,6 +71,7 @@ class CreateLessonContent extends Component {
     var lessoninfo = { lesson: { bgColor: '#000', slideBgColor: '#000', title: title, hash: this.props.hash || null } };
     if (!this.props.hash) {               // adding new lesson if no hash available
       this.props.addLesson(lessoninfo);
+      this.openSectionTypes();
     }
     else if (title != this.props.title) {   // avoiding update if title has no change
       this.props.editLesson(lessoninfo);
@@ -88,6 +89,7 @@ class CreateLessonContent extends Component {
         "layout": "TEXT",
         "displayOrder": maxDisplayOrder + 1
       })
+      this.openSectionTypes();
       return;
     }
 
@@ -119,6 +121,8 @@ class CreateLessonContent extends Component {
       this.props.slideSectionCreateRequest(currentSlideHash, _params)
       return;
     } else {
+      let section = getSectionFromSlides(slides, currentSlideHash)
+      if(section.content ===_params.content) return;        // avoiding update if no changes to content
       this.props.slideSectionUpdateRequest(currentSlideHash, currentSlideSectionHash, _params)
       return;
     }
@@ -150,7 +154,7 @@ class CreateLessonContent extends Component {
   openSectionTypes() {
     this.setState({ openSectionTypes: true })
 
-    setTimeout( this.closeSectionTypes, 8000 )
+    setTimeout(this.closeSectionTypes, 8000)
   }
 
   closeSectionTypes() {
@@ -209,7 +213,7 @@ class CreateLessonContent extends Component {
                   <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur={this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs} />
                 </form>
                 <div className="addslide bg-white box-shadow f-s-12 text-center">
-                  {openSectionTypes ? <SectionTypes /> : <img onClick={this.openSectionTypes} src={ExpandRight} />}
+                  {openSectionTypes ? <SectionTypes onClick={this.closeSectionTypes} /> : <img onClick={this.openSectionTypes} src={ExpandRight} />}
                 </div>
               </div>
               <div className="row">
@@ -252,4 +256,7 @@ export default connect(mapStateToProps, {
   loadLesson,
 })(CreateLessonContent);
 
-
+const getSectionFromSlides = (slides = [], slideHash, sectionType = 'TEXT') => {
+  let slide = slides.find(slide => slide.hash === slideHash)
+  return slide.sections[0] || {}
+}

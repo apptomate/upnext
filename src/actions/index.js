@@ -60,7 +60,7 @@ export function AlertInfo(message) {
 
 export function loadLesson(lessonHash, loadSlides) {
   // lessonHash = 'bdf801b5b023ba7bd920676f2281b83b459a62dd'
-  console.warn(lessonHash)
+  // console.warn(lessonHash)
   return dispatch => {
     var apiURL = '/rest/admin/v1/lessons/' + lessonHash;
     request.get(apiURL)
@@ -81,7 +81,7 @@ export function loadLesson(lessonHash, loadSlides) {
 }
 
 export function loadSlidesByLessonHash(lessonHash) {
-  console.warn(lessonHash)
+  // console.warn(lessonHash)
   return dispatch => {
     var apiURL = '/rest/admin/v1/slides?lessonHash=' + lessonHash;
     request.get(apiURL)
@@ -99,7 +99,10 @@ export function loadSlidesByLessonHash(lessonHash) {
 }
 
 export function loadLessons(params, loadMore=false) {
-  let encodedParams = serialize(params) || '';
+  let encodedParams = '';
+  if(params) {
+    encodedParams = serialize(params)
+  }
   return dispatch => {
     request.get('/rest/admin/v1/lessons'+ encodedParams).end((err, res) => {
       if (err) {
@@ -123,7 +126,7 @@ export function loadSlideSection(payload) {
 
 // /rest/admin/v1/slides/{slideHash}/slide-sections
 export function addLesson(lessoninfo) {
-  console.warn('----------->  addlesson', lessoninfo)
+  // console.warn('----------->  addlesson', lessoninfo)
   return dispatch => {
     var apiURL = API_BASE_URL + '/admin/v1/lessons';
     request.post(apiURL)
@@ -140,13 +143,13 @@ export function addLesson(lessoninfo) {
       })
       .catch(error => {
         AlertError("Unexpected Error - Try again")
-        console.log(error);
+        console.error(error);
       });
   };
 }
 
 export function editLesson(lessoninfo) {
-  console.warn('----------->  editlesson', lessoninfo)
+  // console.warn('----------->  editlesson', lessoninfo)
   return dispatch => {
     var apiURL = API_BASE_URL + '/admin/v1/lessons/' + lessoninfo.lesson.hash;
     request.patch(apiURL)
@@ -158,7 +161,7 @@ export function editLesson(lessoninfo) {
       })
       .catch(error => {
         AlertError("Unexpected Error - Try again")
-        console.log(error);
+        console.error(error);
       });
   };
 }
@@ -215,7 +218,7 @@ export function slideSectionCreateRequest(hash, params) {
     request.post(apiURL)
       .set('Content-Type', 'application/json')
       .send(params).then(res => {
-        console.log('slideSectionCreateRequestSuccess', res)
+        // console.log('slideSectionCreateRequestSuccess', res)
         let payload = {          // preserving response for future use
           slideHash: hash, // slide hash
           sectionHash: res.body.data.hash,
@@ -237,14 +240,14 @@ export function slideSectionCreateRequest(hash, params) {
 
 ///rest/admin/v1/slides/{slideHash}/slide-sections
 export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHash, params) {
-  console.log('slideSectionUpdateRequest', currentSlideHash, currentSlideUpdateHash, params)
+  // console.log('slideSectionUpdateRequest', currentSlideHash, currentSlideUpdateHash, params)
   return dispatch => {
     var apiURL = '/rest/admin/v1/slides/' + currentSlideHash + '/slide-sections/' + currentSlideUpdateHash;
-    console.log(currentSlideHash, currentSlideUpdateHash, params, apiURL)
+    // console.log(currentSlideHash, currentSlideUpdateHash, params, apiURL)
     request.patch(apiURL)
       .set('Content-Type', 'application/json')
       .send(params).then(res => {
-        console.log('slideSectionUpdateRequest', res)
+        // console.log('slideSectionUpdateRequest', res)
         let payload = {          // preserving response for future use
           slideHash: currentSlideHash, // slide hash
           sectionHash: res.body.data.hash,

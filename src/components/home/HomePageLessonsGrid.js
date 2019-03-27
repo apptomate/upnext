@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import { EDIT_LESSON_URI } from '../../helpers/constants';
 
 const HomePageLessonsGrid = (props) => {
-  console.log('HomePageLessonsGrid', props)
+  // console.log('HomePageLessonsGrid', props)
   const { lessons, deleteLesson, loadMoreHandler } = props;
   const listCollection = [];
   var listrow = [];

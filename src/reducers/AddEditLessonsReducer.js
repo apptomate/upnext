@@ -26,7 +26,7 @@ export default function addLessons(state = addLessonInitials, action) {
     case types.SLIDE_SECTION_CREATE_REQUEST_SUCCESS:
       updatedSlides = newState.slides.filter(slide => payload.slideHash !== slide.hash)
       slide = newState.slides.find(slide => payload.slideHash === slide.hash)
-      if(!slide.sections) {
+      if (!slide.sections) {
         slide['sections'] = []
       }
       slide.sections.push(payload.data)
@@ -35,7 +35,7 @@ export default function addLessons(state = addLessonInitials, action) {
       return { ...newState, currentSlideSectionHash: payload.sectionHash, currentSlideHash: payload.slideHash, slides: updatedSlides }
 
     case types.SLIDE_SECTION_UPDATE_REQUEST_SUCCESS:
-      console.warn(payload)
+      // console.warn(payload)
       updatedSlides = newState.slides.filter(slide => payload.slideHash !== slide.hash)
       slide = newState.slides.find(slide => payload.slideHash === slide.hash)
       sectionIndex = slide.sections.findIndex(section => section.hash === payload.sectionHash)
