@@ -3,7 +3,6 @@ import { pure } from 'recompose'
 
 const sectionTypes = () => {
     return <Fragment>
-        <div className="addslide p-3 bg-white box-shadow f-s-12 text-center">
             <div className="row m-0">
                 <div className="col-4 bg-light border">
                     <p><i className="fas fa-font"></i></p>
@@ -31,7 +30,6 @@ const sectionTypes = () => {
                     <p>Question</p>
                 </div>
             </div>
-        </div>
     </Fragment>
 }
 

@@ -729,5 +729,10 @@ ul.tutorlist li { padding: 0; margin: 5px 0; }
 .slick-list{
   height: 225px !important;
 }
-/* elango style */
+/* elango 2 style */
 .blur-effect{pointer-events:none;}
+.ql-editor{
+  height: 350px !important;
+  overflow: hidden;
+  overflow-y: scroll;
+}

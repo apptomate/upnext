@@ -7,6 +7,8 @@ import EditorOptions from './editorOptions';
 import SectionTypes from './SectionTypes';
 import SlideThumbnails from './slideThumbnails';
 import TextSection from './sectionForms.js/TextSection';
+import 'react-quill/dist/quill.snow.css';
+import ExpandRight from '../../../../assets/images/expandRight.png'
 // import { EDIT_LESSON_URI } from '../../../helpers/constants';
 
 class CreateLessonContent extends Component {
@@ -19,6 +21,8 @@ class CreateLessonContent extends Component {
     this.handleSlideInputs = this.handleSlideInputs.bind(this)
     this.handleSlideInputBlur = this.handleSlideInputBlur.bind(this)
     this.handleAddSlideButton = this.handleAddSlideButton.bind(this)
+    this.openSectionTypes = this.openSectionTypes.bind(this)
+    this.closeSectionTypes = this.closeSectionTypes.bind(this)
     // this.lessonChange = this.lessonChange.bind(this)
     this.props.clearAddLessonValues()
     // console.error(this.props)
@@ -120,9 +124,9 @@ class CreateLessonContent extends Component {
     }
     // this.props.slideSectionUpdateRequest(currentSlideSectionHash, params)
   }
-  handleSlideInputs(e) {
-    let name = e.target.name;
-    let value = e.target.value;
+  handleSlideInputs(value, name) {
+    // let name = e; //.target.name;
+    // let value = e; //.target.value;
     // const {currentSection} = this.state
     // console.error({...currentSection,  content: { ...currentSection.content, [name]: value } })
     // console.log(this.state.currentSection)
@@ -143,11 +147,19 @@ class CreateLessonContent extends Component {
     }
   }
 
+  openSectionTypes() {
+    this.setState({ openSectionTypes: true })
 
+    setTimeout( this.closeSectionTypes, 8000 )
+  }
+
+  closeSectionTypes() {
+    this.setState({ openSectionTypes: false })
+  }
 
   render() {
     // console.log(this.name || this.constructor.name, this.state, this.props)
-    let { currentSlide, currentContent } = this.state;
+    let { currentSlide, currentContent, openSectionTypes } = this.state;
     let { currentSlideHash, currentSlideSectionHash, slides = [], title } = this.props;
     let totalSlides = slides.length;
     let currentSlideOrder = slides.findIndex(slide => slide.hash === currentSlide.hash) + 1
@@ -196,7 +208,9 @@ class CreateLessonContent extends Component {
                 <form className="lesson-form">
                   <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur={this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs} />
                 </form>
-                <SectionTypes />
+                <div className="addslide bg-white box-shadow f-s-12 text-center">
+                  {openSectionTypes ? <SectionTypes /> : <img onClick={this.openSectionTypes} src={ExpandRight} />}
+                </div>
               </div>
               <div className="row">
                 <div className="col">
