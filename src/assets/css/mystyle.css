@@ -737,3 +737,13 @@ ul.tutorlist li { padding: 0; margin: 5px 0; }
   overflow-y: scroll;
 }
 .addslideActive { border: 1px solid #007bff !important; color: #007bff;  }
+
+.quillHeaderInp div {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#toolbar{
+  padding-top : 65px;
+  height: 555px;
+}

@@ -22,6 +22,7 @@ const TextSection = (props) => {
                 // formats={[ [{bold : true}] ]}
                 // modules={modules}
                 // formats={formats}
+                className="quillHeaderInp"
                 theme={"snow"}
             />
         </div>

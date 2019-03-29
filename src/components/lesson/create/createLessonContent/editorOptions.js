@@ -68,7 +68,9 @@ import { pure } from 'recompose'
 
 
 const editorOptions = () => (
+  <div>
   <div id="toolbar">
+
     <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
       <option value="1" />
       <option value="2" />
@@ -95,6 +97,7 @@ const editorOptions = () => (
     <button className="ql-color" value="yellow" style={{ backgroundColor: 'yellow' }} />
     <button className="ql-color" value="blue" style={{ backgroundColor: 'blue' }} />
     <br />
+  </div>
   </div>
 );
 

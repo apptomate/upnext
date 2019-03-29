@@ -203,7 +203,7 @@ class CreateLessonContent extends Component {
         </div>
         <div className={`lesson-slides-content container-fluid bg-light p-t-50 p-b-50 ${this.state.blurEffect ? "blur-effect" : ""}`}>
           <div className="row">
-            <div className="col-lg-2">
+            <div className="col-lg-2" style={{height : '555px', overflowY:'scroll'}} >
               <SlideThumbnails slides={slides} currentSlide={currentSlide} onClickHandler={this.loadSlide} />
             </div>
             <div className="col-lg-8">
@@ -212,7 +212,7 @@ class CreateLessonContent extends Component {
                 <form className="lesson-form">
                   <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur={this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs} />
                 </form>
-                <div className="addslide bg-white box-shadow f-s-12 text-center">
+                <div className="addslide bg-white box-shadow f-s-12 text-center" style={{width: openSectionTypes? "40%" : '31px'  }}>
                   {openSectionTypes ? <SectionTypes onClick={this.closeSectionTypes} /> : <img onClick={this.openSectionTypes} src={ExpandRight} />}
                 </div>
               </div>
