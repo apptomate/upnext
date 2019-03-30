@@ -177,9 +177,9 @@ class CreateLessonContent extends Component {
           <div className="row">
             <div className="col-lg-12">
               <h6 className="m-t-75">Lesson Title</h6>
-              <form className="form-inline searchbar">
+              <form className="form-inline searchbar" autoComplete="off" >
                 <div className="input-group mb-3 w-100">
-                  <input name="title" required type="text" className="form-control" placeholder="What is this lesson called?"
+                  <input name="title" required type="text" autoComplete="false" className="form-control" placeholder="What is this lesson called?"
                     aria-label="What is this lesson called?" aria-describedby="basic-addon2" defaultValue={title} onBlur={this.handleTitleOnblur}></input>
                   <div className="input-group-append">
                     <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0"><i className="fas fa-arrow-circle-right"></i></span>

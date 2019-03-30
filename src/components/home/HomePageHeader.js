@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 var courseImg = require('../../../src/assets/images/study.jpg');
 
 const HomePageHeader = (props) => {
+  const {lessons = {}} = props;
   return (
     <main role="main">
       <div className="container">
@@ -27,7 +28,7 @@ const HomePageHeader = (props) => {
         </form>
 
         <div className="h-100 mt-5 mb-5">
-          <span className="small">{props.lessons.totalItems} Lessons Available</span>
+          <span className="small">{lessons.data && lessons.data.length} Lessons Available</span>
           <div className="dropdown float-right">
             <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
