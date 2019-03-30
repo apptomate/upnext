@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import ViewLessonHeader from './ViewLessonHeader';
+import React, { PropTypes, Component } from 'react';
+import { loadLesson, clearAddLessonValues } from '../../../actions';
+import { connect } from 'react-redux'; import ViewLessonHeader from './ViewLessonHeader';
 import ViewLessonContent from './ViewLessonContent';
 
 import '../../../assets/css/mystyle.css';
@@ -11,14 +12,56 @@ import '../../../assets/js/jquery-slim.min.js';
 import '../../../assets/js/custom-file-input.js';
 
 
-const ViewLessonPage = () => {
+class ViewLessonPage extends Component {
+  constructor(props) {
+    super(props)
+    // let initialState = { blurEffect: true, title: '', currentContent: {}, currentSlide: { layout: 'TEXT', displayOrder: 1, sections: [] }, currentSection: {} }
+    // const { hash, title } = this.props;
+    // this.loadSlide = this.loadSlide.bind(this)
+    this.props.clearAddLessonValues()
+  }
+  componentDidMount() {
+    const { match: { params } } = this.props;
+    if (params.hash) {
+      // const { hash } = match.params
+      this.props.loadLesson(params.hash, true)
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.clearAddLessonValues()
+  }
+
+  render() {
+    // console.log(this.state, this.props);
+    const {
+      hash = '',
+      slides = [],
+      title = ''
+    } = this.props;
     return (
-     <div className="viewLesson">
-       <ViewLessonHeader></ViewLessonHeader>
-       <ViewLessonContent></ViewLessonContent>
-    </div>
+      <div className="viewLesson">
+        <ViewLessonHeader lessonHash={hash} ></ViewLessonHeader>
+        <ViewLessonContent lessonHash={hash} slides={slides} title={title} ></ViewLessonContent>
+      </div>
     );
+  }
 };
-export default ViewLessonPage;
+
+const mapStateToProps = state => {
+  return {
+    title: state.addLessons.title,
+    hash: state.addLessons.hash,
+    // currentSlideHash: state.addLessons.currentSlideHash,
+    // currentSlideSectionHash: state.addLessons.currentSlideSectionHash,
+    slides: state.addLessons.slides
+  }
+}
+
+const actionsToDispatch = {
+  loadLesson,
+  clearAddLessonValues
+}
+export default connect(mapStateToProps, actionsToDispatch)(ViewLessonPage);
 
 

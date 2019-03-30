@@ -22,15 +22,16 @@ class CreateLessonHeader extends React.Component {
     }
 
     render() {
+        const {history : {goBack}} = this.props;
         return (
             <div>
                 <main role="main" className="fixed-top">
                     <div className="container-fluid create_less bg-light nav-scroller">
                         <ul className="row fheader nav lh-60 text-dark text-left">
                             <li id="close" className="w-5 text-center border-right">
-                                <Link className="text-dark pt-2" to="/">
-                                    <i className="fas fa-times"></i>
-                                </Link>
+                                <a className="text-dark pt-2" onClick={goBack}  href="#">
+                                    <i className="fas fa-arrow-left"></i>
+                                </a>
                             </li>
 
                             <li id="less_slide" className="w-20 border-right">

@@ -738,9 +738,10 @@ ul.tutorlist li { padding: 0; margin: 5px 0; }
 }
 .addslideActive { border: 1px solid #007bff !important; color: #007bff;  }
 
-.quillHeaderInp div {
+.quillHeader .ql-container {
   font-size: 30px;
   font-weight: bold;
+  height: 65px;
 }
 
 #toolbar{
