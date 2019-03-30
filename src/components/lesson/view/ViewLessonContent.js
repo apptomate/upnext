@@ -6,7 +6,7 @@ var courseImg = require('../../../../src/assets/images/study.jpg');
 var sideContentImg = require('../../../../src/assets/images/slide-content.jpeg');
 
 const ViewLessonContent = (props) => {
-    console.warn(props);
+    //console.warn(props);
     const { lessonHash, title, slides } = props;
     return (
         <div className="container">

@@ -8,7 +8,7 @@ function RenderSlideContents(props) {
         <div className="row">
             <div className="col-lg-12">
                 <div className="carousel-caption d-none d-md-block text-dark text-left">
-                    <h3 style={{ textAlign: "center" }} >{strip(header)}</h3>
+                    <h3 style={{ textAlign: "center", fontWeight:"bold" }} >{strip(header)}</h3>
                     <ReactQuill
                         modules={{ toolbar: false }}
                         defaultValue={body}

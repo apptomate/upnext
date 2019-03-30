@@ -89,7 +89,7 @@ export function loadSlidesByLessonHash(lessonHash) {
       .then(res => {
         // dispatch( (res.body.data));
         // AlertError(`Slide Deleted`)
-        console.error('slides loaded', res.body.data)
+        // console.error('slides loaded', res.body.data)
         dispatch(loadSlidesSuccess(res.body.data));
       }).catch(e => {
         console.error(e);
@@ -141,9 +141,9 @@ export function addLesson(lessoninfo) {
         }))
         return res.body.data.hash;
       })
-      .catch(error => {
+      .catch(e => {
         AlertError("Unexpected Error - Try again")
-        console.error(error);
+        console.error(e);
       });
   };
 }
@@ -159,9 +159,9 @@ export function editLesson(lessoninfo) {
         dispatch(editLessonSuccess(res.body.data));
         return;
       })
-      .catch(error => {
+      .catch(e => {
         AlertError("Unexpected Error - Try again")
-        console.error(error);
+        console.error(e);
       });
   };
 }

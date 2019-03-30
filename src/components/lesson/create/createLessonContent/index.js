@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes, Component, Fragment } from 'react';
 var courseImg = require('../../../../../src/assets/images/study.jpg');
 import { connect } from 'react-redux';
 import { addLesson, editLesson, loadLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, loadSlideSection, AlertError } from '../../../../actions/';
@@ -171,7 +171,7 @@ class CreateLessonContent extends Component {
     //   ? typeof currentSection.content === 'string' ? JSON.parse(currentSection.content) : currentSection.content
     //   : {}
     // console.warn(content)  value={title} onChange={this.lessonChange} 
-    return (
+    return <Fragment>
       <div>
         <div className="container">
           <div className="row">
@@ -231,7 +231,7 @@ class CreateLessonContent extends Component {
           </div>
         </div>
       </div>
-    )
+</Fragment>
   }
 };
 
