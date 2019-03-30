@@ -57,8 +57,8 @@ const renderLessonsList = (lessons, deleteLesson) => {
                           <Link to={EDIT_LESSON_URI+'/'+lesson.hash}><i className="far fa-edit"></i> Edit</Link>
                         </li>
                         <li className="f-s-12">
-                          <button onClick={()=> deleteLesson(lesson.hash)  }>
-                            <i className="far fa-trash-alt"></i> Delete</button>
+                          <a href="#"  onClick={(e)=> { e.preventDefault();if(confirm('Are you sure to delete this lesson?')) deleteLesson(lesson.hash)}  }>
+                            <i className="far fa-trash-alt"></i> Delete</a>
                         </li>
                       </ul>
                     </div>

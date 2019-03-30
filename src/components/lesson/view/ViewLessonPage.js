@@ -41,7 +41,7 @@ class ViewLessonPage extends Component {
     } = this.props;
     return (
       <div className="viewLesson">
-        <ViewLessonHeader lessonHash={hash} ></ViewLessonHeader>
+        <ViewLessonHeader lessonHash={hash} slides={slides} ></ViewLessonHeader>
         <ViewLessonContent lessonHash={hash} slides={slides} title={title} ></ViewLessonContent>
       </div>
     );

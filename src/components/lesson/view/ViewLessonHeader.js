@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-const ViewLessonHeader = () => {
+const ViewLessonHeader = (props) => {
+    const { slides = [] } = props;
     return (
         <main role="main">
             <div className="container-fluid create_less bg-dark text-white fixed-top">
                 <div className="row">
-                    <div className="col-lg-1 col-md-1 col-2 text-center">                       
+                    <div className="col-lg-1 col-md-1 col-2 text-center">
                         <Link className="text-white pt-2" to="/">
                             <i className="fas fa-arrow-left"></i>
                         </Link>
@@ -51,17 +52,15 @@ const ViewLessonHeader = () => {
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-5 col-6 f-s-12">
-                        <span className="m-r-10">Slide 1 of 10</span>
-                        <i className="fas fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
-                        <i className="far fa-circle fa-xs text-info"></i>
+                        {
+                            slides.length > 0 && <Fragment>
+
+                                <span className="m-r-10">Slide 1 of {slides.length}</span>
+                                {
+                                    slides.map((s, index) => <i className={`${index === 0 ? 'fas' : 'far'} fa-circle fa-xs text-info`}></i>)
+                                }
+                            </Fragment>
+                        }
                     </div>
                     <div className="col-lg-1 col-md-2 col-4 bg-primary text-white">
                         <h6 className="p-t-14">
