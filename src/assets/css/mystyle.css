@@ -731,20 +731,45 @@ ul.tutorlist li { padding: 0; margin: 5px 0; }
 }
 /* elango 2 style */
 .blur-effect{pointer-events:none;}
-.ql-editor{
-  height: 350px !important;
+.quillBody .ql-editor{
   overflow: hidden;
   overflow-y: scroll;
+}
+.qlEditorHeight{
+  height: 350px !important;
 }
 .addslideActive { border: 1px solid #007bff !important; color: #007bff;  }
 
 .quillHeader .ql-container {
   font-size: 30px;
   font-weight: bold;
-  height: 65px;
+  height: 70px;
 }
 
 #toolbar{
   padding-top : 65px;
   height: 555px;
+}
+
+.sliderss  .ql-editor{
+  font-size: 0.3vw;
+  height: 118px
+}
+
+.sliderss h3{
+  min-height:10px;
+  font-size: 0.4vw;  
+}
+
+.slideStaticPreview{
+  height: 150px;
+}
+
+::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+.slidePreviewActive{
+  box-shadow: #007bff 0px 0px 8px 2px;
 }

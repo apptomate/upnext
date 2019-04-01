@@ -18,7 +18,8 @@ class ViewLessonPage extends Component {
     // let initialState = { blurEffect: true, title: '', currentContent: {}, currentSlide: { layout: 'TEXT', displayOrder: 1, sections: [] }, currentSection: {} }
     // const { hash, title } = this.props;
     // this.loadSlide = this.loadSlide.bind(this)
-    this.props.clearAddLessonValues()
+    this.props.clearAddLessonValues();
+    scroll(top);
   }
   componentDidMount() {
     const { match: { params } } = this.props;

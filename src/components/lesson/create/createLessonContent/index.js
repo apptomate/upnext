@@ -9,6 +9,7 @@ import SlideThumbnails from './slideThumbnails';
 import TextSection from './sectionForms.js/TextSection';
 import 'react-quill/dist/quill.snow.css';
 import ExpandRight from '../../../../assets/images/expandRight.png'
+import { fadeIn } from 'react-animations'
 // import { EDIT_LESSON_URI } from '../../../helpers/constants';
 
 class CreateLessonContent extends Component {
@@ -27,6 +28,7 @@ class CreateLessonContent extends Component {
     this.props.clearAddLessonValues()
     // console.error(this.props)
     this.state = initialState
+    scroll(top);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -35,7 +37,7 @@ class CreateLessonContent extends Component {
     if (this.state.blurEffect && hash) {
       this.setState({ blurEffect: false })
     }
-    if (currentSlideHash !== prevProps.currentSlideHash) {
+    if (this.props.currentSlideHash && currentSlideHash !== prevProps.currentSlideHash) {
       this.loadSlide(this.props.currentSlideHash)
     }
     // if (title !== prevState.title) {
@@ -122,7 +124,7 @@ class CreateLessonContent extends Component {
       return;
     } else {
       let section = getSectionFromSlides(slides, currentSlideHash)
-      if(section.content ===_params.content) return;        // avoiding update if no changes to content
+      if (section.content === _params.content) return;        // avoiding update if no changes to content
       this.props.slideSectionUpdateRequest(currentSlideHash, currentSlideSectionHash, _params)
       return;
     }
@@ -203,7 +205,7 @@ class CreateLessonContent extends Component {
         </div>
         <div className={`lesson-slides-content container-fluid bg-light p-t-50 p-b-50 ${this.state.blurEffect ? "blur-effect" : ""}`}>
           <div className="row">
-            <div className="col-lg-2" style={{height : '555px', overflowY:'scroll'}} >
+            <div className="col-lg-2" style={{ height: '555px', overflowY: 'scroll' }} >
               <SlideThumbnails slides={slides} currentSlide={currentSlide} onClickHandler={this.loadSlide} />
             </div>
             <div className="col-lg-8">
@@ -212,8 +214,8 @@ class CreateLessonContent extends Component {
                 <form className="lesson-form">
                   <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur={this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs} />
                 </form>
-                <div className="addslide bg-white box-shadow f-s-12 text-center" style={{width: openSectionTypes? "40%" : '31px'  }}>
-                  {openSectionTypes ? <SectionTypes onClick={this.closeSectionTypes} /> : <img onClick={this.openSectionTypes} src={ExpandRight} />}
+                <div className="addslide bg-white box-shadow f-s-12 text-center" style={{ width: openSectionTypes ? "40%" : '31px' }}>
+                  {openSectionTypes ? <SectionTypes animation={fadeIn} onClick={this.closeSectionTypes} /> : <img onClick={this.openSectionTypes} src={ExpandRight} />}
                 </div>
               </div>
               <div className="row">
@@ -231,7 +233,7 @@ class CreateLessonContent extends Component {
           </div>
         </div>
       </div>
-</Fragment>
+    </Fragment>
   }
 };
 

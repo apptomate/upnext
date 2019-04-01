@@ -32,6 +32,7 @@ const TextSection = (props) => {
                 onBlur={(value) => handleSlideInputBlur(value, 'body')}
                 modules={modules}
                 formats={formats}
+                className="quillBody qlEditorHeight"
             />
             {/* <textarea name="body" value={body} onBlur={handleSlideInputBlur} onChange={handleSlideInputs} className="form-control pl-4 pr-4 pt-4 pb-5" rows="10" placeholder="Enter body text"></textarea> */}
         </div>

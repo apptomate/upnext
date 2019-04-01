@@ -28,7 +28,7 @@ const ViewLessonContent = (props) => {
                 <h3> {title.toUpperCase()} </h3>
                 {
                     slides.length === 0 || !slides[0]['sections']
-                        ? <div className="col-lg-10  mb-5" style={{ textAlign: 'center' }} > <br /> <p> No Slide content Found </p> </div>
+                        ? <div className="col-lg-10  mb-5 qlEditorHeight" style={{ textAlign: 'center' }} > <br /> <p> No Slides Found </p> </div>
                         : <div className="col-lg-10 offset-lg-1 mb-5">
                             <div id="carouselExampleIndicators" className="carousel less_slide slide" data-ride="carousel">
                                 <ol className="carousel-indicators">
@@ -44,12 +44,19 @@ const ViewLessonContent = (props) => {
                                     {
                                         slides.map((slide, index) => {
                                             return <Fragment key={index} >
-                                                    <div className={`carousel-item ${index === 0 ? "active" : ''}`}>
-                                                {!slide['sections']
-                                                    ? <p style={{ textAlign: 'center' }}> No Slide content Found </p>
-                                                    :
-                                                    <RenderSlideContents slide={slide} />
-                                                }
+                                                <div className={`carousel-item ${index === 0 ? "active" : ''}`}>
+                                                    <div className="row">
+                                                        <div className="col-lg-12">
+                                                            <div className="carousel-caption d-none d-md-block text-dark text-left">
+
+                                                                {!slide['sections']
+                                                                    ? <div className="qlEditorHeight">    <p style={{ textAlign: 'center' }}> No Slide contents Found </p> </div>
+                                                                    :
+                                                                    <RenderSlideContents classes="qlEditorHeight" slide={slide} />
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </Fragment>
                                         }
@@ -58,16 +65,16 @@ const ViewLessonContent = (props) => {
                                     }
                                 </div>
                                 {
-                    slides.length > 1 && <Fragment>
-                                <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                    <span className="text-dark" aria-hidden="true"><i className="fas fa-chevron-left"></i></span>
-                                    <span className="sr-only">Previous</span>
-                                </a>
-                                <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                    <span className="text-dark" aria-hidden="true"><i className="fas fa-chevron-right"></i></span>
-                                    <span className="sr-only">Next</span>
-                                </a>
-                                </Fragment>  
+                                    slides.length > 1 && <Fragment>
+                                        <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                            <span className="text-dark" aria-hidden="true"><i className="fas fa-chevron-left"></i></span>
+                                            <span className="sr-only">Previous</span>
+                                        </a>
+                                        <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                            <span className="text-dark" aria-hidden="true"><i className="fas fa-chevron-right"></i></span>
+                                            <span className="sr-only">Next</span>
+                                        </a>
+                                    </Fragment>
                                 }
                             </div>
                         </div>

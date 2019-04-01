@@ -57,7 +57,7 @@ const ViewLessonHeader = (props) => {
 
                                 <span className="m-r-10">Slide 1 of {slides.length}</span>
                                 {
-                                    slides.map((s, index) => <i className={`${index === 0 ? 'fas' : 'far'} fa-circle fa-xs text-info`}></i>)
+                                    slides.map((s, index) => <Fragment key={index}> <i className={`${index === 0 ? 'fas' : 'far'} fa-circle fa-xs text-info`}></i></Fragment>)
                                 }
                             </Fragment>
                         }
