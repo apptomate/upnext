@@ -11,7 +11,10 @@
     "build:html": "babel-node tools/buildHtml.js",
     "prebuild": "npm-run-all clean-dist build:html",
     "build": "babel-node tools/build.js",
-    "postbuild": "babel-node tools/distServer.js"
+    "postbuild": "babel-node tools/distServer.js",
+    "preonlybuild": "npm-run-all clean-dist build:html",
+    "onlybuild": "babel-node tools/build.js"
+    
   },
   "author": "Apptomate Digital",
   "license": "MIT",
