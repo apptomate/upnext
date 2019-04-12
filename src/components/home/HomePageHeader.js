@@ -1,9 +1,19 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom'
 var courseImg = require('../../../src/assets/images/study.jpg');
+import { loadLessons } from '../../actions';
+import { connect } from 'react-redux';
 
 const HomePageHeader = (props) => {
   const {lessons = {}} = props;
+  let handleOnchange = e => {
+    e.preventDefault();
+    let params = {
+        pageNumber: 1,
+        title : e.target.value
+    }
+    props.loadLessons(params);
+  }
   return (
     <main role="main">
       <div className="container">
@@ -18,9 +28,9 @@ const HomePageHeader = (props) => {
 
           </div>
         </div>
-        <form className="form-inline mt-5 mb-5 searchbar">
+        <form onSubmit={e => e.preventDefault()} className="form-inline mt-5 mb-5 searchbar">
           <div className="input-group mb-3 w-100">
-            <input type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"></input>
+            <input type="text" defaultValue="" onChange={(e) => handleOnchange(e)} className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"></input>
             <div className="input-group-append">
               <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0"><i className="fas fa-arrow-circle-right"></i></span>
             </div>
@@ -45,6 +55,6 @@ const HomePageHeader = (props) => {
     </main>
   );
 }
-export default HomePageHeader;
+export default connect(null, {loadLessons})(HomePageHeader);
 
 
