@@ -48,7 +48,9 @@ class HomePage extends React.Component {
         <MainHeader></MainHeader>
         <NavScroll></NavScroll>
         <HomePageHeader lessons={lessons}></HomePageHeader>
-        <HomePageLessonsGrid loadMoreHandler={this.loadmore} lessons={lessons}></HomePageLessonsGrid>
+        <ul className="container less_grid">
+          <HomePageLessonsGrid loadMoreHandler={this.loadmore} lessons={lessons}></HomePageLessonsGrid>
+        </ul>
       </div>
     );
   }

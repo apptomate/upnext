@@ -38,7 +38,7 @@ const HomePageHeader = (props) => {
         </form>
 
         <div className="h-100 mt-5 mb-5">
-          <span className="small">{lessons.data && lessons.data.length} Lessons Available</span>
+          <span className="small">{(lessons.data && lessons.data.length) || '0' } Lessons Available</span>
           <div className="dropdown float-right">
             <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
