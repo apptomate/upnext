@@ -62,7 +62,7 @@ export function loadLesson(lessonHash, loadSlides) {
   // lessonHash = 'bdf801b5b023ba7bd920676f2281b83b459a62dd'
   // console.warn(lessonHash)
   return dispatch => {
-    var apiURL = '/rest/admin/v1/lessons/' + lessonHash;
+    var apiURL = API_BASE_URL + '/admin/v1/lessons/' + lessonHash;
     request.get(apiURL)
       .set('Content-Type', 'application/json')
       .then(res => {
@@ -83,7 +83,7 @@ export function loadLesson(lessonHash, loadSlides) {
 export function loadSlidesByLessonHash(lessonHash) {
   // console.warn(lessonHash)
   return dispatch => {
-    var apiURL = '/rest/admin/v1/slides?lessonHash=' + lessonHash;
+    var apiURL = API_BASE_URL + '/admin/v1/slides?lessonHash=' + lessonHash;
     request.get(apiURL)
       .set('Content-Type', 'application/json')
       .then(res => {
@@ -104,7 +104,7 @@ export function loadLessons(params, loadMore=false) {
     encodedParams = serialize(params)
   }
   return dispatch => {
-    request.get('/rest/admin/v1/lessons'+ encodedParams).end((err, res) => {
+    request.get(API_BASE_URL + '/admin/v1/lessons'+ encodedParams).end((err, res) => {
       if (err) {
         throw (err);
       }
@@ -184,7 +184,7 @@ export function deleteLesson(lessonHashID) {
 export function createSlideRequest(params) {
 
   return dispatch => {
-    var apiURL = '/rest/admin/v1/slides';
+    var apiURL = API_BASE_URL + '/admin/v1/slides';
     request.post(apiURL)
       .set('Content-Type', 'application/json')
       .send(params).then(res => {
@@ -198,7 +198,7 @@ export function createSlideRequest(params) {
 export function deleteSlideRequest(currentSlide, data) {
 
   return dispatch => {
-    var apiURL = '/rest/admin/v1/slides/' + currentSlide.hash;
+    var apiURL = API_BASE_URL + '/admin/v1/slides/' + currentSlide.hash;
     request.delete(apiURL)
       .set('Content-Type', 'application/json')
       .then(res => {
@@ -214,7 +214,7 @@ export function slideSectionCreateRequest(hash, params) {
   // console.log(hash, params)
   // return;
   return dispatch => {
-    var apiURL = '/rest/admin/v1/slides/' + hash + '/slide-sections';
+    var apiURL = API_BASE_URL + '/admin/v1/slides/' + hash + '/slide-sections';
     request.post(apiURL)
       .set('Content-Type', 'application/json')
       .send(params).then(res => {
@@ -242,7 +242,7 @@ export function slideSectionCreateRequest(hash, params) {
 export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHash, params) {
   // console.log('slideSectionUpdateRequest', currentSlideHash, currentSlideUpdateHash, params)
   return dispatch => {
-    var apiURL = '/rest/admin/v1/slides/' + currentSlideHash + '/slide-sections/' + currentSlideUpdateHash;
+    var apiURL = API_BASE_URL + '/admin/v1/slides/' + currentSlideHash + '/slide-sections/' + currentSlideUpdateHash;
     // console.log(currentSlideHash, currentSlideUpdateHash, params, apiURL)
     request.patch(apiURL)
       .set('Content-Type', 'application/json')
