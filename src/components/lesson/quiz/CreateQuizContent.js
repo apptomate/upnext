@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 const CreateQuizContent = () => {
     return (
         <div>
-            <div className="container-fluid bg-gradient-light">
+            <div className="container-fluid bg-gradient-light quiz_tabs">
                 <div className="row">
                     <div className="container">
                         <div className="row mt-5 mb-5 m-t-75">
@@ -31,7 +31,7 @@ const CreateQuizContent = () => {
 
             
 
-  <div className="container p-t-50 p-b-50">
+  <div className="container p-t-50 p-b-50 quiz_ans">
     <div className="row">
       <div className="col-lg-12 col-md-12 col-sm-12">
         <form action="">

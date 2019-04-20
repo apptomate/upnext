@@ -23,12 +23,12 @@ const HomePageHeader = (props) => {
             </h6>
           <div className=" col-md-3 mt-5 mb-3 col-sm-12 crt_less">
             <Link to="/CreateLesson">
-              <button type="button" className="btn btn-primary btn-sm float-right f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2">Create a New Lesson</button>
+              <button type="button" className="btn btn-orange-50 btn-sm float-right f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2">Create a New Lesson</button>
             </Link>
 
           </div>
         </div>
-        <form onSubmit={e => e.preventDefault()} className="form-inline mt-5 mb-5 searchbar">
+        <form onSubmit={e => e.preventDefault()} className="form-inline mt-3 mb-2 searchbar">
           <div className="input-group mb-3 w-100">
             <input type="text" defaultValue="" onChange={(e) => handleOnchange(e)} className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"></input>
             <div className="input-group-append">
@@ -37,10 +37,10 @@ const HomePageHeader = (props) => {
           </div>
         </form>
 
-        <div className="h-100 mt-5 mb-5">
+        <div className="h-100 mt-3 mb-5">
           <span className="small">{(lessons.data && lessons.data.length) || '0' } Lessons Available</span>
           <div className="dropdown float-right">
-            <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+            <button className="btn btn-transparent btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
               Dropdown button
               </button>

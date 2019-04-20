@@ -42,12 +42,13 @@ h1, h2, h3, h4, h5, h6 {
 .fixed-top .fcourse-view > i, .fixed-top .fadd-less > i, .fixed-top .fadd-learn > i { margin-right: 10px; line-height: 55px; }
 .fixed-top .fcourse-view > div, .fixed-top .fadd-less > div, .fixed-top .fadd-learn > div { display: inline-block; height: 55px; line-height: 18px; padding: 10px 10px 0; font-weight: 300; font-size: 0.9rem; }
 .fixed-top .fcourse-view > div > span, .fixed-top .fadd-less > div > span, .fixed-top .fadd-learn > div > span { font-size: 0.7rem; font-weight: 400; }
-.fixed-top .fcourse-view.active, .fixed-top .fadd-less.active, .fixed-top .fadd-learn.active { color: #000; box-shadow: inset 0 -5px 0 #1DA1F8; -webkit-box-shadow: inset 0 -5px 0 #1DA1F8; -ms-box-shadow: inset 0 -5px 0 #1DA1F8; }
+.fixed-top .fcourse-view.active, .fixed-top .fadd-less.active, .fixed-top .fadd-learn.active { color: #000; box-shadow: inset 0 -3px 0 #1DA1F8; -webkit-box-shadow: inset 0 -3px 0 #1DA1F8; -ms-box-shadow: inset 0 -3px 0 #1DA1F8; }
 
 .fixed-top .fadd-less, .fixed-top .fadd-learn { color: #ADAFB3; }
 .fadd-lesson button { font-size: 10px; text-align: left; padding: 0;  }
 .fadd-lesson button:hover { text-decoration: unset; }
 .fadd-lesson button span { font-size: 12px; font-weight: 600; }
+
 /*e works*/
 .form-control, .input-group, .input-group-text { border-radius: 0; }
 .form-control:focus { box-shadow: 0 0 0 0 !important; border-left-color: transparent !important; border-right-color: transparent !important; border-top-color: transparent !important; outline: 0; }
@@ -419,7 +420,7 @@ blockquote p { font-size: 13px;}
 }
 
 /*add slide*/
-.addslide { position: absolute; right: 0; bottom: 0; width: 40%; }
+.addslide { position: absolute; right: 0; bottom: 0; width: 40%; padding: 10px 10px; }
 .addslide .col { height: 100px; display: flex; justify-content: center; align-items: center; }
 .addslide .col p { display: block; }
 div.addslide > div > div { height: 80px; line-height: 30px; padding-top: 10px; }
@@ -811,6 +812,22 @@ ul.lpath_less_grid li .lpath_less_grid-right .lpath_less_grid_edit button { padd
   font-weight: bold;
   height: 70px;
 }
+.ql-snow .ql-picker.ql-header {
+  width: 100% !important;
+}
+.ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    float: none !important;
+    height: auto !important;
+    padding: 15px 15px !important;
+    width: 29.333333% !important;
+    text-align: center;
+    border: 1px solid #E0E0E0 !important;
+    margin: 2%;
+}
 .quillHeader .ql-container.ql-snow{
   border: 1px dashed #ececec !important;
   font-size: 30px;
@@ -851,4 +868,17 @@ ul.lpath_less_grid li .lpath_less_grid-right .lpath_less_grid_edit button { padd
 
 .slidePreviewActive{
   box-shadow: #007bff 0px 0px 8px 2px;
-}
+} 
+
+@media (max-width: 650px){
+  .fixed-top .close { width: 10%; }
+  .fixed-top .fcourse-view > div, .fixed-top .fadd-less > div, .fixed-top .fadd-learn > div { padding: 10px 3px 0; }
+  .fixed-top .fcourse-view, .fixed-top .fadd-less, .fixed-top .fadd-learn {padding: 0 10px;}
+  .fadd-lesson { margin-left: unset; width: 100%; }
+  .createQuiz .quiz_tabs { margin-top: 60px; }
+  .createQuiz .quiz_ans { padding-top: 0 !important; }
+  .copy { text-align: center !important; }
+  .createLesson .container h6 { margin-top: 160px !important; }
+  .addslide { width: 100% !important; box-shadow: unset !important; bottom: 15px; }
+  .ql-toolbar.ql-snow { height: auto !important;}
+ }

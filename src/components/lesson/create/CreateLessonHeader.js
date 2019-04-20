@@ -26,8 +26,38 @@ class CreateLessonHeader extends React.Component {
         return (
             <div>
                 <main role="main" className="fixed-top">
-                    <div className="container-fluid create_less bg-light nav-scroller">
-                        <ul className="row fheader nav lh-60 text-dark text-left">
+                    <div className="container-fluid create_less bg-light fixed-top">
+                        <div className="row">
+                            <div className="close">
+                                <a className="pt-2" href="#">
+                                    <i className="fas fa-arrow-left"></i>
+                                </a>
+                            </div>
+                            <div className="fcourse-view border-left active">
+                                <i className="fas fa-book-open"></i>
+                                <div>
+                                    Create new Lesson
+                                    <br />
+                                    <span>STEP 1 of 2</span>
+                                </div>
+                            </div>
+                            <div className="fadd-less border-left">
+                                <i className="fas fa-sticky-note"></i>
+                                <div>
+                                    Create a Quiz
+                                    <br />
+                                    <span>No Questiona added</span>
+                                </div>
+                            </div>
+                            <div className="bg-primary fadd-lesson ml-auto p-l-20 p-r-20">
+                                <button className="btn btn-link text-white">
+                                    NEXT STEP
+                                    <br />
+                                    <span>EDIT LESSONS</span>
+                                </button>
+                            </div>
+                        </div>
+                        {/* <ul className="row fheader nav lh-60 text-dark text-left">
                             <li id="close" className="w-5 text-center border-right">
                                 <a className="text-dark pt-2" onClick={goBack}  href="#">
                                     <i className="fas fa-arrow-left"></i>
@@ -79,7 +109,7 @@ class CreateLessonHeader extends React.Component {
                                     </h6>
                                 </div>
                             </li>
-                        </ul>
+                        </ul> */}
                     </div>
                 </main>
             </div>

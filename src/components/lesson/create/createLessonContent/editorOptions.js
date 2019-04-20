@@ -68,34 +68,34 @@ import { pure } from 'recompose'
 
 
 const editorOptions = () => (
-  <div>
-  <div id="toolbar">
-
+  <div className="col-lg-2">
+    <div id="toolbar" className="bg-white box-shadow p-4 m-t-27">
+    <h6>options</h6>
     <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
       <option value="1" />
       <option value="2" />
       <option value="" />
     </select>
     <br />
-    <button className="ql-bold" />
-    <button className="ql-underline" />
-    <button className="ql-italic" />
+    <button className="ql-bold col-4" />
+    <button className="ql-underline col-4" />
+    <button className="ql-italic col-4" />
     <br />
-    <button type="button" className="ql-align" value="" />
-    <button type="button" className="ql-align" value="center" />
-    <button type="button" className="ql-align" value="right" />
+    <button type="button" className="ql-align col-4" value="" />
+    <button type="button" className="ql-align col-4" value="center" />
+    <button type="button" className="ql-align col-4" value="right" />
     <br />
-    <button className="ql-list" value="ordered" />
-    <button className="ql-list" value="bullet" />
-    <button className="ql-link" />
+    <button className="ql-list col-4" value="ordered" />
+    <button className="ql-list col-4" value="bullet" />
+    <button className="ql-link col-4" />
     <br />
-    <button className="ql-color" value="violet" style={{ backgroundColor: 'violet' }} />
-    <button className="ql-color" value="grey" style={{ backgroundColor: 'grey' }} />
-    <button className="ql-color" value="green" style={{ backgroundColor: 'green' }} />
+    <button className="ql-color col-4" value="violet" style={{ backgroundColor: 'violet' }} />
+    <button className="ql-color col-4" value="grey" style={{ backgroundColor: 'grey' }} />
+    <button className="ql-color col-4" value="green" style={{ backgroundColor: 'green' }} />
     <br />
-    <button className="ql-color" value="red" style={{ backgroundColor: 'red' }} />
-    <button className="ql-color" value="yellow" style={{ backgroundColor: 'yellow' }} />
-    <button className="ql-color" value="blue" style={{ backgroundColor: 'blue' }} />
+    <button className="ql-color col-4" value="red" style={{ backgroundColor: 'red' }} />
+    <button className="ql-color col-4" value="yellow" style={{ backgroundColor: 'yellow' }} />
+    <button className="ql-color col-4" value="blue" style={{ backgroundColor: 'blue' }} />
     <br />
   </div>
   </div>

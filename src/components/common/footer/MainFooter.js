@@ -39,7 +39,7 @@ const MainFooter = () => {
             </a>
             </nav>
           </div>
-          <div className="col-md-6 col-sm-12 text-right font-weight-bold">
+          <div className="col-md-6 col-sm-12 text-right font-weight-bold copy">
             Copyright &copy; 2019 upnext. All rights reserved.
         </div>
         </div>
