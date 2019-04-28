@@ -39,9 +39,11 @@ export function slideSectionCreateRequestSuccess(payload) {
 export function slideSectionUpdateRequestSuccess(payload) {
   return { type: types.SLIDE_SECTION_UPDATE_REQUEST_SUCCESS, payload }
 }
-
 export function loadSlideSectionSuccess(payload) {
   return { type: types.LOAD_SLIDE_SECTION, payload }
+}
+export function videoCreateRequestSuccess(payload){
+  return { type: types.CREATE_VIDEO_REQUEST_SUCCESS, payload }
 }
 
 export function AlertError(message) {
@@ -134,11 +136,11 @@ export function addLesson(lessoninfo) {
       .send(lessoninfo.lesson).then(res => {
         AlertInfo(`Lesson - ${res.body.data.title || ''}  Created!`)
         dispatch(addLessonSuccess(res.body.data));
-        dispatch(createSlideRequest({
-          "lessonHash": res.body.data.hash,
-          "layout": "TEXT",
-          "displayOrder": 1
-        }))
+        // dispatch(createSlideRequest({
+        //   "lessonHash": res.body.data.hash,
+        //   "layout": "TEXT",
+        //   "displayOrder": 1
+        // }))
         return res.body.data.hash;
       })
       .catch(e => {
@@ -266,6 +268,22 @@ export function slideSectionUpdateRequest(currentSlideHash, currentSlideUpdateHa
       })
   }
 }
+
+export function videoCreateRequest(providerMediaID,videoProvider = "YOUTUBE") {
+  let params = {
+    "provider": videoProvider,
+    "providerMediaId": providerMediaID,
+    "providerParamMap": {}
+  }
+    return dispatch => {
+      var apiURL = API_BASE_URL + '/admin/v1/videos';
+      request.post(apiURL)
+        .set('Content-Type', 'application/json')
+        .send(params).then(res => {
+          dispatch(videoCreateRequestSuccess(res.body.data));
+        })
+    }
+  }
 
 export function sortByDisplayOrder(slides) {
   // console.log(111111111111111,slides)

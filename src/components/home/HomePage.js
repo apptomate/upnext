@@ -21,7 +21,8 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       pageOptions: {
-        pageNumber: 1
+        pageNumber: 1,
+        title:'test'
       }
     }
     this.loadmore = this.loadmore.bind(this)

@@ -1,12 +1,17 @@
 import React, { PropTypes, Component, Fragment } from 'react';
 var courseImg = require('../../../../../src/assets/images/study.jpg');
 import { connect } from 'react-redux';
-import { addLesson, editLesson, loadLesson, clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, loadSlideSection, AlertError } from '../../../../actions/';
+import { addLesson, editLesson, loadLesson, 
+  clearAddLessonValues, createSlideRequest, deleteSlideRequest, slideSectionCreateRequest, slideSectionUpdateRequest, loadSlideSection, 
+  AlertError,
+  videoCreateRequest
+ } from '../../../../actions/';
 import shortid from 'shortid';
 import EditorOptions from './editorOptions';
 import SectionTypes from './SectionTypes';
 import SlideThumbnails from './slideThumbnails';
-import TextSection from './sectionForms.js/TextSection';
+import TextSection from './sectionForms/TextSection'
+import VideoSection from './sectionForms/VideoSection'
 import 'react-quill/dist/quill.snow.css';
 import ExpandRight from '../../../../assets/images/expandRight.png'
 import { fadeIn } from 'react-animations'
@@ -15,7 +20,15 @@ import { fadeIn } from 'react-animations'
 class CreateLessonContent extends Component {
   constructor(props) {
     super(props)
-    let initialState = { blurEffect: true, title: '', currentContent: {}, currentSlide: { layout: 'TEXT', displayOrder: 1, sections: [] }, currentSection: {} }
+    let initialState = { blurEffect: true, 
+      title: '', 
+      currentContent: {}, 
+      videoHash : '',
+      videoMediaId : '',
+      currentSlide: { layout: '', displayOrder: 1, sections: [] }, 
+      currentSection: {},
+      openSectionTypes :false
+     }
     const { hash, title } = this.props;
     this.loadSlide = this.loadSlide.bind(this)
     this.handleTitleOnblur = this.handleTitleOnblur.bind(this)
@@ -24,7 +37,10 @@ class CreateLessonContent extends Component {
     this.handleAddSlideButton = this.handleAddSlideButton.bind(this)
     this.openSectionTypes = this.openSectionTypes.bind(this)
     this.closeSectionTypes = this.closeSectionTypes.bind(this)
-    // this.lessonChange = this.lessonChange.bind(this)
+    this.createSlideRequestButton = this.createSlideRequestButton.bind(this)
+    this.handleVideoSlideInputBlur = this.handleVideoSlideInputBlur.bind(this)
+    this.handleVideoSlideInputs = this.handleVideoSlideInputs.bind(this)
+    // this.createSlideRequestButton = this.createSlideRequestButton.bind(this)
     this.props.clearAddLessonValues()
     // console.error(this.props)
     this.state = initialState
@@ -80,20 +96,33 @@ class CreateLessonContent extends Component {
     }
     this.setState({ blurEffect: false });
   }
+  createSlideRequestButton(type = ''){
+    let { hash, createSlideRequest } = this.props;
+    createSlideRequest({
+        "lessonHash": hash,
+        "layout": type.toUpperCase(),
+        "displayOrder": this.getMaxDisplayOrder() + 1
+      })  
+  }
+  getMaxDisplayOrder(){
+    let {  slides } = this.props;
+    return slides.reduce((acc, { displayOrder }) => (displayOrder > acc ? displayOrder : acc), 0)
+    
+  }
 
   loadSlide(loadHash = null) {    //if hash filters out slide from props or creates new slide 
     let { hash, currentSlideHash, currentSlideSectionHash, slides, createSlideRequest, loadSlideSection } = this.props;
     let _currentSlide = {}, _currentSection = {}, _currentContent = {};
-    if (loadHash === null) {
-      let maxDisplayOrder = slides.reduce((acc, { displayOrder }) => (displayOrder > acc ? displayOrder : acc), 0)
-      createSlideRequest({
-        "lessonHash": hash,
-        "layout": "TEXT",
-        "displayOrder": maxDisplayOrder + 1
-      })
-      this.openSectionTypes();
-      return;
-    }
+    // if (loadHash === null) {
+    //   let maxDisplayOrder = slides.reduce((acc, { displayOrder }) => (displayOrder > acc ? displayOrder : acc), 0)
+    //   createSlideRequest({
+    //     "lessonHash": hash,
+    //     "layout": "TEXT",
+    //     "displayOrder": maxDisplayOrder + 1
+    //   })
+    //   this.openSectionTypes();
+    //   return;
+    // }
 
     _currentSlide = slides.find(slide => slide.hash === loadHash)
     if (_currentSlide.sections && _currentSlide.sections.length > 0) {
@@ -130,6 +159,17 @@ class CreateLessonContent extends Component {
     }
     // this.props.slideSectionUpdateRequest(currentSlideSectionHash, params)
   }
+  handleVideoSlideInputBlur(){
+    const { currentSlide, currentContent } = this.state;
+    const { slides, currentSlideHash, currentSlideSectionHash } = this.props;
+    // console.warn(this.state, this.props)
+    // return
+    this.props.videoCreateRequest(this.state.videoMediaId)
+console.log(this.state.videoMediaId)
+  }
+  handleVideoSlideInputs(value, name) {
+    this.setState( {[name]: value} )
+  }
   handleSlideInputs(value, name) {
     // let name = e; //.target.name;
     // let value = e; //.target.value;
@@ -152,7 +192,18 @@ class CreateLessonContent extends Component {
       AlertError('Failed - Lesson should have atleast one slide ');
     }
   }
-
+  decideLayout(){
+    const {currentSlide : {layout}, currentContent ={}} = this.state;
+    const allLayouts = {
+      "TEXT" : <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur={this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs} />,
+      "VIDEO" : <VideoSection videoInput={currentContent.videoInput || ''} handleVideoSlideInputBlur={this.handleVideoSlideInputBlur} handleVideoSlideInputs={this.handleVideoSlideInputs}/>,
+      default : 'choose one from below'
+    }
+    return{
+      decidedLayout : layout,
+      decidedLayoutComponent : allLayouts[layout] || allLayouts.default
+    }
+  }
   openSectionTypes() {
     this.setState({ openSectionTypes: true })
 
@@ -164,11 +215,12 @@ class CreateLessonContent extends Component {
   }
 
   render() {
-    // console.log(this.name || this.constructor.name, this.state, this.props)
-    let { currentSlide, currentContent, openSectionTypes } = this.state;
+    console.log(this.name || this.constructor.name, this.state, this.props)
+    let { currentSlide, currentSlide:{layout}, currentContent, openSectionTypes } = this.state;
     let { currentSlideHash, currentSlideSectionHash, slides = [], title } = this.props;
     let totalSlides = slides.length;
     let currentSlideOrder = slides.findIndex(slide => slide.hash === currentSlide.hash) + 1
+    let {decidedLayoutComponent, decidedLayout} = this.decideLayout();
     // let content = currentSection.length > 1
     //   ? typeof currentSection.content === 'string' ? JSON.parse(currentSection.content) : currentSection.content
     //   : {}
@@ -211,11 +263,12 @@ class CreateLessonContent extends Component {
             <div className="col-lg-8">
               <h6>Slide {currentSlideOrder} of {totalSlides}</h6>
               <div className="p-5 bg-white box-shadow mb-5 relative">
-                <form className="lesson-form">
-                  <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur={this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs} />
-                </form>
+
+                {decidedLayoutComponent}
+
+      
                 <div className="addslide bg-white box-shadow f-s-12 text-center" style={{ width: openSectionTypes ? "40%" : '31px' }}>
-                  {openSectionTypes ? <SectionTypes animation={fadeIn} onClick={this.closeSectionTypes} /> : <i class="fas fa-expand-arrows-alt" onClick={this.openSectionTypes} src={ExpandRight} ></i> }
+                  {openSectionTypes ? <SectionTypes createSlideRequestButton={this.createSlideRequestButton} animation={fadeIn} onClick={this.closeSectionTypes} /> : <i className="fas fa-expand-arrows-alt" onClick={this.openSectionTypes} src={ExpandRight} ></i> }
                 </div>
               </div>
               <div className="row">
@@ -229,7 +282,7 @@ class CreateLessonContent extends Component {
                 </div>
               </div>
             </div>
-            <EditorOptions />
+            {decidedLayout == "TEXT" && <EditorOptions />}
           </div>
         </div>
       </div>
@@ -256,6 +309,7 @@ export default connect(mapStateToProps, {
   slideSectionUpdateRequest,
   loadSlideSection,
   loadLesson,
+  videoCreateRequest,
 })(CreateLessonContent);
 
 const getSectionFromSlides = (slides = [], slideHash, sectionType = 'TEXT') => {

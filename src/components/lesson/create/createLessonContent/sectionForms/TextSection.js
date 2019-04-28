@@ -4,6 +4,7 @@ import ReactQuill from 'react-quill';
 const TextSection = (props) => {
     const { header, body, handleSlideInputBlur, handleSlideInputs } = props
     return <Fragment>
+        <form className="lesson-form">
         <div className="form-group">
             {/* <input
                 name="header"
@@ -23,7 +24,7 @@ const TextSection = (props) => {
                 // modules={modules}
                 // formats={formats}
                 className="quillHeader"
-            />
+                />
         </div>
         <div className="form-group mb-0">
             <ReactQuill style={{ height: '350px' }}
@@ -33,9 +34,10 @@ const TextSection = (props) => {
                 modules={modules}
                 formats={formats}
                 className="quillBody qlEditorHeight"
-            />
+                />
             {/* <textarea name="body" value={body} onBlur={handleSlideInputBlur} onChange={handleSlideInputs} className="form-control pl-4 pr-4 pt-4 pb-5" rows="10" placeholder="Enter body text"></textarea> */}
         </div>
+</form>
     </Fragment>
 }
 

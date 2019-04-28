@@ -30,7 +30,7 @@ const HomePageHeader = (props) => {
         </div>
         <form onSubmit={e => e.preventDefault()} className="form-inline mt-3 mb-2 searchbar">
           <div className="input-group mb-3 w-100">
-            <input type="text" defaultValue="" onChange={(e) => handleOnchange(e)} className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"></input>
+            <input type="text" defaultValue="" onChange={(e) => handleOnchange(e)} className="form-control" placeholder="Search lesson" aria-label="Search lesson" aria-describedby="basic-addon2"></input>
             <div className="input-group-append">
               <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0"><i className="fas fa-arrow-circle-right"></i></span>
             </div>
