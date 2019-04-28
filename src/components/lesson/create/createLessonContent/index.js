@@ -266,7 +266,7 @@ console.log(this.state.videoMediaId)
 
                 {decidedLayoutComponent}
 
-      
+
                 <div className="addslide bg-white box-shadow f-s-12 text-center" style={{ width: openSectionTypes ? "40%" : '31px' }}>
                   {openSectionTypes ? <SectionTypes createSlideRequestButton={this.createSlideRequestButton} animation={fadeIn} onClick={this.closeSectionTypes} /> : <i className="fas fa-expand-arrows-alt" onClick={this.openSectionTypes} src={ExpandRight} ></i> }
                 </div>

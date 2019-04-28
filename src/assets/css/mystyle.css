@@ -189,7 +189,7 @@ footer { border-top: 1px solid #dc3545; }
 
 /*slides*/
 ul.sliderss { padding: 0; margin: 0; list-style: none; }
-ul.sliderss li { margin: 0 0 20px 0; padding: 4px; border: 1px solid #ececec; box-shadow: 0 0 5px 0px #e8e8e8; }
+ul.sliderss li { margin: 0 0 20px 0; padding: 4px; border: 1px solid #ececec; box-shadow: 0 0 5px 0px #e8e8e8; height: 160px; }
 .box-shadow { box-shadow: 0 0 5px 0px #e8e8e8; }
 .less_slide h5 { margin-bottom: 30px; }
 .less_slide p { font-size: 14px; line-height: 28px;}

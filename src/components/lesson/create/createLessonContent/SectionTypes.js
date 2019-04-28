@@ -5,8 +5,8 @@ const sectionTypes = (props) => {
     const {createSlideRequestButton, ...rest} = props;
     return <Fragment>
             <div {...rest} className="row m-0">
-                <div className="col-4 bg-light border addslideActive">
-                    <button onClick={() => createSlideRequestButton("TEXT")}>
+                <div className="col-4 bg-light text-primary border addslideActive">
+                    <button className='btn btn-transparent' onClick={() => createSlideRequestButton("TEXT")}>
                     <p><i className="fas fa-font"></i></p>
                     <p>Text</p>
                     </button>
@@ -21,7 +21,7 @@ const sectionTypes = (props) => {
                     <p>Image</p>
                 </div>
                 <div className="col-4 bg-light border">
-                <button onClick={() => createSlideRequestButton("VIDEO")}>
+                <button className='btn btn-transparent' onClick={() => createSlideRequestButton("VIDEO")}>
                     <p>
                         <i className="fas fa-video"></i>
                     </p>
