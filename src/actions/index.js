@@ -27,7 +27,7 @@ export function clearAddLessonValues() {
 export function deleteLessonSuccess(payload) {
   return { type: types.DELETE_LESSON_SUCCESS, payload }
 }
-export function loadSlidesSuccess(payload) {
+export function loadSlidesSuccess(payload =[]) {
   return { type: types.LOAD_SLIDES_SUCCESS, payload }
 }
 export function createSlideRequestSuccess(payload) {
@@ -281,7 +281,10 @@ export function videoCreateRequest(providerMediaID,videoProvider = "YOUTUBE") {
         .set('Content-Type', 'application/json')
         .send(params).then(res => {
           dispatch(videoCreateRequestSuccess(res.body.data));
-        })
+        }).catch(e =>{
+          console.error(e);
+          AlertError('Error occurred')}  
+        )
     }
   }
 

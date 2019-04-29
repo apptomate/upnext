@@ -105,7 +105,7 @@ class CreateLessonContent extends Component {
       })  
   }
   getMaxDisplayOrder(){
-    let {  slides } = this.props;
+    let {  slides = [] } = this.props;
     return slides.reduce((acc, { displayOrder }) => (displayOrder > acc ? displayOrder : acc), 0)
     
   }
@@ -113,16 +113,10 @@ class CreateLessonContent extends Component {
   loadSlide(loadHash = null) {    //if hash filters out slide from props or creates new slide 
     let { hash, currentSlideHash, currentSlideSectionHash, slides, createSlideRequest, loadSlideSection } = this.props;
     let _currentSlide = {}, _currentSection = {}, _currentContent = {};
-    // if (loadHash === null) {
-    //   let maxDisplayOrder = slides.reduce((acc, { displayOrder }) => (displayOrder > acc ? displayOrder : acc), 0)
-    //   createSlideRequest({
-    //     "lessonHash": hash,
-    //     "layout": "TEXT",
-    //     "displayOrder": maxDisplayOrder + 1
-    //   })
-    //   this.openSectionTypes();
-    //   return;
-    // }
+    if (loadHash === null) {
+      this.openSectionTypes();
+      return;
+    }
 
     _currentSlide = slides.find(slide => slide.hash === loadHash)
     if (_currentSlide.sections && _currentSlide.sections.length > 0) {
@@ -193,11 +187,11 @@ console.log(this.state.videoMediaId)
     }
   }
   decideLayout(){
-    const {currentSlide : {layout}, currentContent ={}} = this.state;
+    const {currentSlide : {layout}, currentSection, currentContent ={}} = this.state;
     const allLayouts = {
       "TEXT" : <TextSection header={currentContent.header || ''} body={currentContent.body || ''} handleSlideInputBlur={this.handleSlideInputBlur} handleSlideInputs={this.handleSlideInputs} />,
-      "VIDEO" : <VideoSection videoInput={currentContent.videoInput || ''} handleVideoSlideInputBlur={this.handleVideoSlideInputBlur} handleVideoSlideInputs={this.handleVideoSlideInputs}/>,
-      default : 'choose one from below'
+      "VIDEO" : <VideoSection videoMediaId={currentContent.videoMediaId || ''} handleVideoSlideInputBlur={this.handleVideoSlideInputBlur} handleVideoSlideInputs={this.handleVideoSlideInputs}/>,
+      default : <div style={{height : '200px'}}>Choose a section type</div>
     }
     return{
       decidedLayout : layout,
@@ -207,7 +201,7 @@ console.log(this.state.videoMediaId)
   openSectionTypes() {
     this.setState({ openSectionTypes: true })
 
-    setTimeout(this.closeSectionTypes, 8000)
+    // setTimeout(this.closeSectionTypes, 100)
   }
 
   closeSectionTypes() {
@@ -255,7 +249,7 @@ console.log(this.state.videoMediaId)
             </div>
           </div>
         </div>
-        <div className={`lesson-slides-content container-fluid bg-light p-t-50 p-b-50 ${this.state.blurEffect ? "blur-effect" : ""}`}>
+        <div className={`lesson-slides-content container-fluid bg-light p-t-50 p-b-50 ${this.state.blurEffect ? "blur-effect disableDiv" : ""}`}>
           <div className="row">
             <div className="col-lg-2" style={{ height: '555px', overflowY: 'scroll' }} >
               <SlideThumbnails slides={slides} currentSlide={currentSlide} onClickHandler={this.loadSlide} />
@@ -268,7 +262,7 @@ console.log(this.state.videoMediaId)
 
 
                 <div className="addslide bg-white box-shadow f-s-12 text-center" style={{ width: openSectionTypes ? "40%" : '31px' }}>
-                  {openSectionTypes ? <SectionTypes createSlideRequestButton={this.createSlideRequestButton} animation={fadeIn} onClick={this.closeSectionTypes} /> : <i className="fas fa-expand-arrows-alt" onClick={this.openSectionTypes} src={ExpandRight} ></i> }
+                  {openSectionTypes ? <SectionTypes createSlideRequestButton={this.createSlideRequestButton} onClick={this.closeSectionTypes} /> : <i className="fas fa-expand-arrows-alt" onClick={this.openSectionTypes} src={ExpandRight} ></i> }
                 </div>
               </div>
               <div className="row">

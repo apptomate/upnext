@@ -797,7 +797,7 @@ ul.lpath_less_grid li .lpath_less_grid-right .lpath_less_grid_edit button { padd
   height: 225px !important;
 }
 /* elango 2 style */
-.blur-effect{pointer-events:none;}
+.disableDiv{pointer-events:none;}
 .quillBody .ql-editor{
   overflow: hidden;
   overflow-y: scroll;

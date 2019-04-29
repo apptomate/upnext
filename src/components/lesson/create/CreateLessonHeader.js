@@ -28,7 +28,7 @@ class CreateLessonHeader extends React.Component {
                 <main role="main" className="fixed-top">
                     <div className="container-fluid create_less bg-light fixed-top">
                         <div className="row">
-                            <div className="close">
+                            <div className="close" onClick={goBack}>
                                 <a className="pt-2" href="#">
                                     <i className="fas fa-arrow-left"></i>
                                 </a>

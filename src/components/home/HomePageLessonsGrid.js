@@ -51,7 +51,7 @@ const renderLessonsList = (lessons, deleteLesson) => {
                     <div>
                       <Link to={VIEW_LESSON_URI + '/' + lesson.hash}>
                         <p className="f-s-10 m-b-5 w-100 mr-auto mt-auto text-warning">Published</p>
-                        <h5 className="card-title m-b-5 small w-100 text-white">{lesson.title}</h5>
+                        <h5 className="card-title m-b-5 small w-100 text-white">{lesson.title.length > 30 ? lesson.title.substring(0,27)+'...' : lesson.title}</h5>
                         <p className="f-s-10 m-b-5 w-100 text-warning">By Andrew Scott</p>
                         <p className="f-s-10 m-b-5 w-100 text-warning">378 Views, 83 Favourites, 43 Saved for later</p>
                       </Link>

@@ -35,28 +35,29 @@ const TEXTSECTION = ({props}) => {
 </Fragment>
 }
 
-const opts = {
-    height: '100%',
-    width: '100%',
-    // playerVars: { // https://developers.google.com/youtube/player_parameters
-    //   autoplay: 1
-    // }
-  };
 
 const VIDEOSECTION = ({props}) => {
-    const { slide: { sections }, classes = '' } = props;
+    const { renderThumbnails, slide: { sections }, classes = '' } = props;
     let sectionContent = sections[0].video
     const { providerMediaId } = typeof sectionContent =='string' ? JSON.parse(sectionContent) : sectionContent
-
+    const opts = {
+        height: renderThumbnails ? '100%' : '400px',
+        width: '100%',
+        // playerVars: { // https://developers.google.com/youtube/player_parameters
+        //   autoplay: 1
+        // }
+      };
     let _onReady = (event) => {
         // access to player in all event handlers via event.target
         event.target.pauseVideo();
       }
     return <Fragment>
+        <div className={renderThumbnails ? "disableDiv" : ''}>
     <YouTubePlayer 
     videoId={providerMediaId}
     opts={opts}
     onReady={_onReady}
-     />
+    />
+    </div>
 </Fragment>
 }

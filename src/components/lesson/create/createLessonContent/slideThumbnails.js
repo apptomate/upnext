@@ -49,7 +49,7 @@ const slideThumbnails = (props) => {
                         <div className={slide.hash === currentSlide.hash ? 'slidePreviewActive' : ''}>
                             {!(slide['sections'] && slide['sections'][0])
                                 ? <img src={`https://dummyimage.com/600x500/ddd/${slide.hash === currentSlide.hash ? '07b' : '000'}&text=` + (slide.displayOrder || '')} className="w-100 slideStaticPreview" alt={slide.header}></img>
-                                : <RenderSlideContents slide={slide} />
+                                : <RenderSlideContents renderThumbnails slide={slide} />
                             }
                         </div>
                     </li>
