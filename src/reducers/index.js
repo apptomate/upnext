@@ -1,10 +1,14 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 import lessons from "./LessonsReducer";
+import courses from "./CoursesReducer";
 import addLessons from "./AddEditLessonsReducer";
+import createVideo from "./CreateVideoReducer";
 
 const rootReducer = combineReducers({
-    lessons,
-    addLessons
+  lessons,
+  courses,
+  addLessons,
+  createVideo
 });
 
 export default rootReducer;
