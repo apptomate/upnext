@@ -28,10 +28,13 @@ const MainHeaderWithNavigation = () => {
         </ul>
         <nav className="my-2 my-md-0 header_profile">
           <a href="#" className="text-dark">
-            Hi Rahul <i className="text-black-50 far fa-user m-l-5"></i>
+            Hi Rahul 
+            <span className="course_tutor">
+              <img src="./images/profile.jpg" className="rounded-circle float-left" alt=""></img>
+            </span>
           </a>
           <a href="#" className="text-black-50">
-            <i className="far fa-bell"></i>
+            <i className="far fa-bell"></i> <span class="badge badge-primary rounded-circle">4</span>
           </a>
           <a className="text-black-50" href="#">
             <i className="fas fa-search"></i>

@@ -32,7 +32,7 @@ body .home{
 .nav-scroller {
   position: relative;
   z-index: 2;
-  height: 3.75rem;
+  height: 4.05rem;
   line-height: 2.55rem;
   /*overflow-y: hidden;*/
 }
@@ -52,10 +52,14 @@ body .home{
 }
 
 .nav-underline .nav-link {
+  font-family: 'PT Sans', sans-serif;
   padding-top: .75rem;
   padding-bottom: .75rem;
   font-size: .875rem;
-  color: #6c757d;
+    color: #ADAFB3;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .nav-underline .nav-link:hover {

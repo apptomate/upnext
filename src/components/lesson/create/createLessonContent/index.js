@@ -236,7 +236,7 @@ console.log(this.state.videoMediaId)
                   <input name="title" required type="text" autoComplete="false" className="form-control" placeholder="What is this lesson called?"
                     aria-label="What is this lesson called?" aria-describedby="basic-addon2" defaultValue={title} onBlur={this.handleTitleOnblur}></input>
                   <div className="input-group-append">
-                    <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0 p-r-0"><i className="fas fa-arrow-circle-right"></i></span>
+                    <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0 p-r-0"><i className="fas fa-arrow-right text-primary"></i></span>
                   </div>
                 </div>
               </form>

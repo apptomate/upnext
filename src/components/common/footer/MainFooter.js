@@ -2,13 +2,13 @@ import React, { PropTypes } from 'react';
 
 const MainFooter = () => {
   return (
-    <footer className="footer mt-auto py-3 border-top">
+    <footer className="footer mt-auto py-3">
       <div className="container">
         <div className="row pb-3">
-          <div className="col-md-6 col">
+          <div className="col-md-6 col pl-0 pr-0">
             <span className="text-danger font-weight-bold">UpNext</span>
           </div>
-          <div className="col-md-6 col text-right">
+          <div className="col-md-6 col text-right pl-0 pr-0">
             <nav className="social-links">
               <a href="#">
                 <i className="text-black-50 fab fa-twitter"></i>
@@ -23,7 +23,7 @@ const MainFooter = () => {
           </div>
         </div>
         <div className="row pb-1 pt-3 border-top f-s-14 copy">
-          <div className="col-md-6 col-sm-12">
+          <div className="col-md-6 col-sm-12 pl-0 pr-0">
             <nav className="social-links">
               <a href="#" className="text-body">
                 About
@@ -39,7 +39,7 @@ const MainFooter = () => {
             </a>
             </nav>
           </div>
-          <div className="col-md-6 col-sm-12 text-right font-weight-bold copy">
+          <div className="col-md-6 col-sm-12 text-right font-weight-bold copy pl-0 pr-0">
             Copyright &copy; 2019 upnext. All rights reserved.
         </div>
         </div>
