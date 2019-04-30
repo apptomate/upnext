@@ -4,9 +4,8 @@ import { connect } from "react-redux";
 import MainHeader from "../common/header/MainHeader";
 import NavScroll from "../common/header/NavScroll";
 import HomePageHeader from "./HomePageHeader";
-import HomePageLessonsGrid from "./HomePageLessonsGrid";
-// import * as lessonsActions from '../../actions/LessonsActions';
-import { loadLessons } from "../../actions";
+import HomePageCoursesGrid from "./HomePageCoursesGrid";
+import { loadCourses } from "../../actions";
 
 import "../../assets/css/mystyle.css";
 import "../../assets/css/helper.css";
@@ -28,7 +27,7 @@ class HomePage extends React.Component {
     this.loadmore = this.loadmore.bind(this);
   }
   componentDidMount() {
-    this.props.loadLessons(this.state.pageOptions);
+    this.props.loadCourses(this.state.pageOptions);
   }
 
   loadmore() {
@@ -38,25 +37,26 @@ class HomePage extends React.Component {
         pageOptions: { ...pageOptions, pageNumber: pageOptions.pageNumber + 1 }
       }),
       // , () => console.log(this.state))
-      () => this.props.loadLessons(this.state.pageOptions, true)
+      () => this.props.loadCourses(this.state.pageOptions, true)
     );
   }
 
-  // loadlessons(){
-  //   this.props.loadLessons(this.state.pageOptions)
+  // loadCourses(){
+  //   this.props.loadCourses(this.state.pageOptions)
   // }
 
   render() {
-    const { lessons } = this.props;
+    const { courses } = this.props;
+    console.warn(this.props);
     return (
       <div className="home">
         <MainHeader />
         <NavScroll />
-        <HomePageHeader lessons={lessons} />
+        <HomePageHeader courses={courses} />
         <ul className="container less_grid">
-          <HomePageLessonsGrid
+          <HomePageCoursesGrid
             loadMoreHandler={this.loadmore}
-            lessons={lessons}
+            courses={courses}
           />
         </ul>
       </div>
@@ -65,11 +65,11 @@ class HomePage extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    lessons: state.lessons
+    courses: state.courses
   };
 };
 
 export default connect(
   mapStateToProps,
-  { loadLessons }
+  { loadCourses }
 )(HomePage);

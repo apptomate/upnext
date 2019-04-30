@@ -1,21 +1,29 @@
 export const lessonsInitials = {
-  totalItems: '',
-  pageNumber: '',
-  pageSize: '',
-  totalPages: '',
+  totalItems: "",
+  pageNumber: "",
+  pageSize: "",
+  totalPages: "",
+  data: []
+};
+
+export const coursesInitials = {
+  totalItems: "",
+  pageNumber: "",
+  pageSize: "",
+  totalPages: "",
   data: []
 };
 
 export const addLessonInitials = {
-  title: '',
+  title: "",
   hash: null,
-  slides:[],
+  slides: []
   // currentSlide : {}
-}
+};
 
 export const alertInitials = {
-  position: 'top-right',
+  position: "top-right",
   offset: 100,
-  effect: 'jelly',
+  effect: "jelly",
   timeout: 2500
-}
+};
