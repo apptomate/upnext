@@ -1,5 +1,9 @@
 import React, { PropTypes, Component } from "react";
-import { loadLesson, clearAddLessonValues } from "../../../actions";
+import {
+  loadLesson,
+  clearAddLessonValues,
+  clearVideoValues
+} from "../../../actions";
 import { connect } from "react-redux";
 import ViewCourseHeader from "./ViewCourseHeader";
 import ViewCourseContent from "./ViewCourseContent";
@@ -64,7 +68,8 @@ const mapStateToProps = state => {
 
 const actionsToDispatch = {
   loadLesson,
-  clearAddLessonValues
+  clearAddLessonValues,
+  clearVideoValues
 };
 export default connect(
   mapStateToProps,

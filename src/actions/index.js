@@ -3,16 +3,13 @@ import Alert from "react-s-alert";
 import request from "superagent";
 import { alertInitials } from "../reducers/initialState";
 import { serialize } from "../helpers/methods";
-// var URLSearchParams = require('url-search-params');
 
+//lesson actions
 export function loadLessonsListSuccess(payload) {
   return { type: types.LOAD_LESSONS_LIST, payload };
 }
 export function loadLessonsLoadMoreSuccess(payload) {
   return { type: types.LOAD_LESSONS_LOAD_MORE, payload };
-}
-export function loadCourseSuccess(payload) {
-  return { type: types.LOAD_COURSE_SUCCESS, payload };
 }
 export function loadLessonSuccess(payload) {
   return { type: types.LOAD_LESSON_SUCCESS, payload };
@@ -20,19 +17,32 @@ export function loadLessonSuccess(payload) {
 export function addLessonSuccess(payload) {
   return { type: types.ADD_LESSON_SUCCESS, payload };
 }
-
 export function editLessonSuccess(payload) {
   return { type: types.EDIT_LESSON_SUCCESS, payload };
 }
 export function clearAddLessonValues() {
   return { type: types.CLEAR_ADD_LESSON_VALUES };
 }
-export function clearAddCourseValues() {
-  return { type: types.CLEAR_ADD_COURSE_VALUES };
-}
 export function deleteLessonSuccess(payload) {
   return { type: types.DELETE_LESSON_SUCCESS, payload };
 }
+
+//course actions
+export function clearAddCourseValues() {
+  return { type: types.CLEAR_ADD_COURSE_VALUES };
+}
+
+export function loadCoursesListSuccess(payload) {
+  return { type: types.LOAD_COURSES_LIST, payload };
+}
+export function loadCoursesLoadMoreSuccess(payload) {
+  return { type: types.LOAD_COURSES_LOAD_MORE, payload };
+}
+export function loadCourseSuccess(payload) {
+  return { type: types.LOAD_COURSE_SUCCESS, payload };
+}
+
+//slide & sections
 export function loadSlidesSuccess(payload = []) {
   return { type: types.LOAD_SLIDES_SUCCESS, payload };
 }
@@ -48,17 +58,16 @@ export function slideSectionUpdateRequestSuccess(payload) {
 export function loadSlideSectionSuccess(payload) {
   return { type: types.LOAD_SLIDE_SECTION, payload };
 }
+
+//video actions
 export function videoCreateRequestSuccess(payload) {
   return { type: types.CREATE_VIDEO_REQUEST_SUCCESS, payload };
 }
-
-export function loadCoursesListSuccess(payload) {
-  return { type: types.LOAD_COURSES_LIST, payload };
-}
-export function loadCoursesLoadMoreSuccess(payload) {
-  return { type: types.LOAD_COURSES_LOAD_MORE, payload };
+export function clearVideoValues() {
+  return { type: types.CLEAR_VIDEO_VALUES };
 }
 
+// alerts
 export function AlertError(message) {
   if (message) {
     Alert.error(message, alertInitials);
@@ -74,17 +83,12 @@ export function AlertInfo(message) {
 }
 
 export function loadLesson(lessonHash, loadSlides) {
-  // lessonHash = 'bdf801b5b023ba7bd920676f2281b83b459a62dd'
-  // console.warn(lessonHash)
   return dispatch => {
     var apiURL = API_BASE_URL + "/admin/v1/lessons/" + lessonHash;
     request
       .get(apiURL)
       .set("Content-Type", "application/json")
       .then(res => {
-        // dispatch( (res.body.data));
-        // AlertError(`Slide Deleted`)
-        console.error("lesson loaded", res.body.data);
         dispatch(loadLessonSuccess(res.body.data));
         if (loadSlides) {
           dispatch(loadSlidesByLessonHash(lessonHash));
@@ -92,47 +96,35 @@ export function loadLesson(lessonHash, loadSlides) {
       })
       .catch(e => {
         console.error(e);
-        // AlertError('Error - Slide not deleted')
       });
   };
 }
 export function loadCourse(courseHash, loadSlides) {
-  // courseHash = 'bdf801b5b023ba7bd920676f2281b83b459a62dd'
-  // console.warn(courseHash)
   return dispatch => {
     var apiURL = API_BASE_URL + "/admin/v1/lessons/" + courseHash;
     request
       .get(apiURL)
       .set("Content-Type", "application/json")
       .then(res => {
-        // dispatch( (res.body.data));
-        // AlertError(`Slide Deleted`)
-        console.error("lesson loaded", res.body.data);
         dispatch(loadCourseSuccess(res.body.data));
       })
       .catch(e => {
         console.error(e);
-        // AlertError('Error - Slide not deleted')
       });
   };
 }
 
 export function loadSlidesByLessonHash(lessonHash) {
-  // console.warn(lessonHash)
   return dispatch => {
     var apiURL = API_BASE_URL + "/admin/v1/slides?lessonHash=" + lessonHash;
     request
       .get(apiURL)
       .set("Content-Type", "application/json")
       .then(res => {
-        // dispatch( (res.body.data));
-        // AlertError(`Slide Deleted`)
-        // console.error('slides loaded', res.body.data)
         dispatch(loadSlidesSuccess(res.body.data));
       })
       .catch(e => {
         console.error(e);
-        // AlertError('Error - Slide not deleted')
       });
   };
 }
@@ -187,9 +179,7 @@ export function loadSlideSection(payload) {
   };
 }
 
-// /rest/admin/v1/slides/{slideHash}/slide-sections
 export function addLesson(lessoninfo) {
-  // console.warn('----------->  addlesson', lessoninfo)
   return dispatch => {
     var apiURL = API_BASE_URL + "/admin/v1/lessons";
     request
@@ -199,11 +189,6 @@ export function addLesson(lessoninfo) {
       .then(res => {
         AlertInfo(`Lesson - ${res.body.data.title || ""}  Created!`);
         dispatch(addLessonSuccess(res.body.data));
-        // dispatch(createSlideRequest({
-        //   "lessonHash": res.body.data.hash,
-        //   "layout": "TEXT",
-        //   "displayOrder": 1
-        // }))
         return res.body.data.hash;
       })
       .catch(e => {
@@ -214,7 +199,6 @@ export function addLesson(lessoninfo) {
 }
 
 export function editLesson(lessoninfo) {
-  // console.warn('----------->  editlesson', lessoninfo)
   return dispatch => {
     var apiURL = API_BASE_URL + "/admin/v1/lessons/" + lessoninfo.lesson.hash;
     request
@@ -281,9 +265,7 @@ export function createSlideRequest(params) {
       });
   };
 }
-// export function findPreviousSlide(slides, displayOrder){
-//   let resultSlide = 0;
-// }
+
 export function deleteSlideRequest(currentSlide, data) {
   return dispatch => {
     var apiURL = API_BASE_URL + "/admin/v1/slides/" + currentSlide.hash;
@@ -301,8 +283,6 @@ export function deleteSlideRequest(currentSlide, data) {
   };
 }
 export function slideSectionCreateRequest(hash, params) {
-  // console.log(hash, params)
-  // return;
   return dispatch => {
     var apiURL = API_BASE_URL + "/admin/v1/slides/" + hash + "/slide-sections";
     request
@@ -310,16 +290,9 @@ export function slideSectionCreateRequest(hash, params) {
       .set("Content-Type", "application/json")
       .send(params)
       .then(res => {
-        // console.log('slideSectionCreateRequestSuccess', res)
         let payload = {
-          // preserving response for future use
-          slideHash: hash, // slide hash
+          slideHash: hash,
           sectionHash: res.body.data.hash,
-          // data: {
-          //   hash: res.body.data.hash, //section hash
-          //   content: res.body.data.content,
-          //   type: res.body.data.type
-          // },
           response: res.body.data
         };
         AlertInfo("Slide Updated");
@@ -332,13 +305,11 @@ export function slideSectionCreateRequest(hash, params) {
   };
 }
 
-///rest/admin/v1/slides/{slideHash}/slide-sections
 export function slideSectionUpdateRequest(
   currentSlideHash,
   currentSlideUpdateHash,
   params
 ) {
-  // console.log('slideSectionUpdateRequest', currentSlideHash, currentSlideUpdateHash, params)
   return dispatch => {
     var apiURL =
       API_BASE_URL +
@@ -346,22 +317,14 @@ export function slideSectionUpdateRequest(
       currentSlideHash +
       "/slide-sections/" +
       currentSlideUpdateHash;
-    // console.log(currentSlideHash, currentSlideUpdateHash, params, apiURL)
     request
       .patch(apiURL)
       .set("Content-Type", "application/json")
       .send(params)
       .then(res => {
-        // console.log('slideSectionUpdateRequest', res)
         let payload = {
-          // preserving response for future use
-          slideHash: currentSlideHash, // slide hash
+          slideHash: currentSlideHash,
           sectionHash: res.body.data.hash,
-          // data: {
-          //   hash: res.body.data.hash, //section hash
-          //   content: res.body.data.content,
-          //   type: res.body.data.type
-          // },
           response: res.body.data
         };
         dispatch(slideSectionUpdateRequestSuccess(payload));
@@ -398,7 +361,6 @@ export function videoCreateRequest(providerMediaID, videoProvider = "YOUTUBE") {
 }
 
 export function sortByDisplayOrder(slides) {
-  // console.log(111111111111111,slides)
   return slides.length > 1
     ? slides.sort((a, b) => a.displayOrder - b.displayOrder)
     : slides;

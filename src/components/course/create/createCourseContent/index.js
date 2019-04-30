@@ -39,7 +39,6 @@ class CreateCourseContent extends Component {
   //   this.handleVideoSlideInputs = this.handleVideoSlideInputs.bind(this);
   //   // this.createSlideRequestButton = this.createSlideRequestButton.bind(this)
   //   this.props.clearAddLessonValues();
-  //   // console.error(this.props)
   //   this.state = initialState;
   //   scroll(top);
   // }
@@ -239,7 +238,6 @@ class CreateCourseContent extends Component {
   //   // let name = e; //.target.name;
   //   // let value = e; //.target.value;
   //   // const {currentSection} = this.state
-  //   // console.error({...currentSection,  content: { ...currentSection.content, [name]: value } })
   //   // console.log(this.state.currentSection)
   //   this.setState(({ currentContent }) => ({
   //     currentContent: { ...currentContent, [name]: value }

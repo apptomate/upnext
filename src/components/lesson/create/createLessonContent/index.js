@@ -12,7 +12,8 @@ import {
   slideSectionUpdateRequest,
   loadSlideSection,
   AlertError,
-  videoCreateRequest
+  videoCreateRequest,
+  clearVideoValues
 } from "../../../../actions/";
 import shortid from "shortid";
 import EditorOptions from "./editorOptions";
@@ -51,7 +52,7 @@ class CreateLessonContent extends Component {
     this.handleVideoSlideInputs = this.handleVideoSlideInputs.bind(this);
     // this.createSlideRequestButton = this.createSlideRequestButton.bind(this)
     this.props.clearAddLessonValues();
-    // console.error(this.props)
+    this.props.clearVideoValues();
     this.state = initialState;
     scroll(top);
   }
@@ -200,7 +201,6 @@ class CreateLessonContent extends Component {
         videoHash: videoHash
       };
     }
-    console.error("handleSlideInputBlur", _params);
     if (!currentSlideSectionHash) {
       _params.type = currentSlide.layout;
       this.props.slideSectionCreateRequest(currentSlideHash, _params);
@@ -210,7 +210,6 @@ class CreateLessonContent extends Component {
       return;
     } else {
       let section = getSectionFromSlides(slides, currentSlideHash);
-      console.error(section.content, _params.content);
       // if (section.content === _params.content) return; // avoiding update if no changes to content
       this.props.slideSectionUpdateRequest(
         currentSlideHash,
@@ -257,7 +256,6 @@ class CreateLessonContent extends Component {
     // let name = e; //.target.name;
     // let value = e; //.target.value;
     // const {currentSection} = this.state
-    // console.error({...currentSection,  content: { ...currentSection.content, [name]: value } })
     // console.log(this.state.currentSection)
     this.setState(({ currentContent }) => ({
       currentContent: { ...currentContent, [name]: value }
@@ -490,7 +488,8 @@ export default connect(
     slideSectionUpdateRequest,
     loadSlideSection,
     loadLesson,
-    videoCreateRequest
+    videoCreateRequest,
+    clearVideoValues
   }
 )(CreateLessonContent);
 
