@@ -21,13 +21,12 @@ class CreateLessonHeader extends React.Component {
     //       };
     //     }
     //     this.navigateNext = this.navigateNext.bind(this);
+
+    //   navigateNext() {
+    //     event.preventDefault();
+    //     this.props.history.push(`/CreateQuiz`);
+    //   }
   }
-
-  //   navigateNext() {
-  //     event.preventDefault();
-  //     this.props.history.push(`/CreateQuiz`);
-  //   }
-
   render() {
     const {
       history: { goBack }

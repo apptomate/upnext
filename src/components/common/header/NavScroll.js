@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router-dom";
+import { COURSE_HOME_URI, LEARNING_PATH } from "../../../helpers/constants";
 
 const NavScroll = props => {
   let getClassName = path => {
@@ -15,10 +16,10 @@ const NavScroll = props => {
         <Link to="/" className={getClassName("/")}>
           Lessons
         </Link>
-        <Link to="/course" className={getClassName("/course")}>
+        <Link to={COURSE_HOME_URI} className={getClassName(COURSE_HOME_URI)}>
           Courses
         </Link>
-        <Link to="/" className={getClassName("/careerPath")}>
+        <Link to="/" className={getClassName(LEARNING_PATH)}>
           Career Path
         </Link>
       </nav>

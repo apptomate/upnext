@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 var courseImg = require("../../../src/assets/images/study.jpg");
 import { loadCourses } from "../../actions";
 import { connect } from "react-redux";
+import { CREATE_COURSE_URI } from "../../helpers/constants";
 
 const HomePageHeader = props => {
   const { courses = {} } = props;
@@ -22,7 +23,7 @@ const HomePageHeader = props => {
             Discover Content in courses
           </h6>
           <div className=" col-md-3 mt-5 mb-3 col-sm-12 crt_less">
-            <Link to="/CreateCourse">
+            <Link to={CREATE_COURSE_URI}>
               <button
                 type="button"
                 className="btn btn-orange-50 btn-sm float-right f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2"

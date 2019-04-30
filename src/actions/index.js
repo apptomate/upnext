@@ -11,6 +11,9 @@ export function loadLessonsListSuccess(payload) {
 export function loadLessonsLoadMoreSuccess(payload) {
   return { type: types.LOAD_LESSONS_LOAD_MORE, payload };
 }
+export function loadCourseSuccess(payload) {
+  return { type: types.LOAD_COURSE_SUCCESS, payload };
+}
 export function loadLessonSuccess(payload) {
   return { type: types.LOAD_LESSON_SUCCESS, payload };
 }
@@ -86,6 +89,26 @@ export function loadLesson(lessonHash, loadSlides) {
         if (loadSlides) {
           dispatch(loadSlidesByLessonHash(lessonHash));
         }
+      })
+      .catch(e => {
+        console.error(e);
+        // AlertError('Error - Slide not deleted')
+      });
+  };
+}
+export function loadCourse(courseHash, loadSlides) {
+  // courseHash = 'bdf801b5b023ba7bd920676f2281b83b459a62dd'
+  // console.warn(courseHash)
+  return dispatch => {
+    var apiURL = API_BASE_URL + "/admin/v1/lessons/" + courseHash;
+    request
+      .get(apiURL)
+      .set("Content-Type", "application/json")
+      .then(res => {
+        // dispatch( (res.body.data));
+        // AlertError(`Slide Deleted`)
+        console.error("lesson loaded", res.body.data);
+        dispatch(loadCourseSuccess(res.body.data));
       })
       .catch(e => {
         console.error(e);
