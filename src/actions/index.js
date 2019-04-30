@@ -315,12 +315,12 @@ export function slideSectionCreateRequest(hash, params) {
           // preserving response for future use
           slideHash: hash, // slide hash
           sectionHash: res.body.data.hash,
-          data: {
-            hash: res.body.data.hash, //section hash
-            content: res.body.data.content,
-            type: res.body.data.type
-          },
-          response: res
+          // data: {
+          //   hash: res.body.data.hash, //section hash
+          //   content: res.body.data.content,
+          //   type: res.body.data.type
+          // },
+          response: res.body.data
         };
         AlertInfo("Slide Updated");
         dispatch(slideSectionCreateRequestSuccess(payload));
@@ -357,12 +357,12 @@ export function slideSectionUpdateRequest(
           // preserving response for future use
           slideHash: currentSlideHash, // slide hash
           sectionHash: res.body.data.hash,
-          data: {
-            hash: res.body.data.hash, //section hash
-            content: res.body.data.content,
-            type: res.body.data.type
-          },
-          response: res
+          // data: {
+          //   hash: res.body.data.hash, //section hash
+          //   content: res.body.data.content,
+          //   type: res.body.data.type
+          // },
+          response: res.body.data
         };
         dispatch(slideSectionUpdateRequestSuccess(payload));
         AlertInfo("Slide Updated");
@@ -387,6 +387,7 @@ export function videoCreateRequest(providerMediaID, videoProvider = "YOUTUBE") {
       .set("Content-Type", "application/json")
       .send(params)
       .then(res => {
+        console.log(res.body.data);
         dispatch(videoCreateRequestSuccess(res.body.data));
       })
       .catch(e => {

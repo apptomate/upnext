@@ -90,9 +90,10 @@ class CreateLessonContent extends Component {
   //   let value = e.target.value;
   //   this.setState({[name]: value })
   // }
-  componentWillUnmount() {
-    this.props.clearAddLessonValues();
-  }
+  // componentWillUnmount() {
+  //   console.log("this.props.clearAddLessonValues();");
+  //   this.props.clearAddLessonValues();
+  // }
   handleTitleOnblur(e) {
     const title = e.target.value;
     if (title.length == 0) {
@@ -199,13 +200,18 @@ class CreateLessonContent extends Component {
         videoHash: videoHash
       };
     }
+    console.error("handleSlideInputBlur", _params);
     if (!currentSlideSectionHash) {
       _params.type = currentSlide.layout;
       this.props.slideSectionCreateRequest(currentSlideHash, _params);
+      console.log(
+        "this.props.slideSectionCreateRequest(currentSlideHash, _params);"
+      );
       return;
     } else {
       let section = getSectionFromSlides(slides, currentSlideHash);
-      if (section.content === _params.content) return; // avoiding update if no changes to content
+      console.error(section.content, _params.content);
+      // if (section.content === _params.content) return; // avoiding update if no changes to content
       this.props.slideSectionUpdateRequest(
         currentSlideHash,
         currentSlideSectionHash,

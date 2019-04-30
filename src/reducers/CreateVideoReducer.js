@@ -6,10 +6,11 @@ export default function createVideo(state = {}, action) {
   const { type, payload = {} } = action;
   switch (type) {
     case types.CREATE_VIDEO_REQUEST_SUCCESS:
-      return { ...(payload.data || {}) };
+      console.log(payload);
+      return { ...payload };
     // case types.LOAD_LESSONS_LOAD_MORE:
     //   return { ...newState, data: [...newState.data, ...payload.data] }
     default:
-      return state;
+      return newState;
   }
 }

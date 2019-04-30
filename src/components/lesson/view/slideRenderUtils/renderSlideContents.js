@@ -50,6 +50,7 @@ const VIDEOSECTION = ({ props }) => {
     slide: { sections },
     classes = ""
   } = props;
+  console.error(VIDEOSECTION, props);
   let sectionContent = sections[0].video;
   const { providerMediaId } =
     typeof sectionContent == "string"
