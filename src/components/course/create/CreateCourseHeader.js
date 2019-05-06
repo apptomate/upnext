@@ -29,7 +29,8 @@ class CreateLessonHeader extends React.Component {
   }
   render() {
     const {
-      history: { goBack }
+      history: { goBack },
+      handleNavButton
     } = this.props;
     return (
       <Fragment>
@@ -66,7 +67,10 @@ class CreateLessonHeader extends React.Component {
                   </div>
                 </div>
                 <div className="bg-primary fadd-lesson ml-auto p-l-20 p-r-20">
-                  <button className="btn btn-link text-white">
+                  <button
+                    onClick={handleNavButton}
+                    className="btn btn-link text-white"
+                  >
                     NEXT STEP
                     <br /> <span>ADD LESSONS</span>
                   </button>
