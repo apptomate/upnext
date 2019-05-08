@@ -1,28 +1,13 @@
 import React, { PropTypes, Component, Fragment } from "react";
 var profileImg = require("../../../../../src/assets/images/profile.jpg");
 
-// import shortid from "shortid";
-// import { EDIT_LESSON_URI } from '../../../helpers/constants';
-
 class CreateCourseContent extends Component {
-  //   const { hash, title } = this.props;
-  //   this.loadSlide = this.loadSlide.bind(this);
-  //   this.handleTitleOnblur = this.handleTitleOnblur.bind(this);
-  //   this.handleSlideInputs = this.handleSlideInputs.bind(this);
-  //   this.handleSlideInputBlur = this.handleSlideInputBlur.bind(this);
-  //   this.handleAddSlideButton = this.handleAddSlideButton.bind(this);
-  //   this.openSectionTypes = this.openSectionTypes.bind(this);
-  //   this.closeSectionTypes = this.closeSectionTypes.bind(this);
-  //   this.createSlideRequestButton = this.createSlideRequestButton.bind(this);
-  //   this.handleVideoSlideInputBlur = this.handleVideoSlideInputBlur.bind(this);
-  //   this.handleVideoSlideInputs = this.handleVideoSlideInputs.bind(this);
-  //   // this.createSlideRequestButton = this.createSlideRequestButton.bind(this)
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { title, description } = this.props;
+    let { title, description } = this.props;
     console.error(this.props);
     return (
       <Fragment>
@@ -32,9 +17,10 @@ class CreateCourseContent extends Component {
             <div className="col-lg-12">
               <h6 className="m-t-50 m-b-30">Course Title</h6>
               <form>
-                {/* <!-- <h2 className="text-black-25 m-t-30">What is this course called?</h2> --> */}
                 <input
                   type="text"
+                  name="title"
+                  id="title"
                   className="form-control border-0 course_title rounded-0 p-l-0 p-r-0 m-b-10"
                   placeholder="What is this course called?"
                   defaultValue={title}

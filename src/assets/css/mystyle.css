@@ -226,7 +226,7 @@ ul.less_grid li .card {
   border-radius: 0px;
 }
 .lesson_grid {
-  height: 160px;
+  height: 155px;
   overflow: hidden;
   transition: height 0.5s;
   -webkit-transition: height 0.5s;

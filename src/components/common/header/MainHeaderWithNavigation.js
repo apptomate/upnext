@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const MainHeaderWithNavigation = () => {
   return (
     <nav className="navbar navbar-expand-lg fixed-top bg-white shadow-sm pt-0 pb-0">
-      <a className="navbar-brand text-danger" href="#">
-        Up Next
-      </a>
+      <Link className="navbar-brand text-danger font-weight-bold" to={"/"}>
+        upnext
+      </Link>
       <button
         className="navbar-toggler collapsed"
         type="button"

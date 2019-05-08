@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react";
+import React, { PropTypes, Component } from "react";
 import CreateCourseHeader from "./CreateCourseHeader";
 import CreateCourseContent from "./createCourseContent/index";
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ import "../../../assets/js/offcanvas.js";
 import "../../../assets/js/jquery-slim.min.js";
 import "../../../assets/js/custom-file-input.js";
 
-class CreateCoursePage extends React.PureComponent {
+class CreateCoursePage extends Component {
   constructor(props) {
     super(props);
     this.handleNavButton = this.handleNavButton.bind(this);
@@ -48,7 +48,7 @@ class CreateCoursePage extends React.PureComponent {
   handleNavButton() {}
   render() {
     console.warn(this.props, this.state);
-    const { title, description } = this.state;
+    let { title, description } = this.props;
     return (
       <div className="d-flex flex-column h-100">
         <CreateCourseHeader
