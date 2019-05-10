@@ -4,12 +4,6 @@ import { Link } from "react-router-dom";
 const MainHeaderWithNavigation = () => {
   return (
     <nav className="navbar navbar-expand-lg fixed-top bg-white shadow-sm pt-0 pb-0">
-<<<<<<< HEAD
-      <a className="navbar-brand text-danger font-weight-bold" href="#">Up Next</a>
-      <button className="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-=======
       <Link className="navbar-brand text-danger font-weight-bold" to={"/"}>
         upnext
       </Link>
@@ -23,7 +17,6 @@ const MainHeaderWithNavigation = () => {
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon" />
->>>>>>> bf7a908fba6deed547321085d9740584f1db251d
       </button>
       <div className="navbar-collapse justify-content-md-center collapse">
         <ul className="navbar-nav ml-auto mr-auto">
