@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from "react";
-import { loadLesson, clearAddLessonValues } from "../../../actions";
+import { loadCourse, clearAddCourseValues } from "../../../actions";
 import { connect } from "react-redux";
 import ViewCourseHeader from "./ViewCourseHeader";
 import ViewCourseContent from "./ViewCourseContent";
@@ -12,13 +12,10 @@ import "../../../assets/js/offcanvas.js";
 import "../../../assets/js/jquery-slim.min.js";
 import "../../../assets/js/custom-file-input.js";
 
-class ViewLessonPage extends Component {
+class ViewCoursePage extends Component {
   constructor(props) {
     super(props);
-    // let initialState = { blurEffect: true, title: '', currentContent: {}, currentSlide: { layout: 'TEXT', displayOrder: 1, sections: [] }, currentSection: {} }
-    // const { hash, title } = this.props;
-    // this.loadSlide = this.loadSlide.bind(this)
-    this.props.clearAddLessonValues();
+    this.props.clearAddCourseValues();
     scroll(top);
   }
   componentDidMount() {
@@ -26,27 +23,23 @@ class ViewLessonPage extends Component {
       match: { params }
     } = this.props;
     if (params.hash) {
+      console.log(this.props, params);
       // const { hash } = match.params
-      this.props.loadLesson(params.hash, true);
+      this.props.loadCourse(params.hash, true);
     }
   }
 
   componentWillUnmount() {
-    this.props.clearAddLessonValues();
+    this.props.clearAddCourseValues();
   }
 
   render() {
     // console.log(this.state, this.props);
-    const { hash = "", slides = [], title = "" } = this.props;
+    const { hash = "", title = "" } = this.props;
     return (
-      <div className="viewLesson">
-        <ViewCourseHeader {...this.props} lessonHash={hash} slides={slides} />
-        <ViewCourseContent
-          {...this.props}
-          lessonHash={hash}
-          slides={slides}
-          title={title}
-        />
+      <div className="viewCourse">
+        <ViewCourseHeader {...this.props} courseHash={hash} />
+        <ViewCourseContent {...this.props} courseHash={hash} />
       </div>
     );
   }
@@ -54,19 +47,18 @@ class ViewLessonPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    title: state.addLessons.title,
-    hash: state.addLessons.hash,
-    // currentSlideHash: state.addLessons.currentSlideHash,
-    // currentSlideSectionHash: state.addLessons.currentSlideSectionHash,
-    slides: state.addLessons.slides
+    title: state.addCourses.title,
+    hash: state.addCourses.hash,
+    description: state.addCourses.description,
+    duration: state.addCourses.duration
   };
 };
 
 const actionsToDispatch = {
-  loadLesson,
-  clearAddLessonValues
+  loadCourse,
+  clearAddCourseValues
 };
 export default connect(
   mapStateToProps,
   actionsToDispatch
-)(ViewLessonPage);
+)(ViewCoursePage);

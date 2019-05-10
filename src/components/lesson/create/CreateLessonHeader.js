@@ -43,36 +43,46 @@ class CreateLessonHeader extends React.Component {
       <div>
         <main role="main" className="fixed-top">
           <div className="container-fluid create_less bg-light fixed-top">
-            <div className="row">
-              <div className="close" onClick={goBack}>
-                <a className="pt-2" href="#">
-                  <i className="fas fa-arrow-left" />
-                </a>
-              </div>
-              <div className="fcourse-view border-left active">
-                <i className="fas fa-book-open" />
-                <div>
-                  Create new Lesson
-                  <br />
-                  <span>STEP 1 of 2</span>
+            
+            <div className="nav-scroller bg-white shadow-sm">
+              <nav className="nav nav-underline">
+                <div className="nav-link close" onClick={goBack}>
+                  <a className="pt-2" href="#">
+                    <i className="fas fa-times"></i>
+                  </a>
                 </div>
-              </div>
-              <div className="fadd-less border-left">
-                <i className="fas fa-sticky-note" />
-                <div>
-                  Create a Quiz
-                  <br />
-                  <span>No Questiona added</span>
+                <div className="nav-link fcourse-view border-left active">
+                  <i className="fas fa-book-open"></i>
+                  <div>
+                    COURSE OVERVIEW <br/>
+                    <span>ADD COURSE DETAILS</span>
+                  </div>
                 </div>
-              </div>
-              <div className="bg-primary fadd-lesson ml-auto p-l-20 p-r-20">
-                <button className="btn btn-link text-white">
-                  NEXT STEP
-                  <br />
-                  <span>EDIT LESSONS</span>
-                </button>
-              </div>
+                <div className="fadd-less border-left">
+                  <i className="fas fa-sticky-note"></i>
+                  <div>
+                    ADD LESSONS
+                    <br/>
+                    <span>NO LESSONS ADDED</span>
+                  </div>
+                </div>
+                <div className="fadd-learn border-left">
+                  <i className="fas fa-user-check"></i>
+                  <div>
+                    ADD LEARNERS
+                    <br/>
+                    <span>NO ENROLLED</span>
+                  </div>
+                </div>
+                <div className="bg-primary fadd-lesson ml-auto p-t-8 p-l-20 p-r-20">
+                  <button className="btn btn-link text-white">
+                    NEXT STEP
+                    <br/> <span>ADD LESSONS</span>
+                  </button>
+                </div>
+              </nav>
             </div>
+
             {/* <ul className="row fheader nav lh-60 text-dark text-left">
                             <li id="close" className="w-5 text-center border-right">
                                 <a className="text-dark pt-2" onClick={goBack}  href="#">

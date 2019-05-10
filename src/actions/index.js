@@ -58,6 +58,15 @@ export function loadCoursesListSuccess(payload) {
 export function loadCoursesLoadMoreSuccess(payload) {
   return { type: types.LOAD_COURSES_LOAD_MORE, payload };
 }
+export function addCourseSuccess(payload) {
+  return { type: types.ADD_COURSE_SUCCESS, payload };
+}
+export function editCourseSuccess(payload) {
+  return { type: types.EDIT_COURSE_SUCCESS, payload };
+}
+// export function loadCourseSuccess(payload) {
+//   return { type: types.LOAD_COURSE_SUCCESS, payload };
+// }
 
 export function AlertError(message) {
   if (message) {
@@ -100,19 +109,16 @@ export function loadCourse(courseHash, loadSlides) {
   // courseHash = 'bdf801b5b023ba7bd920676f2281b83b459a62dd'
   // console.warn(courseHash)
   return dispatch => {
-    var apiURL = API_BASE_URL + "/admin/v1/lessons/" + courseHash;
+    var apiURL = API_BASE_URL + "/admin/v1/courses/" + courseHash;
     request
       .get(apiURL)
       .set("Content-Type", "application/json")
       .then(res => {
-        // dispatch( (res.body.data));
-        // AlertError(`Slide Deleted`)
-        console.error("lesson loaded", res.body.data);
+        console.warn("cousrse loaded", res.body.data);
         dispatch(loadCourseSuccess(res.body.data));
       })
       .catch(e => {
         console.error(e);
-        // AlertError('Error - Slide not deleted')
       });
   };
 }
@@ -251,6 +257,43 @@ export function deleteLesson(lessonHashID) {
   };
 }
 
+export function addCourse(courseInfo) {
+  return dispatch => {
+    var apiURL = API_BASE_URL + "/admin/v1/courses";
+    request
+      .post(apiURL)
+      .set("Content-Type", "application/json")
+      .send(courseInfo.course)
+      .then(res => {
+        AlertInfo(`Course - ${res.body.data.title || ""}  Created!`);
+        dispatch(addCourseSuccess(res.body.data));
+        return res.body.data.hash;
+      })
+      .catch(e => {
+        AlertError("Unexpected Error - Try again");
+        console.error(e);
+      });
+  };
+}
+
+export function editCourse(courseInfo) {
+  return dispatch => {
+    var apiURL = API_BASE_URL + "/admin/v1/courses/" + courseInfo.course.hash;
+    request
+      .patch(apiURL)
+      .set("Content-Type", "application/json")
+      .send(courseInfo.course)
+      .then(res => {
+        AlertInfo(`Course - ${res.body.data.title || ""}  Updated!`);
+        dispatch(editCourseSuccess(res.body.data));
+        return;
+      })
+      .catch(e => {
+        AlertError("Unexpected Error - Try again");
+        console.error(e);
+      });
+  };
+}
 export function deleteCourse(courseHashID) {
   var apiURL =
     API_BASE_URL + "/admin/v1/courses/" + courseHashID + "/deactivate";

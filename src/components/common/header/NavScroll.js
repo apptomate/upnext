@@ -20,7 +20,7 @@ const NavScroll = props => {
           Courses
         </Link>
         <Link to="/" className={getClassName(LEARNING_PATH)}>
-          Career Path
+          Learning Path
         </Link>
       </nav>
     </div>
