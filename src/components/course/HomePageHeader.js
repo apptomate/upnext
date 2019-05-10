@@ -27,7 +27,7 @@ const HomePageHeader = props => {
               <button
                 type="button"
                 className="btn btn-orange-50 btn-sm float-right f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2"
-              >
+              ><i className="far fa-file m-r-5"></i>
                 Create a New Course
               </button>
             </Link>
@@ -38,18 +38,21 @@ const HomePageHeader = props => {
           className="form-inline mt-3 mb-2 searchbar"
         >
           <div className="input-group mb-3 w-100">
+            <div className="input-group-prepend">
+              <span className="input-group-text bg-transparent border-bottom"><i className="fas fa-search"></i></span>
+            </div>
             <input
               type="text"
               defaultValue=""
               onChange={e => handleOnchange(e)}
-              className="form-control"
+              className="form-control border-bottom"
               placeholder="Search course"
               aria-label="Search course"
               aria-describedby="basic-addon2"
             />
             <div className="input-group-append">
-              <span className="input-group-text bg-white border-top-0 border-right-0 border-left-0">
-                <i className="fas fa-arrow-circle-right" />
+              <span className="input-group-text bg-white border-bottom">
+                <i className="fas fa-arrow-right text-primary"></i>
               </span>
             </div>
           </div>

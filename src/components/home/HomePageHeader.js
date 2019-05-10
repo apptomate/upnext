@@ -27,7 +27,7 @@ const HomePageHeader = props => {
             <Link to={CREATE_LESSON_URI}>
               <button
                 type="button"
-                className="btn btn-orange-50 btn-sm float-right f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2"
+                className="btn btn-primary-50 btn-sm float-right f-s-12 rounded-pill pr-4 pl-4 pt-2 pb-2"
               ><i className="far fa-file m-r-5"></i> 
                 Create a New Lesson
               </button>
@@ -46,7 +46,7 @@ const HomePageHeader = props => {
               type="text"
               defaultValue=""
               onChange={e => handleOnchange(e)}
-              className="form-control"
+              className="form-control border-bottom"
               placeholder="Search lesson"
               aria-label="Search lesson"
               aria-describedby="basic-addon2"
